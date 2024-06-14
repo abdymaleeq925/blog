@@ -1,0 +1,1 @@
+.title input{font-size:30px;font-weight:500}.title div:before,.title div:after{display:none}.image{width:100%;display:flex;align-items:flex-start;gap:15px;margin-bottom:30px}.image img{width:150px;height:auto;max-height:150px;-o-object-fit:cover;object-fit:cover}.tags{margin:15px 0 !important}.editor{margin:30px 0}.buttons{display:flex}.buttons button{margin-right:15px}

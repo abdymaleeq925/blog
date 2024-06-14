@@ -1,0 +1,41 @@
+.title {
+    input {
+        font-size: 30px;
+        font-weight: 500;
+    }
+    div {
+        &:before, &:after {
+            display: none;
+        }
+    }
+}
+
+.image {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+    img {
+        width: 150px;
+        height: auto;
+        max-height: 150px;
+        object-fit: cover;
+    }
+}
+
+.tags {
+    // display: block;
+    margin: 15px 0 !important;
+}
+
+.editor {
+    margin: 30px 0;
+}
+
+.buttons {
+    display: flex;
+    button {
+        margin-right: 15px;
+    }
+}

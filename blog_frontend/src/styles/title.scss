@@ -1,0 +1,11 @@
+.title {
+    &-3xl {
+        font-weight: 700;
+        font-size: 243px;
+        border-top: solid 1px var(--border-color);
+        border-bottom: solid 1px var(--border-color);
+        text-transform: uppercase;
+        margin: 0;
+        margin-top: 50px;
+    }
+}
