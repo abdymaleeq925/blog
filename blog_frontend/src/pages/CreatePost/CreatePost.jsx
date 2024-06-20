@@ -132,7 +132,6 @@ const CreatePost = () => {
 				/>
 				<ReactTag
 					tags={tags}
-					// suggestions={suggestions}
 					placeholder='Tags'
 					classes={{ root: styles.tags }}
 					handleAddition={handleAddition}
