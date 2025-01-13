@@ -8,12 +8,12 @@ import { useRegisterUserMutation } from '../services/authApi';
 import { setAuthState } from '../redux/authSlice';
 
 const Register = ({ formType, setFormType }) => {
-    const [ registerUser, data ] = useRegisterUserMutation();
+    const [ registerUser ] = useRegisterUserMutation();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { register, setError, handleSubmit, formState: {errors, isValid} } = useForm(
+    const { register, handleSubmit, formState: {errors} } = useForm(
         {
             mode: 'onChange'
         }
@@ -67,7 +67,7 @@ const Register = ({ formType, setFormType }) => {
                 />
                 <button className="btn btn-primary" type="submit">Sign Up</button>
             </form>
-            <span className='switch-form' onClick={() => setFormType('login')}>Have an account? Login</span>
+            <span className='switch-form' onClick={() => setFormType('login')}>Have an account? <i>Login</i></span>
       </div>
     </div>
   )

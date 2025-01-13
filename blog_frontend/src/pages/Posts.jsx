@@ -19,7 +19,8 @@ const Posts = () => {
                 text = {post.text}
                 tags = {post.tags}
                 image = {post.imageUrl}
-                size = "post-item--sm"
+                views = {post.viewsCount}
+                size = "post-item--md"
                 direction = "col"
               />
             ))

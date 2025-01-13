@@ -71,6 +71,7 @@ img {
 
 .posts__wrapper {
     gap: 30px;
+    margin-top: 20px;
 }
 
 .forms {
@@ -156,12 +157,26 @@ img {
 
     &.btn-outlined {
         height: 40px;
-        border: 1px solid #000;
+        border: 1px solid var(--border-color);
 
         &:hover {
             color: #000;
             background-color: #adadad;
         }
+    }
+}
+
+.password {
+    position: relative;
+    .btn-showpassword {
+        position: absolute;
+        top: 25%;
+        right: 2%;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--text-color);
     }
 }
 
@@ -217,12 +232,12 @@ img {
     }
 }
 
-.post-item.post-item--md {
-    .post-item__image {
-        height: 400px;
-        max-height: 70%;
-    }
-}
+// .post-item.post-item--md {
+//     .post-item__image {
+//         height: 400px;
+//         max-height: 70%;
+//     }
+// }
 
 @media screen and (max-width: 1399px) {
     .title--3xl {

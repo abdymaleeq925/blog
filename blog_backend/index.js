@@ -15,7 +15,7 @@ app.use(express.json()); //Обработка запроса
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0.nkey3jf.mongodb.net/blogdb?retryWrites=true&w=majority').then(console.log('DB is OK')).catch((error) => console.log('DB is NOT OK', error));
+mongoose.connect('mongodb+srv://admin:admin@result.jgjqijk.mongodb.net/?retryWrites=true&w=majority&appName=RESULT').then(console.log('DB is OK')).catch((error) => console.log('DB is NOT OK', error));
 
 const storage = multer.diskStorage({
     destination: (_, __, cb) => { cb(null, 'uploads') },
@@ -53,9 +53,6 @@ app.get('/post/:id', getOne);
 app.patch('/post/:id',checkUser, postValidation, handleValidation, update);
 
 app.delete('/post/:id', checkUser, remove);
-
-// app.put();
-// app.delete();
 
 // app.set(); //Настройка запроса
 // // app.get();

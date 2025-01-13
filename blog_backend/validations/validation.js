@@ -16,5 +16,5 @@ export const postValidation = [
     body('title', 'Enter title').isLength({min: 1}),
     body('text', 'Enter text').isLength({min: 3}),
     body('tags', 'Incorrect format for tags').optional(),
-    body('imgae', 'Incorrect link').optional()
+    body('image', 'Incorrect link').optional()
 ];

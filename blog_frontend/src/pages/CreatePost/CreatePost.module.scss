@@ -25,8 +25,22 @@
 }
 
 .tags {
-    // display: block;
-    margin: 15px 0 !important;
+    margin: 15px 0;
+
+    span {
+        // display: flex;
+        // gap: 5px;
+        margin: 5px;
+    }
+    button {
+        border-style: none;
+        background-color: white;
+    }
+    svg {
+        fill: black;
+        display: flex;
+        align-items: center;
+    }
 }
 
 .editor {

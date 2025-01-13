@@ -1,28 +1,38 @@
 .hero-grid {
     margin-top: 30px;
+    margin-bottom: 60px;
+
     &__wrapper {
         display: grid;
-        grid-template-columns: 1fr 2em 1fr;
-        grid-template-rows: 1fr 1fr 1.25fr;
-        row-gap: 2em;
-        grid-template-areas: "Post1 . Post2" "Post1 . Post3" "Post4 Post4 Post4";
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+        gap: 2em;
     }
+
     .post-item {
         width: 100%;
         height: auto;
-        &:nth-child(1) {
-            grid-area: Post1;
-        }
-        &:nth-child(2) {
-            grid-area: Post2;
-        }
-        &:nth-child(3) {
-            grid-area: Post3;
-        }
-        &:nth-child(4) {
-            grid-area: Post4;
-        }
+        grid-column: span 1;
+        grid-row: span 1;
     }
+
+    .post-item--sm {
+        grid-column: span 1;
+        grid-row: span 4;
+    }
+
+    /* Средние элементы */
+    .post-item--md {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+
+    /* Крупные элементы */
+    .post-item--lg {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
     .title-sm {
         font-weight: 600;
     }

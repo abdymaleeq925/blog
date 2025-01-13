@@ -26,7 +26,7 @@ const Header = () => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__logo">
-            <Link to="/">Your Name</Link>
+            <Link to="/">The Blog</Link>
           </div>
           <div className="header__navs">
             <ul className="header__navs-list">

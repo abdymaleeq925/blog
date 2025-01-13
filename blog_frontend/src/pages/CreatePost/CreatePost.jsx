@@ -4,7 +4,7 @@ import { TextField, Button } from '@mui/material';
 import SimpleMde from 'react-simplemde-editor';
 import "easymde/dist/easymde.min.css";
 import { useParams } from 'react-router-dom';
-import { WithContext as ReactTag, SEPARATORS } from 'react-tag-input'
+import { WithContext as ReactTag, SEPARATORS } from 'react-tag-input';
 
 import styles from './CreatePost.module.scss';
 import { useUploadImageMutation, useCreatePostMutation, useGetOnePostQuery, useEditPostMutation, useCreateTagMutation, useGetAllTagsQuery } from '../../services/postsApi';
@@ -66,12 +66,20 @@ const CreatePost = () => {
 	useEffect(() => {
 		if (data) {
 			setTitle(data?.title);
-			setTags(data?.tags.map(tag => ({ id: tag._id, text: tag.name })));
+			setTags(
+				data?.tags.map(tag => {
+				  const foundTag = allTags?.tags.find(allTag => allTag._id === tag);
+				  if (!foundTag) {
+					console.warn(`Tag with id ${tag} not found in allTags`);
+				  }
+				  return foundTag ? { id: foundTag._id, text: foundTag.name } : null;
+				}).filter(Boolean)
+			  );
+			  
 			setText(data?.text);
 			setImage(data?.imageUrl);
 		}
 	}, [data]);
-
 
 	const removeImage = () => {
 		setImage('');
@@ -118,7 +126,7 @@ const CreatePost = () => {
 						image && (
 							<>
 								<Button variant='contained' color="error" onClick={removeImage}>Delete</Button>
-								<img src={`http://localhost:4444${image}`} />
+								<img src={`http://localhost:4444${image}`} alt="Post"/>
 							</>
 						)
 					}
@@ -130,17 +138,19 @@ const CreatePost = () => {
 					classes={{ root: styles.title }}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
-				<ReactTag
-					tags={tags}
-					placeholder='Tags'
-					classes={{ root: styles.tags }}
-					handleAddition={handleAddition}
-					separators={[SEPARATORS.ENTER]}
-					handleDelete={(i) => {
-						const newTags = tags?.filter((tag, index) => index !== i);
-						setTags(newTags);
-					}}
-				/>
+				<div className={styles.tags}>
+					<ReactTag
+						tags={tags}
+						placeholder='Tags'
+						classes={{ root: styles.tags }}
+						handleAddition={handleAddition}
+						separators={[SEPARATORS.ENTER]}
+						handleDelete={(i) => {
+							const newTags = tags?.filter((tag, index) => index !== i);
+							setTags(newTags);
+						}}
+					/>
+				</div>
 				<SimpleMde className={styles.editor} onChange={changeText} value={text || ''} />
 				<div className={styles.buttons}>
 					<Button variant='contained' color='primary' onClick={onSubmitPost}>{isEditing ? 'Edit Post' : 'Add Post'}</Button>

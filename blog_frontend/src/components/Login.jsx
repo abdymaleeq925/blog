@@ -1,5 +1,7 @@
 import { TextField } from '@mui/material';
-import React from 'react';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '../services/authApi';
@@ -9,10 +11,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Login = ({ formType, setFormType }) => {
-    const [ login, data ] = useLoginMutation();
+    const [ login ] = useLoginMutation();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async(vals) => {
         let email = vals.email;
@@ -27,9 +31,9 @@ const Login = ({ formType, setFormType }) => {
         } else {
             return alert('Login failured')
         }
-        navigate('/');
+        navigate(-1);
     };
-    const { register, setError, handleSubmit, formState: {errors, isValid} } = useForm(
+    const { register, handleSubmit, formState: {errors} } = useForm(
         {
             defaultValues: {
                 email: 'malikbatyr@mail.com',
@@ -49,13 +53,21 @@ const Login = ({ formType, setFormType }) => {
                 helperText={errors.fullName?.message}
                 {...register('email', {required: 'Put valid name'})}
             />
-            <TextField
-                label = 'Password'
-                className='field'
-                error={Boolean(errors.password?.message)}
-                helperText={errors.password?.message}
-                {...register('password', {required: 'Put valid password'})}
-            />
+            <div className='password' style={{width: '100%'}}>
+                <TextField
+                    label = 'Password'
+                    className='field'
+                    type={showPassword ? 'text' : 'password'}
+                    error={Boolean(errors.password?.message)}
+                    helperText={errors.password?.message}
+                    {...register('password', {required: 'Put valid password'})}
+                />
+                <button
+                    className='btn-showpassword'
+                    type='button'
+                    onClick={() => setShowPassword((prev) => !prev)}
+                >{showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}</button>
+            </div>
             <button className="btn btn-primary" type="submit">Log In</button>
         </form>
         <span className='switch-form' onClick={() => setFormType('register')}>Don't have an account? <i>Sign up</i></span>

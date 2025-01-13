@@ -5,7 +5,11 @@ import '../styles/HomeHeroGrid.css';
 
 const HomeHeroGrid = ( { postList }) => {
 
-  const shortList = postList?.slice(postList.length-5,postList.length-1).reverse();
+  const shortList = Array.isArray(postList)
+    ? postList.length > 4
+        ? postList.slice(-5, -1).reverse()
+        : [...postList].reverse()
+    : [];
 
   return (
     <div className='hero-grid'>
@@ -16,7 +20,7 @@ const HomeHeroGrid = ( { postList }) => {
                     return <PostItem 
                         key={index} 
                         id={item._id}
-                        size={ index===0 ? 'post-item--md' : index===3 ? 'post-item--lg' : 'post-item--sm'}
+                        size={ index===0 ? 'post-item--sm' : index===3 ? 'post-item--md' : 'post-item--lg'}
                         direction={index===0 ? 'column' : 'row'}
                         title={item.title}
                         author={item.user.fullName}

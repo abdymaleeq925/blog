@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
 import { useGetOnePostQuery } from '../services/postsApi';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const PostDetail = () => {
     const {postId} = useParams();
-    const {data} = useGetOnePostQuery(postId);
+    const {data, refetch} = useGetOnePostQuery(postId);
+    const location = useLocation();
     const [post, setPost] = useState();
 
     useEffect(() => {
         setPost(data)
     }, [data])
+
+    useEffect(() => {
+        refetch()
+      }, [location.pathname, refetch])
   return (
     <div>
         <div className="single-post">
