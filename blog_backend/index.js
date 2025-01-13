@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import cors from 'cors';
-
+import dotenv from 'dotenv';
 
 import { registerValidation, loginValidation, postValidation } from './validations/validation.js';
 import checkUser from './utils/checkUser.js';
@@ -10,12 +10,15 @@ import { login, profile, registration } from './controllers/userController.js';
 import { create, getAll, getOne, update, remove, createTag, getAllTags } from './controllers/postController.js';
 import handleValidation from './validations/handleValidation.js';
 
+
+dotenv.config();
+
 const app = express();
 app.use(express.json()); //Обработка запроса
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
-mongoose.connect('mongodb+srv://admin:admin@result.jgjqijk.mongodb.net/?retryWrites=true&w=majority&appName=RESULT').then(console.log('DB is OK')).catch((error) => console.log('DB is NOT OK', error));
+mongoose.connect(process.env.REDACTED).then(console.log('DB is OK')).catch((error) => console.log('DB is NOT OK', error));
 
 const storage = multer.diskStorage({
     destination: (_, __, cb) => { cb(null, 'uploads') },
