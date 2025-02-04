@@ -27,8 +27,8 @@
         gap: 32px;
     }
     &__image {
-        height: 100%;
-        max-height: 320px;
+        max-width: 100%;
+        max-height: 250px;
         img{
             width: 100%;
             height: 100%;
@@ -75,8 +75,12 @@
         &-text {
             font-size: 16px;
             font-weight: 400;
-            color: #667085;
+            color: var(--blog-text-color);
             margin-top: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         &-tags {
             margin-top: 24px;
@@ -154,5 +158,9 @@
         display: flex;
         gap: 10px;
     }
+}
+
+.post-img {
+    max-width: 250px;
 }
 

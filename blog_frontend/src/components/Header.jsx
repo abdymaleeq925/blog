@@ -7,7 +7,7 @@ import { toggleTheme } from '../redux/themeSlice';
 import '../styles/header.css';
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const theme = useSelector((state) => state.theme.value);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.data);
@@ -15,7 +15,6 @@ const Header = () => {
   const handleToggle = () => {
     dispatch(toggleTheme());
   };
-  
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -26,7 +25,7 @@ const Header = () => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__logo">
-            <Link to="/">The Blog</Link>
+            {isLoggedIn && <Link to={`/profile/${user?._id}`}>{user?.fullName}</Link>}
           </div>
           <div className="header__navs">
             <ul className="header__navs-list">
@@ -34,7 +33,7 @@ const Header = () => {
               <li><Link to="/posts">Posts</Link></li>
               <li>
                 {
-                  isLoggedIn ? <Link className='btn btn-outlined' to={`/profile/${user?._id}`}>{user?.fullName}</Link> : <Link className='btn btn-outlined' to="profile/registration">Log In</Link> 
+                  !isLoggedIn && <Link className='btn btn-outlined' to="profile/registration">Log In</Link> 
                 }
               </li>
               <li>

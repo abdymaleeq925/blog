@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useGetPostsQuery, useRemovePostMutation } from '../services/postsApi';
 import { setLogOut } from '../redux/authSlice';
-import { PostItem } from '../components';
+import { Title, PostItem } from '../components';
 import '../styles/profile.scss';
 
 const Profile = () => {
   
   const profile = useSelector((state) => state.auth.data)
-  const { data, isFetching } = useGetPostsQuery();
+  const { data, isFetching, refetch } = useGetPostsQuery();
   const [postList, setPostList] = useState();
   const createdAt = profile?.createdAt;
   const formatedDate = new Date(createdAt).toLocaleDateString();
@@ -19,16 +19,21 @@ const Profile = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const location = useLocation();
+
   const logOut = () => {
     dispatch(setLogOut());
     window.localStorage.removeItem('token');
     navigate('/');
   }
+  
+  useEffect(() => {
+    setPostList(data?.posts?.filter(post => post.user._id === profile?._id))
+  },[data, profile?._id]);
 
   useEffect(() => {
-    setPostList(data?.posts?.filter(post => post.user._id === profile._id))
-  },[data, profile._id]);
+      refetch()
+    }, [location.pathname, refetch])
 
   const handlePostDelete = async(id) => {
     try {
@@ -49,35 +54,37 @@ const Profile = () => {
 
   return (
     <div className='profile'>
+      <Title title="profile" />
       <div className="container">
         <div className="profile__wrapper">
           <h1 className="h1">{profile?.fullName}</h1>
-          <p>Registered at: {formatedDate}</p>
-          <button className='btn btn-primary' type="button" onClick={logOut}>Log Out</button>
-            <div className="posts__wrapper flex wrap">
-              {
-                (isFetching ? [...Array(3)] : postList)?.map((post, index) => (
-                  isFetching ? (<PostItem isLoading={true} key={index}/>) :
-                    <PostItem
-                      isLoading = { false }
-                      key = {post?._id}
-                      id = {post?._id}
-                      title = {post?.title}
-                      author = {post?.user.fullName}
-                      date = {post?.createdAt}
-                      text = {post?.text}
-                      tags = {post?.tags}
-                      views = {post?.viewsCount}
-                      image = {post?.imageUrl}
-                      size = "post-item--sm"
-                      direction = "column"
-                      isEditing = {true}
-                      handlePostDelete={handlePostDelete}
-                    />
-                ))
-              }
-            </div>      
+          <p>Registration date: {formatedDate}</p>
+          <button className='btn btn-primary' type="button" onClick={logOut}>Log Out</button>    
         </div>
+        <h2 className="posts">All posts</h2>
+        <div className="posts__wrapper flex">
+          {
+            (isFetching ? [...Array(3)] : postList)?.map((post, index) => (
+              isFetching ? (<PostItem isLoading={true} key={index}/>) :
+                <PostItem
+                  isLoading = { false }
+                  key = {post?._id}
+                  id = {post?._id}
+                  title = {post?.title}
+                  author = {post?.user.fullName}
+                  date = {post?.createdAt}
+                  text = {post?.text}
+                  tags = {post?.tags}
+                  views = {post?.viewsCount}
+                  image = {post?.imageUrl}
+                  size = "post-item--sm"
+                  direction = "column"
+                  isEditing = {true}
+                  handlePostDelete={handlePostDelete}
+                />
+            ))
+          }
+        </div>  
       </div>
     </div>
   )

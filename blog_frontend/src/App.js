@@ -7,7 +7,7 @@ import { setAuthState } from './redux/authSlice';
 import './styles/index.css';
 import {Home, PostDetail, Posts, Profile, Registration} from './pages';
 import { CreatePost } from './pages';
-import { Header } from './components';
+import { Footer, Header } from './components';
 import { useGetProfileQuery } from './services/authApi';
 
 function App() {
@@ -38,6 +38,7 @@ function App() {
         <Route path='/profile/:userId' element={<Profile/>}/>
         <Route path='/profile/registration' element={<Registration/>}/>
       </Routes>
+      <Footer/>
     </div>
   );
 }

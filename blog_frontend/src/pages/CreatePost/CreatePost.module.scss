@@ -1,7 +1,11 @@
 .title {
+    background-color: #fff;
     input {
         font-size: 30px;
         font-weight: 500;
+    }
+    fieldset {
+        border-color: var(--border-color);
     }
     div {
         &:before, &:after {
@@ -22,15 +26,18 @@
         max-height: 150px;
         object-fit: cover;
     }
+    button {
+        border-color: var(--border-color);
+        color: var(--background-color);
+        background-color: var(--text-color)
+    }
 }
 
 .tags {
     margin: 15px 0;
 
-    span {
-        // display: flex;
-        // gap: 5px;
-        margin: 5px;
+    input {
+        margin-top: 5px;
     }
     button {
         border-style: none;
@@ -45,11 +52,17 @@
 
 .editor {
     margin: 30px 0;
+    i {
+        color: var(--text-color);
+    }
 }
 
 .buttons {
     display: flex;
     button {
         margin-right: 15px;
+        border: 1px solid var(--text-color);
+        color: var(--background-color);
+        background-color: var(--text-color)
     }
 }

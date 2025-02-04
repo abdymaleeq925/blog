@@ -45,7 +45,7 @@ export const registration = async(request, response) => {
             const user = await doc.save();
             const token = jwt.sign({
                 _id: user._id
-            }, 'secretkey', {expiresIn: '7d'});
+            }, 'secretkey', {expiresIn: '24h'});
             const { passwordHash, ...userData } = user._doc
             return response.status(200).json({
                 ...userData, token

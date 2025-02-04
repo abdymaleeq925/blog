@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { IoArrowForwardCircle } from "react-icons/io5";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 import { Title, PostItem, HomeHeroGrid } from '../components';
 import { useGetPostsQuery } from '../services/postsApi';
@@ -13,6 +15,13 @@ const Home = () => {
 
   const userId = useSelector(state => state?.auth?.data?._id);
   const location = useLocation();
+
+  const postsPerPage = 6;
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = data?.length > postsPerPage ? Math.ceil(data?.length / postsPerPage) : 1;
+  const currentData = postList?.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 
   useEffect(() => {
     setPostList(data?.posts);
@@ -26,6 +35,8 @@ const Home = () => {
     setPostList(postList.filter(post => post._id !== id))
   }
 
+
+
   return (
     <div>
       <Title title="the blog" />
@@ -36,7 +47,7 @@ const Home = () => {
           window.innerWidth > 1024 ? (
             <div className="posts__wrapper flex wrap">
               {
-                (isFetching ? [...Array(3)] : postList)?.map((post, index) => (
+                (isFetching ? [...Array(3)] : currentData)?.map((post, index) => (
                   isFetching ? (<PostItem isLoading={true} key={index} />) :
                     <PostItem
                       isLoading={false}
@@ -56,6 +67,21 @@ const Home = () => {
                     />
 
                 ))
+              }
+              {
+                postList?.length > 6 && (
+                  <div className="pagination">
+                    <IoArrowBackCircle
+                      onClick={currentPage > 1 ? () => setCurrentPage((prev) => prev - 1) : undefined}
+                      style={{ cursor: currentPage === 1 ? "not-allowed" : "pointer", opacity: currentPage === 1 ? 0.5 : 1, fontSize: "25px" }}
+                    />
+                    <span>{currentPage} / {totalPages}</span>
+                    <IoArrowForwardCircle
+                      onClick={currentPage < totalPages ? () => setCurrentPage((prev) => prev + 1) : undefined}
+                      style={{ cursor: currentPage === totalPages ? "not-allowed" : "pointer", opacity: currentPage === totalPages ? 0.5 : 1, fontSize: "25px" }}
+                    />
+                  </div>
+                )
               }
             </div>
           ) : (
