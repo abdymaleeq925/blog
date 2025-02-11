@@ -32,6 +32,15 @@ export const postsApi = createApi({
         }),
         getAllTags: builder.query({
             query: () => createRequest('/tags/get-all', 'GET')
+        }),
+        likePost: builder.mutation({
+            query: ({postId, userId}) => createRequest(`/post/${postId}/like`, 'PATCH', {userId})
+        }),
+        dislikePost: builder.mutation({
+            query: ({postId, userId}) => createRequest(`/post/${postId}/dislike`, 'PATCH', {userId})
+        }),
+        addComment: builder.mutation({
+            query: ({postId, userId, commentText}) => createRequest(`/post/${postId}/addComment`, 'POST', {userId, commentText})
         })
     })
 })
@@ -44,4 +53,7 @@ export const {
     useEditPostMutation,
     useGetOnePostQuery,
     useCreateTagMutation,
-    useGetAllTagsQuery } = postsApi
+    useGetAllTagsQuery,
+    useLikePostMutation,
+    useDislikePostMutation,
+    useAddCommentMutation } = postsApi

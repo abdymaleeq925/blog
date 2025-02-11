@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 import { registerValidation, loginValidation, postValidation } from './validations/validation.js';
 import checkUser from './utils/checkUser.js';
 import { login, profile, registration } from './controllers/userController.js';
-import { create, getAll, getOne, update, remove, createTag, getAllTags } from './controllers/postController.js';
+import { create, getAll, getOne, update, remove, createTag, getAllTags, likePost, dislikePost, addComment } from './controllers/postController.js';
 import handleValidation from './validations/handleValidation.js';
 
 
@@ -56,6 +56,12 @@ app.get('/post/:id', getOne);
 app.patch('/post/:id',checkUser, postValidation, handleValidation, update);
 
 app.delete('/post/:id', checkUser, remove);
+
+app.patch('/post/:postId/like', likePost);
+
+app.patch('/post/:postId/dislike', dislikePost);
+
+app.post('/post/:postId/addComment', addComment);
 
 // app.set(); //Настройка запроса
 // // app.get();

@@ -1,4 +1,5 @@
-import { request } from 'express';
+import mongoose from 'mongoose';
+
 import Post from '../models/Post.js';
 import Tag from '../models/Tag.js';
 
@@ -44,7 +45,7 @@ export const getOne = async(request, response) => {
         {
             new: true
         }
-        ).populate('user')
+        ).populate('user').populate("likes", "fullName").populate("comments.user", "fullName");
         response.json(updatedPost);
     } catch(error){
         response.status(401).json({ message: 'Error' });
@@ -106,3 +107,138 @@ export const getAllTags = async(request, response) => {
         response.status(404).json({ message: 'Not found' });
     }
 }
+
+export const likePost = async (request, response) => {
+    try {
+        const {postId} = request.params;
+        const {userId} = request.body;
+        const objectId = new mongoose.Types.ObjectId(userId);
+        const post = await Post.findByIdAndUpdate(
+            postId,
+            { $addToSet: { likes: objectId } },
+            { new: true }
+        ).populate("likes", "fullName");
+        if (!post) {
+            return response.status(404).json({ message: 'Post not found' });
+        }
+
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: error.message || 'Server error' });
+    }
+};
+
+export const dislikePost = async (request, response) => {
+    try {
+        const post = await Post.findByIdAndUpdate(
+            request.params.postId,
+            { $pull: { likes: new mongoose.Types.ObjectId(request.body.userId) } }, // Убираем ID пользователя из массива лайков
+            { new: true }
+        ).populate('likes', 'fullName');
+        if (!post) {
+            return response.status(404).json({ message: 'Post not found' });
+        }
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: error.message || 'Server error' });
+    }
+};
+
+export const addComment = async (request, response) => {
+    try {
+        console.log('body', request.body);
+        const post = await Post.findByIdAndUpdate(
+            request.params.postId,
+            { $push: { comments: { user: new mongoose.Types.ObjectId(request.body.userId), text: request.body.commentText } } },
+            { new: true }
+        ).populate({
+            path: 'comments.user',
+            select: 'fullName _id'
+        });
+        if (!post) {
+            return response.status(404).json({ message: 'Post not found' });
+        }
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: error.message || 'Server error' });
+    }
+};
+
+export const deleteComment = async (request, response) => {
+    try {
+        const post = await Post.findByIdAndUpdate(
+            request.params.postId,
+            { $pull: { comments: { _id: request.params.commentId, user: request.userId } } }, // Удаляет только комментарии пользователя
+            { new: true }
+        );
+
+        if (!post) {
+            return response.status(404).json({ message: 'Post not found' });
+        }
+
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: 'Delete comment error' });
+    }
+};
+
+export const likeComment = async (request, response) => {
+    try {
+        const post = await Post.findOneAndUpdate(
+            { _id: request.params.postId, "comments._id": request.params.commentId },
+            { $addToSet: { "comments.$.likes": request.userId } },
+            { new: true }
+        );
+
+        if (!post) {
+            return response.status(404).json({ message: 'Post or comment not found' });
+        }
+
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: 'Like comment error' });
+    }
+};
+
+export const dislikeComment = async (request, response) => {
+    try {
+        const post = await Post.findOneAndUpdate(
+            { _id: request.params.postId, "comments._id": request.params.commentId },
+            { $pull: { "comments.$.likes": request.userId } },
+            { new: true }
+        );
+
+        if (!post) {
+            return response.status(404).json({ message: 'Post or comment not found' });
+        }
+
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: 'Unlike comment error' });
+    }
+};
+
+export const replyToComment = async (request, response) => {
+    try {
+        const post = await Post.findOneAndUpdate(
+            { _id: request.params.postId, "comments._id": request.params.commentId },
+            { 
+                $push: { 
+                    "comments.$.replies": { 
+                        user: request.userId, 
+                        text: request.body.text 
+                    } 
+                } 
+            },
+            { new: true }
+        );
+
+        if (!post) {
+            return response.status(404).json({ message: 'Post or comment not found' });
+        }
+
+        return response.json(post);
+    } catch (error) {
+        response.status(500).json({ message: 'Reply error' });
+    }
+};
