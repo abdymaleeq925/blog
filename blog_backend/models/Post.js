@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import deepPopulateLib from 'mongoose-deep-populate';
+
+const deepPopulate = deepPopulateLib(mongoose);
 
 const CommentSchema = new mongoose.Schema(
     {
@@ -16,11 +19,14 @@ const CommentSchema = new mongoose.Schema(
             ref: 'User'
         }],
         replies: [{
-            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-            text: { type: String, required: true },
-            likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-            createdAt: { type: Date, default: Date.now }
-        }]
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        }],
+        parentCommentId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment',
+            default: null
+        }
     },
     { timestamps: true}
 );
@@ -58,4 +64,9 @@ const PostSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export default mongoose.model('Post', PostSchema);
+PostSchema.plugin(deepPopulate);
+
+const Post = mongoose.model('Post', PostSchema);
+const Comment =  mongoose.model('Comment', CommentSchema);
+
+export { Comment, Post };

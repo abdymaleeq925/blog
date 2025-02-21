@@ -7,7 +7,20 @@ import dotenv from 'dotenv';
 import { registerValidation, loginValidation, postValidation } from './validations/validation.js';
 import checkUser from './utils/checkUser.js';
 import { login, profile, registration } from './controllers/userController.js';
-import { create, getAll, getOne, update, remove, createTag, getAllTags, likePost, dislikePost, addComment } from './controllers/postController.js';
+import {
+    create,
+    getAll,
+    getOne,
+    update,
+    remove,
+    createTag,
+    getAllTags,
+    likeTogglePost,
+    toggleComment,
+    likeToggleComment,
+    replyToggleComment,
+
+} from './controllers/postController.js';
 import handleValidation from './validations/handleValidation.js';
 
 
@@ -57,11 +70,13 @@ app.patch('/post/:id',checkUser, postValidation, handleValidation, update);
 
 app.delete('/post/:id', checkUser, remove);
 
-app.patch('/post/:postId/like', likePost);
+app.patch('/post/:postId/likeToggle', likeTogglePost);
 
-app.patch('/post/:postId/dislike', dislikePost);
+app.patch('/post/:postId/toggleComment', toggleComment);
 
-app.post('/post/:postId/addComment', addComment);
+app.patch('/post/:postId/comment/:commentId/likeToggleComment', likeToggleComment);
+
+app.patch('/post/:postId/comment/:commentId/replyToggle', replyToggleComment);
 
 // app.set(); //Настройка запроса
 // // app.get();
