@@ -40,7 +40,7 @@ const PostItem = ({ title, author, date, text, tags, image, views, size, directi
                 </div>)
             }
             <div className={`post-item__image ${location}`}>
-                <img src={`http://localhost:4444${image}`} alt="" />
+                <img src={`https://blog-backend-m5ss.onrender.com${image}`} alt="" />
             </div>
             <div className={`post-item__info ${location}`}>
                 <div className="post-item__info-author">

@@ -126,7 +126,7 @@ const CreatePost = () => {
 						image && (
 							<>
 								<Button variant='contained' color="error" onClick={removeImage}>Delete</Button>
-								<img src={`http://localhost:4444${image}`} alt="Post"/>
+								<img src={`https://blog-backend-m5ss.onrender.com${image}`} alt="Post"/>
 							</>
 						)
 					}

@@ -278,7 +278,7 @@ const PostDetail = () => {
               </div>
               <div className="single-post-image">
                 <img
-                  src={`http://localhost:4444${state.post?.imageUrl}`}
+                  src={`https://blog-backend-m5ss.onrender.com${state.post?.imageUrl}`}
                   alt="post-illustration"
                 />
               </div>
