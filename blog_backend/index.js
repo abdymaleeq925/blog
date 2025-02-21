@@ -40,6 +40,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
+const cors = require("cors");
+app.use(cors({ origin: "https://blog-frontend-4j7d.onrender.com" }));
+
 //CRUD
 app.get('/', (request, response) => {
     response.send('Hello World!');
