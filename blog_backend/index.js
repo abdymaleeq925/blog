@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import multer from 'multer';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 import { registerValidation, loginValidation, postValidation } from './validations/validation.js';
 import checkUser from './utils/checkUser.js';
@@ -27,10 +28,13 @@ import handleValidation from './validations/handleValidation.js';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
 app.use(express.json()); //Обработка запроса
 app.use(cors());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(join(__dirname, "uploads")));
 
 
 mongoose.connect(process.env.REDACTED).then(console.log('DB is OK')).catch((error) => console.log('DB is NOT OK', error));
