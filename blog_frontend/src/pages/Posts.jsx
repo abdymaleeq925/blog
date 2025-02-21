@@ -24,7 +24,7 @@ const Posts = () => {
                 views = {post.viewsCount}
                 size = "post-item--lg"
                 direction = "col"
-                location = "post-img"
+                location = "post-img posts-w"
               />
             ))
           }

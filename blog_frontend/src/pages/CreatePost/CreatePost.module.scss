@@ -1,14 +1,17 @@
 .title {
     background-color: #fff;
+
     input {
         font-size: 30px;
         font-weight: 500;
     }
+
     fieldset {
         border-color: var(--border-color);
     }
+
     div {
-        &:before, &:after {
+        &::before, &::after {
             display: none;
         }
     }
@@ -20,16 +23,24 @@
     align-items: flex-start;
     gap: 15px;
     margin-bottom: 30px;
+
     img {
         width: 150px;
         height: auto;
         max-height: 150px;
         object-fit: cover;
     }
+
     button {
         border-color: var(--border-color);
         color: var(--background-color);
-        background-color: var(--text-color)
+        background-color: var(--text-color);
+
+        &:hover {
+            border-color: var(--border-color);
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
     }
 }
 
@@ -39,10 +50,12 @@
     input {
         margin-top: 5px;
     }
+
     button {
         border-style: none;
         background-color: white;
     }
+
     svg {
         fill: black;
         display: flex;
@@ -52,6 +65,7 @@
 
 .editor {
     margin: 30px 0;
+
     i {
         color: var(--text-color);
     }
@@ -59,10 +73,17 @@
 
 .buttons {
     display: flex;
+
     button {
         margin-right: 15px;
         border: 1px solid var(--text-color);
         color: var(--background-color);
-        background-color: var(--text-color)
+        background-color: var(--text-color);
+
+        &:hover {
+            border-color: var(--border-color);
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
     }
 }

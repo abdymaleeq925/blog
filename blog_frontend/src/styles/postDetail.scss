@@ -1,14 +1,17 @@
 .post-detail__wrapper {
     display: flex;
     gap: 50px;
+
     img {
         max-height: inherit;
     }
 }
+
 .single-post {
     &__wrapper {
         width: 70%;
         margin: 20px auto;
+
         .likes-amount {
             display: flex;
             align-items: center;
@@ -48,69 +51,135 @@
 
 .comments {
     &-input-box {
-        background: white;
+        background: var(--background-color);
+        border: 1px solid var(--comment-border-color);
         padding: 15px;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
         max-width: 700px;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin-bottom: 30px;
+        margin: 20px 0;
+
         textarea {
             width: 100%;
             height: 80px;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             resize: none;
         }
+
+        &-actions {
+            display: flex;
+            gap: 10px;
+        }
+
         .submit-button {
             width: 20%;
             background: #000;
-            color: white;
+            background-color: var(--text-color);
+            color: var(--background-color);
             border: 1px solid;
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
         }
+
         .submit-button:hover {
-            background: #fff;
-            color: #000;
-            border-color: #000;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            border-color: rgb(255 255 255 / 54%);
         }
     }
+
     &-box {
-        background: white;
+        background: var(--background-color);
+        border: 1px solid var(--comment-border-color);
         padding: 15px;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
         max-width: 900px;
-        margin-bottom: 20px;
+        margin-top: 30px;
+
         .comment-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .comment-text {
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 30px;
+
+            .text {
+                width: 100%;
+            }
         }
+
         .comment-actions {
             display: flex;
             gap: 10px;
         }
+
         .comment-actions button {
+            font-family: "Inter", sans-serif;
             background: none;
             border: none;
             cursor: pointer;
-            color: #000;
-            font-size: 14px;
+            color: var(--text-color);
+            font-size: 16px;
         }
+
         .comment-actions button:hover {
             text-decoration: underline;
         }
+
+        .comment-like {
+            display: flex;
+            align-items: center;
+        }
     }
-    
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+    z-index: 1000;
+    svg {
+        float: right;
+    }
+    &-buttons {
+        display: flex;
+        justify-content: end;
+        gap: 20px;
+        .btn-modal {
+            height: 40px;
+            min-width: 90px;
+            &:hover {
+                background-color: var(--background-color);
+                color: var(--text-color);
+                border: 1px solid var(--border-color);
+            }
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgb(0 0 0 / 50%);
+    z-index: 999;
 }

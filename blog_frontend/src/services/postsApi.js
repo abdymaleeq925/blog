@@ -33,15 +33,18 @@ export const postsApi = createApi({
         getAllTags: builder.query({
             query: () => createRequest('/tags/get-all', 'GET')
         }),
-        likePost: builder.mutation({
-            query: ({postId, userId}) => createRequest(`/post/${postId}/like`, 'PATCH', {userId})
+        likeTogglePost: builder.mutation({
+            query: ({postId, userId, state}) => createRequest(`/post/${postId}/likeToggle`, 'PATCH', {userId, state})
         }),
-        dislikePost: builder.mutation({
-            query: ({postId, userId}) => createRequest(`/post/${postId}/dislike`, 'PATCH', {userId})
+        toggleComment: builder.mutation({
+            query: ({postId, userId, commentText, booleanState, commentId}) => createRequest(`/post/${postId}/toggleComment`, 'PATCH', {userId, commentText, booleanState, commentId})
         }),
-        addComment: builder.mutation({
-            query: ({postId, userId, commentText}) => createRequest(`/post/${postId}/addComment`, 'POST', {userId, commentText})
-        })
+        likeToggleComment: builder.mutation({
+            query: ({postId, userId, commentId, booleanState, parentComment}) => createRequest(`/post/${postId}/comment/${commentId}/likeToggleComment`, 'PATCH', {userId, booleanState, parentComment})
+        }),
+        replyToggleComment: builder.mutation({
+            query: ({postId, commentId, userId, commentText, booleanState, replyId}) => createRequest(`/post/${postId}/comment/${commentId}/replyToggle`, 'PATCH', {userId, commentText, booleanState, replyId})
+        }),
     })
 })
 
@@ -54,6 +57,7 @@ export const {
     useGetOnePostQuery,
     useCreateTagMutation,
     useGetAllTagsQuery,
-    useLikePostMutation,
-    useDislikePostMutation,
-    useAddCommentMutation } = postsApi
+    useLikeTogglePostMutation,
+    useToggleCommentMutation,
+    useLikeToggleCommentMutation,
+    useReplyToggleCommentMutation } = postsApi
