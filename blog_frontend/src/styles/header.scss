@@ -27,6 +27,68 @@
             gap: 22px;
             font-size: 20px;
         }
+        *,
+        *:after,
+        *::before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        
+        section {
+            margin: 0 auto;
+            padding: 10em 3em;
+            text-align: center;
+        }
+        .color-11 {
+            background: #aab7b7;
+        }
+        nav a {
+            position: relative;
+            display: inline-block;
+            margin: 15px 25px;
+            outline: none;
+            color: var(--text-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+            text-shadow: 0 0 1px rgba(255,255,255,0.3);
+            font-size: 1.35em;
+        }
+        nav a:hover,
+        nav a:focus {
+            outline: none;
+        }
+
+        /* Effect 16: fall down */
+        .cl-effect-16 a {
+            // color: var(--background-color);
+            text-shadow: 0 0 1px rgba(111,134,134,0.3);
+        }
+
+        .cl-effect-16 a::before {
+            color: var(--border-color);
+            content: attr(data-hover);
+            position: absolute;
+            opacity: 0;
+            text-shadow: 0 0 1px rgba(255,255,255,0.3);
+            -webkit-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+            -moz-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+            transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+            -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+            -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+            transition: transform 0.3s, opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .cl-effect-16 a:hover::before,
+        .cl-effect-16 a:focus::before {
+            -webkit-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+            -moz-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+            transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+            opacity: 1;
+        }
     }
 
     .btn {
@@ -66,3 +128,11 @@
         }
     }
 }
+
+@media screen and (width <= 768px) {
+    .title {
+      .text-pressure-title {
+        font-size: 150px;
+      }
+    }
+  }

@@ -39,7 +39,17 @@ const Home = () => {
 
   return (
     <div>
-      <Title title="the blog" />
+      <Title
+        title="The Blog"
+        flex={true}
+        alpha={false}
+        stroke={false}
+        width={true}
+        weight={true}
+        italic={true}
+        strokeColor="#ff0000"
+        minFontSize={36}
+      />
       <div className="container">
         {
           postList?.length > 0 ? (

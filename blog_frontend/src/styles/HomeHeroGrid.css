@@ -1,1 +1,34 @@
-.hero-grid{margin-top:30px;margin-bottom:60px}.hero-grid__wrapper{display:grid;grid-template-columns:repeat(3, 1fr);grid-template-rows:auto auto;gap:2em}.hero-grid .post-item{width:100%;height:auto;grid-column:span 1;grid-row:span 1}.hero-grid .post-item--sm{grid-column:span 1;grid-row:span 4}.hero-grid .post-item--md{grid-column:span 3;grid-row:span 1}.hero-grid .post-item--lg{grid-column:span 2;grid-row:span 2}.hero-grid .title-sm{font-weight:600}
+@charset "UTF-8";
+.hero-grid {
+  margin-top: 30px;
+  margin-bottom: 60px;
+  /* Средние элементы */
+  /* Крупные элементы */
+}
+.hero-grid__wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 2em;
+}
+.hero-grid .post-item {
+  width: 100%;
+  height: auto;
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.hero-grid .post-item--sm {
+  grid-column: span 1;
+  grid-row: span 4;
+}
+.hero-grid .post-item--md {
+  grid-column: span 3;
+  grid-row: span 1;
+}
+.hero-grid .post-item--lg {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.hero-grid .title-sm {
+  font-weight: 600;
+}/*# sourceMappingURL=homeHeroGrid.css.map */

@@ -1,1 +1,116 @@
-.header{padding:40px 0}.header__logo{font-size:20px;font-weight:600}.header__logo :hover{text-decoration:underline}.header__wrapper{display:flex;justify-content:space-between;align-items:center}.header__navs{display:flex;align-items:center;gap:22px}.header__navs-list{display:flex;align-items:center;gap:22px;font-size:20px}.header .btn{width:96px;height:40px}.header .switch-toggles{width:96px;height:40px;display:flex;justify-content:space-between;align-items:center;background-color:var(--text-color);color:var(--background-color);border-radius:45px;padding:8px 16px;font-size:24px;position:relative}.header .switch-toggles:hover{cursor:pointer}.header .switch-toggles::after{content:"";position:absolute;background-color:var(--background-color);width:24px;height:24px;border-radius:100%;top:8px;right:15px;left:auto;transition:all .3s ease-in-out}.header .switch-toggles .day,.header .switch-toggles .night{height:24px}
+.header {
+  padding: 40px 0;
+}
+.header__logo {
+  font-size: 20px;
+  font-weight: 600;
+}
+.header__logo :hover {
+  text-decoration: underline;
+}
+.header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__navs {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  /* Effect 16: fall down */
+}
+.header__navs-list {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 20px;
+}
+.header__navs *,
+.header__navs *:after,
+.header__navs *::before {
+  box-sizing: border-box;
+}
+.header__navs section {
+  margin: 0 auto;
+  padding: 10em 3em;
+  text-align: center;
+}
+.header__navs .color-11 {
+  background: #aab7b7;
+}
+.header__navs nav a {
+  position: relative;
+  display: inline-block;
+  margin: 15px 25px;
+  outline: none;
+  color: var(--text-color);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  font-size: 1.35em;
+}
+.header__navs nav a:hover,
+.header__navs nav a:focus {
+  outline: none;
+}
+.header__navs .cl-effect-16 a {
+  text-shadow: 0 0 1px rgba(111, 134, 134, 0.3);
+}
+.header__navs .cl-effect-16 a::before {
+  color: var(--border-color);
+  content: attr(data-hover);
+  position: absolute;
+  opacity: 0;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  transition: transform 0.3s, opacity 0.3s;
+  pointer-events: none;
+}
+.header__navs .cl-effect-16 a:hover::before,
+.header__navs .cl-effect-16 a:focus::before {
+  transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  opacity: 1;
+}
+.header .btn {
+  width: 96px;
+  height: 40px;
+}
+.header .switch-toggles {
+  width: 96px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  border-radius: 45px;
+  padding: 8px 16px;
+  font-size: 24px;
+  position: relative;
+}
+.header .switch-toggles:hover {
+  cursor: pointer;
+}
+.header .switch-toggles::after {
+  content: "";
+  position: absolute;
+  background-color: var(--background-color);
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  top: 8px;
+  right: 15px;
+  left: auto;
+  transition: all 0.3s ease-in-out;
+}
+.header .switch-toggles .day, .header .switch-toggles .night {
+  height: 24px;
+}
+
+@media screen and (width <= 768px) {
+  .title .text-pressure-title {
+    font-size: 150px;
+  }
+}/*# sourceMappingURL=header.css.map */

@@ -1,1 +1,76 @@
-.title{background-color:#fff}.title input{font-size:30px;font-weight:500}.title fieldset{border-color:var(--border-color)}.title div:before,.title div:after{display:none}.image{width:100%;display:flex;align-items:flex-start;gap:15px;margin-bottom:30px}.image img{width:150px;height:auto;max-height:150px;-o-object-fit:cover;object-fit:cover}.image button{border-color:var(--border-color);color:var(--background-color);background-color:var(--text-color)}.tags{margin:15px 0}.tags input{margin-top:5px}.tags button{border-style:none;background-color:#fff}.tags svg{fill:#000;display:flex;align-items:center}.editor{margin:30px 0}.editor i{color:var(--text-color)}.buttons{display:flex}.buttons button{margin-right:15px;border:1px solid var(--text-color);color:var(--background-color);background-color:var(--text-color)}
+.title {
+  background-color: #fff;
+}
+.title input {
+  font-size: 30px;
+  font-weight: 500;
+}
+.title fieldset {
+  border-color: var(--border-color);
+}
+.title div::before, .title div::after {
+  display: none;
+}
+
+.image {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+.image img {
+  width: 150px;
+  height: auto;
+  max-height: 150px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.image button {
+  border-color: var(--border-color);
+  color: var(--background-color);
+  background-color: var(--text-color);
+}
+.image button:hover {
+  border-color: var(--border-color);
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.tags {
+  margin: 15px 0;
+}
+.tags input {
+  margin-top: 5px;
+}
+.tags button {
+  border-style: none;
+  background-color: white;
+}
+.tags svg {
+  fill: black;
+  display: flex;
+  align-items: center;
+}
+
+.editor {
+  margin: 30px 0;
+}
+.editor i {
+  color: var(--text-color);
+}
+
+.buttons {
+  display: flex;
+}
+.buttons button {
+  margin-right: 15px;
+  border: 1px solid var(--text-color);
+  color: var(--background-color);
+  background-color: var(--text-color);
+}
+.buttons button:hover {
+  border-color: var(--border-color);
+  color: var(--text-color);
+  background-color: var(--background-color);
+}/*# sourceMappingURL=CreatePost.module.css.map */

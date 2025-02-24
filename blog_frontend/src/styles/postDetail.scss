@@ -81,7 +81,7 @@
             background: #000;
             background-color: var(--text-color);
             color: var(--background-color);
-            border: 1px solid;
+            border: 1px solid var(--text-color);
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -90,7 +90,7 @@
         .submit-button:hover {
             color: var(--text-color);
             background-color: var(--background-color);
-            border-color: rgb(255 255 255 / 54%);
+            border-color: var(--border-color);
         }
     }
 

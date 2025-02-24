@@ -28,9 +28,9 @@ const Header = () => {
             {isLoggedIn && <Link to={`/profile/${user?._id}`}>{user?.fullName}</Link>}
           </div>
           <div className="header__navs">
-            <ul className="header__navs-list">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/posts">Posts</Link></li>
+            <ul className="header__navs-list cl-effect-16">
+              <a href="/" data-hover="Home">Home</a>
+              <a href="/posts" data-hover="Posts">Posts</a>
               <li>
                 {
                   !isLoggedIn && <Link className='btn btn-outlined' to="profile/registration">Log In</Link> 

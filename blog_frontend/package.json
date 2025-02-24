@@ -61,5 +61,6 @@
     "stylelint": "^16.14.1",
     "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-scss": "^6.11.0"
-  }
+  },
+  "proxy": "https://blog-backend-m5ss.onrender.com"
 }

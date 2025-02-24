@@ -1,5 +1,6 @@
 .post-item {
     display: flex;
+    align-items: center;
     position: relative;
     gap: 30px;
     margin-bottom: 20px;
@@ -196,4 +197,5 @@
 
 .posts-w {
     max-width: 850px;
+    height: 100%;
 }

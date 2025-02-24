@@ -224,17 +224,7 @@ img {
     }
 }
 
-@media screen and (width <= 1399px) {
-    .title--3xl {
-        font-size: 212px;
-        text-align: center;
-    }
-}
-
 @media screen and (width <= 1199px) {
-    .title--3xl {
-        font-size: 190px;
-    }
 
     .hero-grid__wrapper {
         display: flex;

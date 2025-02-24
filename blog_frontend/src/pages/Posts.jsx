@@ -7,26 +7,42 @@ const Posts = () => {
   
   return (
     <div className='posts'>
-      <Title title="posts"/>
+      <Title
+          title="Posts"
+          flex={true}
+          alpha={false}
+          stroke={false}
+          width={true}
+          weight={true}
+          italic={true}
+          strokeColor="#ff0000"
+          minFontSize={36}
+        />
         <div className="container">
           <div className="posts__wrapper">
           {
-            posts?.posts.map(post => (
-              <PostItem
-                key = {post._id}
-                id={post?._id}
-                title = {post.title}
-                author = {post.user.fullName}
-                date = {post.updatedAt}
-                text = {post.text}
-                tags = {post.tags}
-                image = {post.imageUrl}
-                views = {post.viewsCount}
-                size = "post-item--lg"
-                direction = "col"
-                location = "post-img posts-w"
-              />
-            ))
+            posts?.posts?.length > 0 ? (
+              posts?.posts.map(post => (
+                <PostItem
+                  key = {post._id}
+                  id={post?._id}
+                  title = {post.title}
+                  author = {post.user.fullName}
+                  date = {post.updatedAt}
+                  text = {post.text}
+                  tags = {post.tags}
+                  image = {post.imageUrl}
+                  views = {post.viewsCount}
+                  size = "post-item--lg"
+                  direction = "col"
+                  location = "post-img posts-w"
+                />
+              ))
+            ) : (
+              <div className="posts__empty">
+                <h2>No posts yet</h2>
+              </div>
+            )
           }
           </div>
         </div>

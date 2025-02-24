@@ -54,7 +54,17 @@ const Profile = () => {
 
   return (
     <div className='profile'>
-      <Title title="profile" />
+      <Title
+          title="Profile"
+          flex={true}
+          alpha={false}
+          stroke={false}
+          width={true}
+          weight={true}
+          italic={true}
+          strokeColor="#ff0000"
+          minFontSize={36}
+        />
       <div className="container">
         <div className="profile__wrapper">
           <h1 className="h1">{profile?.fullName}</h1>

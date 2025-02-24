@@ -114,8 +114,6 @@ const CreatePost = () => {
 
 	}
 
-	const suggestions = allTags?.tags?.map(tag => ({ id: tag._id, text: tag.name }))
-
 	return (
 		<div className='post-editor'>
 			<div className="container">

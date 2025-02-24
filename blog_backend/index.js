@@ -46,7 +46,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-app.use(cors({ origin: "https://blog-frontend-4j7d.onrender.com" }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://blog-frontend-4j7d.onrender.com'] }));
 
 
 //CRUD

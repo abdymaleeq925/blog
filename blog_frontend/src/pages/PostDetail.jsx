@@ -361,7 +361,7 @@ const PostDetail = () => {
               className="modal"
               overlayClassName="overlay"
             >
-              <ClearIcon onClick={closeModal} />
+              <ClearIcon onClick={closeModal} style={{cursor: "pointer"}}/>
               <h2>Are you sure you want to delete this comment?</h2>
               <p>"{state.selectedComment?.text}"</p>
               <div className="modal-buttons">
