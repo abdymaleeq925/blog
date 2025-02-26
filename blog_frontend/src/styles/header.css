@@ -108,9 +108,53 @@
 .header .switch-toggles .day, .header .switch-toggles .night {
   height: 24px;
 }
+.header .mini-switch {
+  width: 40px;
+  height: 20px;
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
 
-@media screen and (width <= 768px) {
-  .title .text-pressure-title {
-    font-size: 150px;
+.btn-secondary {
+  display: none;
+}
+
+@media screen and (width <= 425px) {
+  .btn-primary {
+    display: none;
+  }
+  .btn-secondary {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .btn-secondary:hover {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+  }
+  .header__navs .switch .switch-toggles {
+    width: 70px;
+    height: 30px;
+    padding: 8px;
+  }
+  .header__navs .switch .switch-toggles::after {
+    width: 22px;
+    height: 22px;
+    top: 4px;
+    right: 6px;
+    left: 6px;
+  }
+  .header__navs .switch .day, .header__navs .switch .night {
+    height: 18px;
+    font-size: 18px;
   }
 }/*# sourceMappingURL=header.css.map */

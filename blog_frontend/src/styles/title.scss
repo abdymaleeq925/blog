@@ -79,6 +79,14 @@
 @media screen and (width <= 768px) {
   .title {
     .text-pressure-title {
+      font-size: 130px;
+    }
+  }
+}
+
+@media screen and (width <= 425px) {
+  .title {
+    .text-pressure-title {
       font-size: 90px;
     }
   }

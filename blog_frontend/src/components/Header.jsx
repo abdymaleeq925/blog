@@ -38,8 +38,12 @@ const Header = () => {
               </li>
               <li>
                 {
-                  isLoggedIn &&
-                    <Link to="/create-post" className="btn btn-primary">Create Post</Link>
+                  isLoggedIn && (
+                    <>
+                      <Link to="/create-post" className="btn btn-primary">Create Post</Link>
+                      <Link to="/create-post" className="btn-secondary">+</Link>
+                    </>
+                  )
                 }
               </li>
             </ul>
