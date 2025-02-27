@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import baseQuery from './baseQuery';
+import baseQuery from './baseQuery.js';
 
 const createRequest = (url, method, data) => ({
     url, method, body: data

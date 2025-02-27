@@ -1,8 +1,8 @@
-export { default as Header } from './Header';
-export { default as Footer } from './Footer';
-export { default as Pagination } from './Pagination';
-export { default as PostItem } from './PostItem';
-export { default as Title } from './Title';
-export { default as HomeHeroGrid } from './HomeHeroGrid';
-export { default as Login } from './Login';
-export { default as Register } from './Register';
+export { default as Header } from './Header.jsx';
+export { default as Footer } from './Footer.jsx';
+export { default as Pagination } from './Pagination.jsx';
+export { default as PostItem } from './PostItem.jsx';
+export { default as Title } from './Title.jsx';
+export { default as HomeHeroGrid } from './HomeHeroGrid.jsx';
+export { default as Login } from './Login.jsx';
+export { default as Register } from './Register.jsx';

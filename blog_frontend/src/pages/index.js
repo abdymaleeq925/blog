@@ -1,7 +1,7 @@
-export { default as Posts } from './Posts';
-export { default as Home } from './Home';
-export { default as PostDetail } from './PostDetail';
-export { default as CreatePost } from './CreatePost/CreatePost';
-export { default as Profile } from './Profile';
-export { default as Registration } from './Registration';
-export { default as FourOFour } from './FourOFour';
+export { default as Posts } from './Posts.jsx';
+export { default as Home } from './Home.jsx';
+export { default as PostDetail } from './PostDetail.jsx';
+export { default as CreatePost } from './CreatePost/CreatePost.jsx';
+export { default as Profile } from './Profile.jsx';
+export { default as Registration } from './Registration.jsx';
+export { default as FourOFour } from './FourOFour.jsx';

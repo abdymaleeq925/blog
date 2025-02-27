@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import themeReducer from './themeSlice';
-import authReducer from './authSlice';
-import tagReducer from './tagSlice';
-import { authApi } from '../services/authApi';
-import { postsApi } from '../services/postsApi';
+import themeReducer from './themeSlice.js';
+import authReducer from './authSlice.js';
+import tagReducer from './tagSlice.js';
+import { authApi } from '../services/authApi.js';
+import { postsApi } from '../services/postsApi.js';
 
 export const store = configureStore({
     reducer: {

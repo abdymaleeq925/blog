@@ -2,13 +2,12 @@ import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAuthState } from './redux/authSlice';
+import { setAuthState } from './redux/authSlice.js';
 
 import './styles/index.css';
-import {Home, PostDetail, Posts, Profile, Registration, FourOFour} from './pages';
-import { CreatePost } from './pages';
-import { Footer, Header } from './components';
-import { useGetProfileQuery } from './services/authApi';
+import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost} from './pages/index.js';
+import { Footer, Header } from './components/index.js';
+import { useGetProfileQuery } from './services/authApi.js';
 
 function App() {
   const linkUrl = useLocation();
