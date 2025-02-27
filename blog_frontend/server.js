@@ -1,7 +1,6 @@
 import express from 'express';
+import path from 'path';
 
-
-const path = require('path');
 const app = express();
 
 // Обслуживание статических файлов из папки build
