@@ -119,14 +119,17 @@
   display: none;
 }
 
-@media screen and (width <= 425px) {
+@media screen and (width <= 480px) {
+  .header__navs-list, .header__logo {
+    font-size: 16px;
+  }
   .btn-primary {
     display: none;
   }
   .btn-secondary {
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 5px;
     transition: all 0.2s ease-in-out;
     background-color: var(--text-color);
@@ -141,20 +144,29 @@
     color: var(--text-color);
     border: 1px solid var(--text-color);
   }
-  .header__navs .switch .switch-toggles {
-    width: 70px;
+  .switch .switch-toggles {
+    width: 64px;
     height: 30px;
     padding: 8px;
   }
-  .header__navs .switch .switch-toggles::after {
+  .switch .switch-toggles::after {
     width: 22px;
     height: 22px;
     top: 4px;
-    right: 6px;
     left: 6px;
   }
-  .header__navs .switch .day, .header__navs .switch .night {
+  .switch .switch-toggles .day, .switch .switch-toggles .night {
     height: 18px;
     font-size: 18px;
+  }
+}
+@media screen and (width <= 375px) {
+  .header__navs-list, .header__logo {
+    font-size: 14px;
+    gap: 15px;
+  }
+  .header__logo {
+    width: 75px;
+    word-break: break-word;
   }
 }/*# sourceMappingURL=header.css.map */

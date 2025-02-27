@@ -75,8 +75,13 @@
     font-size: 130px;
   }
 }
-@media screen and (width <= 425px) {
+@media screen and (width <= 480px) {
   .title .text-pressure-title {
     font-size: 90px;
+  }
+}
+@media screen and (width <= 375px) {
+  .title .text-pressure-title {
+    font-size: 68px;
   }
 }/*# sourceMappingURL=title.css.map */

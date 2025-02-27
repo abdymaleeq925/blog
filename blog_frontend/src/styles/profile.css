@@ -3,4 +3,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (width <= 480px) {
+  .h1 {
+    font-size: 25px;
+  }
+  p {
+    font-size: 15px;
+  }
 }/*# sourceMappingURL=profile.css.map */

@@ -183,3 +183,27 @@
     background-color: rgb(0 0 0 / 50%);
     z-index: 999;
 }
+
+@media screen and (width <= 768px) {
+    .post-detail__wrapper {
+        flex-direction: column-reverse;
+    }
+    .single-post__wrapper {
+        width: 100%;
+    }
+    .single-post-image {
+        text-align: center;
+    }
+    .recent-posts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (width <= 480px) {
+    .single-post-image {
+        img {
+            height: 100%;
+        }
+    }
+}

@@ -87,3 +87,16 @@
         }
     }
 }
+
+@media screen and (width <= 480px) {
+    .image, .buttons {
+        button {
+            font-size: 12px;
+        }
+    }
+    .title {
+        input {
+            font-size: 20px;
+        }
+    }
+}

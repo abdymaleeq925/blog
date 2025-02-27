@@ -73,4 +73,13 @@
   border-color: var(--border-color);
   color: var(--text-color);
   background-color: var(--background-color);
+}
+
+@media screen and (width <= 480px) {
+  .image button, .buttons button {
+    font-size: 12px;
+  }
+  .title input {
+    font-size: 20px;
+  }
 }/*# sourceMappingURL=CreatePost.module.css.map */

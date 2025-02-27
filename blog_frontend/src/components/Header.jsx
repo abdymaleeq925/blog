@@ -31,21 +31,16 @@ const Header = () => {
             <ul className="header__navs-list cl-effect-16">
               <a href="/" data-hover="Home">Home</a>
               <a href="/posts" data-hover="Posts">Posts</a>
-              <li>
-                {
-                  !isLoggedIn && <Link className='btn btn-outlined' to="profile/registration">Log In</Link> 
-                }
-              </li>
-              <li>
-                {
-                  isLoggedIn && (
-                    <>
-                      <Link to="/create-post" className="btn btn-primary">Create Post</Link>
-                      <Link to="/create-post" className="btn-secondary">+</Link>
-                    </>
-                  )
-                }
-              </li>
+              {
+                isLoggedIn ? (
+                  <>
+                    <li className='btn btn-primary'><Link to="/create-post">Create Post</Link></li>
+                    <li className='btn-secondary'><Link to="/create-post">+</Link></li>
+                  </>
+                ) : (
+                  <li><Link className='btn btn-outlined' to="profile/registration">Log In</Link></li>
+                )
+              }
             </ul>
             <div className="switch" onClick={handleToggle}>
               <div className="switch-toggles">

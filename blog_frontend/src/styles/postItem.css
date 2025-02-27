@@ -169,4 +169,48 @@
 .posts-w {
   max-width: 850px;
   height: 100%;
+}
+
+@media screen and (width <= 1024px) {
+  .posts-w {
+    max-width: 700px;
+  }
+}
+@media screen and (width <= 768px) {
+  .posts-w {
+    max-width: 500px;
+  }
+}
+@media screen and (width <= 480px) {
+  .post-item.post-item--sm {
+    width: 100%;
+  }
+  .post-item__info-title {
+    font-size: 20px;
+  }
+  .post-item__info-text {
+    font-size: 14px;
+  }
+  .post-item__info-tags {
+    font-size: 14px;
+  }
+  .post-item__info-actions span, .post-item__info-actions svg {
+    font-size: 1rem;
+  }
+  .post-item__image {
+    width: 65%;
+  }
+  .col {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+@media screen and (width <= 375px) {
+  .post-item__info-author {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .post-item__info-author span:first-child::after {
+    display: none;
+  }
 }/*# sourceMappingURL=postItem.css.map */

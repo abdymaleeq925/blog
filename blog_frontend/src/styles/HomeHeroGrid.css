@@ -31,4 +31,16 @@
 }
 .hero-grid .title-sm {
   font-weight: 600;
+}
+
+@media screen and (width <= 480px) {
+  .hero-grid {
+    margin-bottom: 30px;
+  }
+  .hero-grid .title-sm {
+    font-size: 20px;
+  }
+  .hero-grid__wrapper {
+    display: flex;
+  }
 }/*# sourceMappingURL=homeHeroGrid.css.map */

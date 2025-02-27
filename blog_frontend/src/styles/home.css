@@ -1,6 +1,35 @@
+@charset "UTF-8";
 .add-first-post {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 100px;
+}
+
+.swiper-wrapper {
+  align-items: center;
+}
+
+.swiper-pagination {
+  position: static;
+}
+
+.swiper-pagination-bullet {
+  background-color: #000; /* Цвет точек */
+  opacity: 0.5;
+  margin: 0 5px;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #000; /* Цвет активной точки */
+  opacity: 1;
+}
+
+@media screen and (width <= 480px) {
+  .title-sm {
+    font-size: 20px;
+  }
+  .posts__wrapper {
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=home.css.map */
