@@ -1,11 +1,5 @@
 {
-    "routes": {
-      "/*": "/public/index.html"
-    },
-    "rewrites": [
-    {
-      "source": "**",
-      "destination": "/public/index.html"
-    }
-  ]
+  "routes": {
+    "/*": "/index.html"
   }
+}

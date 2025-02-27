@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "caniuse-lite": "^1.0.30001701",
     "date-fns": "^4.1.0",
     "easymde": "^2.18.0",
     "lottie-web": "^5.12.2",
