@@ -25,7 +25,7 @@ const Registration = () => {
                         On all devices daily.
                     </p>
                 </div>
-                <img src={illustration} alt="" />
+                <img src={illustration} alt="illustration" />
             </div>
         </div>
     </div>   

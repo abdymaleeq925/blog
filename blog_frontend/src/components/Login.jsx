@@ -45,7 +45,7 @@ const Login = ({ formType, setFormType }) => {
   return (
     <>
         <h2 className="h2 title-sm">Log In</h2>
-        <form action="" className='login-form form-col' onSubmit={handleSubmit(onSubmit)}>
+        <form aria-labelledby="login-title" className='login-form form-col' onSubmit={handleSubmit(onSubmit)}>
             <TextField
                 label = 'E-Mail'
                 className='field'
@@ -65,12 +65,13 @@ const Login = ({ formType, setFormType }) => {
                 <button
                     className='btn-showpassword'
                     type='button'
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                     onClick={() => setShowPassword((prev) => !prev)}
                 >{showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}</button>
             </div>
             <button className="btn btn-primary" type="submit">Log In</button>
         </form>
-        <span className='switch-form' onClick={() => setFormType('register')}>Don't have an account? <i>Sign up</i></span>
+        <button type='button' className='switch-form' onClick={() => setFormType('register')}>Don't have an account? <i>Sign up</i></button>
     </>
   )
 }

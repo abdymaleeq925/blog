@@ -132,6 +132,10 @@ img {
         margin-top: 12px;
         display: block;
         font-size: 13px;
+        background-color: var(--background-color);
+        border: none;
+        cursor: pointer;
+        color: var(--text-color);
     }
 
     i {
@@ -326,7 +330,7 @@ img {
             display: flex;
             justify-content: center;
             width: 100%;
-            margin-bottom: 200px;
+            margin-bottom: 275px;
         }
     }
     .post-item.post-item--sm.row {

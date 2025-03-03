@@ -34,7 +34,7 @@ const Header = () => {
               {
                 isLoggedIn ? (
                   <>
-                    <li className='btn btn-primary'><Link to="/create-post">Create Post</Link></li>
+                    <li className='create btn btn-primary'><Link to="/create-post">Create Post</Link></li>
                     <li className='btn-secondary'><Link to="/create-post">+</Link></li>
                   </>
                 ) : (

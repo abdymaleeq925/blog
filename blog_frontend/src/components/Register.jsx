@@ -1,8 +1,10 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { useRegisterUserMutation } from '../services/authApi';
 import { setAuthState } from '../redux/authSlice';
@@ -12,6 +14,8 @@ const Register = ({ formType, setFormType }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const { register, handleSubmit, formState: {errors} } = useForm(
         {
@@ -38,7 +42,7 @@ const Register = ({ formType, setFormType }) => {
             return alert("Registration failured");
         }
     };
-    const isLogged = useSelector(state => state.auth.isLoggedIn);
+
   return (
     <div>
       <div className="register">
@@ -53,21 +57,31 @@ const Register = ({ formType, setFormType }) => {
                 />
                 <TextField
                 label = 'E-Mail'
+                type='email'
                 className='field'
                 error={Boolean(errors.email?.message)}
                 helperText={errors.email?.message}
                 {...register('email', {required: 'Put valid email'})}
                 />
+                <div className="password" style={{width: '100%'}}>
                 <TextField
                 label = 'Password'
                 className='field'
+                type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password?.message)}
                 helperText={errors.password?.message}
                 {...register('password', {required: 'Put valid password'})}
                 />
+                <button
+                    className='btn-showpassword'
+                    type='button'
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => setShowPassword((prev) => !prev)}
+                >{showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}</button>
+                </div>
                 <button className="btn btn-primary" type="submit">Sign Up</button>
             </form>
-            <span className='switch-form' onClick={() => setFormType('login')}>Have an account? <i>Login</i></span>
+            <button type='button' className='switch-form' onClick={() => setFormType('login')}>Have an account? <i>Login</i></button>
       </div>
     </div>
   )
