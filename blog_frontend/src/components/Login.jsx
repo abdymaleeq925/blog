@@ -71,7 +71,10 @@ const Login = ({ formType, setFormType }) => {
             </div>
             <button className="btn btn-primary" type="submit">Log In</button>
         </form>
-        <button type='button' className='switch-form' onClick={() => setFormType('register')}>Don't have an account? <i>Sign up</i></button>
+        <p className='sign-up-button'>
+            Don't have an account?
+            <button type='button' className='switch-form' onClick={() => setFormType('register')}>Sign up</button>
+        </p>
     </>
   )
 }

@@ -129,7 +129,6 @@ img {
     }
 
     .switch-form {
-        margin-top: 12px;
         display: block;
         font-size: 13px;
         background-color: var(--background-color);
@@ -232,6 +231,16 @@ img {
 
     &-cta:hover {
         text-decoration: underline;
+    }
+}
+
+.sign-up-button {
+    display: flex;
+    align-items: center;
+    .switch-form {
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 15px;
     }
 }
 
