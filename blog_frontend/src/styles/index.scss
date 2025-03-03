@@ -289,6 +289,11 @@ img {
 }
 
 @media screen and (width <= 768px) {
+    .forms {
+        .form-col {
+            width: 300px;
+        }
+    }
     .post-item.post-item--sm.row {
         .post-item__info-author {
             width: 67%;
@@ -297,9 +302,44 @@ img {
 }
 
 @media screen and (width <= 480px) {
+    .forms__illustration {
+        display: none;
+    }
+    .forms {
+        &__wrapper {
+            position: relative;
+            min-height: 100vh;
+            &::before {
+                content: "";
+                position: absolute;
+                bottom: -5.8%;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 100vh;
+                width: 100%;
+                background: url('../assets/login_illustration.svg') no-repeat center bottom;
+                background-size: contain;
+                z-index: -1;
+              }
+        }   
+        .form {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 200px;
+        }
+    }
     .post-item.post-item--sm.row {
         .post-item__info-author {
             width: 115%;
+        }
+    }
+}
+
+@media screen and (width <= 320px) {
+    .forms {
+        .form-col {
+            width: 260px;
         }
     }
 }
