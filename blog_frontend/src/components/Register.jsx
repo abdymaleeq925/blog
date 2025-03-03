@@ -81,7 +81,11 @@ const Register = ({ formType, setFormType }) => {
                 </div>
                 <button className="btn btn-primary" type="submit">Sign Up</button>
             </form>
-            <button type='button' className='switch-form' onClick={() => setFormType('login')}>Have an account? <i>Login</i></button>
+            <p className='sign-up-button'>
+            Have an account?
+            <button type='button' className='switch-form' onClick={() => setFormType('login')}>Login</button>
+        </p>
+            
       </div>
     </div>
   )
