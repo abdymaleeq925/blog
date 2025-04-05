@@ -34,3 +34,26 @@ Welcome to **Blog Website**, a modern, full-stack blogging platform built with *
 - **Authentication**: JWT (JSON Web Tokens)
 - **State Management**: Redux
 - **Styling**: CSS (with optional libraries like Bootstrap or Tailwind)
+
+---
+
+## How to run 🚀
+
+- Clone the repository
+- Install dependencies
+  Backend Setup:
+    ```bash
+    cd blog_backend
+    npm install
+    cp .env.blog .env
+    - Start server
+    ```bash
+    node index.js
+  Frontend Setup:
+    ```bash
+    cd blog_frontend
+    npm install
+    cp .env.blog .env
+    - Start the development server
+    ```bash
+    npm start run
