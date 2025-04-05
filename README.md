@@ -48,7 +48,7 @@ Welcome to **Blog Website**, a modern, full-stack blogging platform built with *
     npm install
     cp .env.blog .env
     ```
-  Start server
+  Start backend server
     ```bash
     node index.js
     ```
@@ -58,7 +58,7 @@ Welcome to **Blog Website**, a modern, full-stack blogging platform built with *
     npm install
     cp .env.blog .env
     ```
-    - Start the development server
+  Start the development server
     ```bash
     npm start run
     ```
