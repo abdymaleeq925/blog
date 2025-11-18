@@ -4,6 +4,7 @@ import { IoSunnyOutline } from 'react-icons/io5';
 import { FaRegMoon } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from '../redux/themeSlice';
+import Icon from '../assets/icon.svg';
 import '../styles/header.css';
 
 const Header = () => {
@@ -25,23 +26,27 @@ const Header = () => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__logo">
-            {isLoggedIn && <Link to={`/profile/${user?._id}`}>{user?.fullName}</Link>}
+            <img src={Icon} alt="icon"/>
+            <h2>FutureTech</h2>
           </div>
-          <div className="header__navs">
-            <ul className="header__navs-list cl-effect-16">
-              <a href="/" data-hover="Home">Home</a>
-              <a href="/posts" data-hover="Posts">Posts</a>
-              {
+          <ul className="header__navs">
+            <a href="/" data-hover="Home">Home</a>
+            <a href="/news" data-hover="Posts">News</a>
+            <a href="/podcasts" data-hover="Posts">Podcasts</a>
+            <a href="/resources" data-hover="Posts">Resources</a>
+          </ul>
+          
+          <div className="header__cta">
+          {
                 isLoggedIn ? (
                   <>
-                    <li className='create btn btn-primary'><Link to="/create-post">Create Post</Link></li>
-                    <li className='btn-secondary'><Link to="/create-post">+</Link></li>
+                    <li className='btn-primary'><Link to="/create-post">Create Post</Link></li>
+                    <li className='btn-primary'><Link to="/create-post">+</Link></li>
                   </>
                 ) : (
-                  <li><Link className='btn btn-outlined' to="profile/registration">Log In</Link></li>
+                  <Link className='btn' to="profile/registration">Log In</Link>
                 )
               }
-            </ul>
             <div className="switch" onClick={handleToggle}>
               <div className="switch-toggles">
                 <div className="day"><IoSunnyOutline/></div>

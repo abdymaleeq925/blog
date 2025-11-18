@@ -6,10 +6,14 @@ import { Pagination } from "swiper/modules";
 import { IoArrowForwardCircle } from "react-icons/io5";
 import { IoArrowBackCircle } from "react-icons/io5";
 
+import HeroBanner from "../assets/hero-image.png";
 import { Title, PostItem, HomeHeroGrid } from "../components";
 import { useGetPostsQuery } from "../services/postsApi";
 import "swiper/swiper-bundle.css"; // Импортируйте стили Swiper
+
 import "../styles/home.scss";
+import HomeBanner from "../components/HomeBanner";
+import HomeFeatures from "../components/HomeFeatures";
 
 const Home = () => {
   const [postList, setPostList] = useState([]);
@@ -57,18 +61,12 @@ const Home = () => {
 
   return (
     <div>
-      <Title
-        title="The Blog"
-        flex={true}
-        alpha={false}
-        stroke={false}
-        width={true}
-        weight={true}
-        italic={true}
-        strokeColor="#ff0000"
-        minFontSize={36}
-      />
-      <div className="container">
+      {/* <div className="hero-banner-wrapper">
+        <img className="hero-banner" src={HeroBanner} alt="Hero banner"/>
+      </div> */}
+      {/* <div className="container"> */}
+        <HomeBanner/>
+        <HomeFeatures/>
         {postList?.length > 0 ? (
           <>
             <HomeHeroGrid postList={postList} />
@@ -196,7 +194,7 @@ const Home = () => {
             </Link>
           </div>
         )}
-      </div>
+      {/* </div> */}
     </div>
   );
 };
