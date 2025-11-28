@@ -7,6 +7,7 @@
     --border-color: --dark-15;
     --blog-text-color: #C0C5D0;
     --comment-border-color: rgb(255 255 255 / 54%);
+    --avatar-icon-color: #000;
     --dark-08: #141414;
     --dark-10: #1A1A1A;
     --dark-15: #262626;
@@ -39,6 +40,7 @@
     --border-color: rgb(255 255 255 / 54%);
     --blog-text-color: #C0C5D0;
     --comment-border-color: rgb(255 255 255 / 54%);
+    --avatar-icon-color: #fff;
 
     .switch-toggles::after {
         left: 15px !important;
@@ -138,6 +140,8 @@ img {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    flex: 1;
+    min-width: 0;
 }
 
 .title-tag {
@@ -267,8 +271,13 @@ img {
 
 .pagination {
     display: flex;
+    justify-content: center;
     align-items: center;
+    padding: 40px 0;
     gap: 10px;
+    span {
+        font-size: 25px;
+    }
 }
 
 .footer {
