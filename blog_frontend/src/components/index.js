@@ -5,5 +5,6 @@ export { default as PostItem } from './PostItem.jsx';
 export { default as Title } from './Title.jsx';
 export { default as HomeBlogs } from './HomeBlogs.jsx';
 export { default as HomeResources } from './HomeResources.jsx';
+export { default as HomeTestimonials } from './HomeTestimonials.jsx';
 export { default as Login } from './Login.jsx';
 export { default as Register } from './Register.jsx';

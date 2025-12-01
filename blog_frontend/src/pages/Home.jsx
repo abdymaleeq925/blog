@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 
 
-import { PostItem, HomeBlogs, HomeResources } from "../components";
+import { PostItem, HomeBlogs, HomeResources, HomeTestimonials } from "../components";
 
 import "../styles/home.scss";
 import HomeBanner from "../components/HomeBanner";
@@ -26,18 +26,19 @@ const Home = () => {
         <HomeFeatures/>
         <HomeBlogs/>
         <HomeResources/>
+        <HomeTestimonials/>
 
-          <div className="add-first-post">
-            <h2>
-              There is no post yet. You can be the first one who can post!
-            </h2>
-            <Link
-              to={isLoggedIn ? "/create-post" : "/profile/registration"}
-              className="btn btn-primary"
-            >
-              Create Post
-            </Link>
-          </div>
+        <div className="add-first-post">
+          <h2>
+            There is no post yet. You can be the first one who can post!
+          </h2>
+          <Link
+            to={isLoggedIn ? "/create-post" : "/profile/registration"}
+            className="btn btn-primary"
+          >
+            Create Post
+          </Link>
+        </div>
     </div>
   );
 };
