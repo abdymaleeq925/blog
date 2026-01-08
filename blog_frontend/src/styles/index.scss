@@ -71,16 +71,28 @@ body {
 h1, h2, h3, h4 , p{
     margin: 0;
     padding: 0;
-    color: var(--title-color);
+    color: var(--grey-50);
 }
 
 a {
     text-decoration: none;
     color: inherit;
     transition: all .2s linear;
+    padding: 0.875rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid transparent;
 
     &:hover {
         opacity: .8;
+    }
+
+    &.active {
+        background-color: var(--dark-08);
+        border-radius: 10px;
+        border-color: var(--dark-20);
+        color: #fff;
+        opacity: 1;
     }
 }
 
@@ -109,7 +121,23 @@ img {
     line-height: 150%;
     font-weight: 500;
     border-radius: 10px;
+    text-align: center;
     cursor: pointer;
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+
+    &:hover {
+        transform: translateY(-2px); // Легкий подъем
+        background-color: #ffe033; // Чуть более яркий желтый
+        // Мягкое свечение в цвет кнопки
+        box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0); // Возврат при клике
+        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
+    }
 }
 
 .action-btn {
@@ -180,61 +208,112 @@ img {
 
 .forms {
     height: 100vh;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/authorization_background.jpg');
+    background-size: cover;
+    background-position: center;
 
-    &__wrapper {
+    .form {
         display: flex;
-    }
+        flex-direction: column;
+        align-items: center;
+        
 
-    &__illustration {
-        width: 50%;
-        background-color: #6EABCD;
-        padding-top: 100px;
-
-        &-txt {
-            padding: 0 50px;
-            margin-bottom: 50px;
+        h2 {
+            font-family: 'Kumbh Sans', sans-serif;
+            font-weight: 500;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #fff;
         }
     }
 
-    .form {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+    // Стили для кнопки пароля внутри TextField
+    .password {
+        position: relative;
+        .btn-showpassword {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--grey-60);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            &:hover { color: var(--yellow-55); }
+        }
     }
 
-    .form-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        width: 400px;
+    .btn-primary {
+        margin-top: 10px;
+        background-color: var(--yellow-55);
+        border-radius: 4px;
+        color: #000;
+        &:hover { background-color: var(--yellow-60); }
+    }
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+}
+
+.field {
+    width: 100%;
+
+    // 1. Стили текста и лейбла
+    .MuiInputBase-input {
+        color: #fff !important;
+        font-family: 'Kumbh Sans', sans-serif;
     }
 
-    .btn {
-        width: 100%;
+    .MuiInputLabel-root {
+        color: var(--grey-60); // Серый в покое
+        font-family: 'Kumbh Sans', sans-serif;
+
+        &.Mui-focused {
+            color: var(--yellow-55); // Желтый при фокусе
+        }
+        &.Mui-error {
+            color: #f44336; // Красный при ошибке
+        }
     }
 
-    .field {
-        width: 100%;
+    // 2. Стили рамки (Border)
+    .MuiOutlinedInput-root {
+        fieldset {
+            border-color: var(--dark-30);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        &:hover fieldset {
+            border-color: var(--grey-60) !important;
+        }
+
+        &.Mui-focused fieldset {
+            border-color: var(--yellow-55) !important;
+        }
+
+        &.Mui-error fieldset {
+            border-color: #f44336 !important;
+        }
     }
 
-    .switch-form {
-        display: block;
-        font-size: 13px;
-        background-color: var(--background-color);
-        border: none;
-        cursor: pointer;
-        color: var(--text-color);
-    }
-
-    i {
-        text-decoration: underline;
-        font-weight: 600;
-        cursor: pointer;
-        font-style: normal;
+    // 3. САМЫЙ ОПТИМАЛЬНЫЙ ФИКС АВТОЗАПОЛНЕНИЯ
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #fff !important; // Цвет текста
+        transition: background-color 600000s ease-in-out 0s; // Убирает белый фон
+        caret-color: #fff; // Цвет курсора
     }
 }
 
@@ -249,7 +328,7 @@ img {
         border: none;
         cursor: pointer;
         font-size: 14px;
-        color: var(--text-color);
+        color: #fff;
     }
 }
 
@@ -282,9 +361,12 @@ img {
 }
 
 .sign-up-button {
+    margin-top: 20px;
     display: flex;
     align-items: center;
+    font-family: Kumbh Sans;
     .switch-form {
+        font-family: Kumbh Sans;
         font-weight: bold;
         text-decoration: underline;
         font-size: 15px;

@@ -1,19 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import SimpleMde from 'react-simplemde-editor';
 import "easymde/dist/easymde.min.css";
 import { useParams } from 'react-router-dom';
-import { WithContext as ReactTag, SEPARATORS } from 'react-tag-input';
 
+import { API_URL } from '../../constants';
 import styles from './CreatePost.module.scss';
-import { useUploadImageMutation, useCreatePostMutation, useGetOnePostQuery, useEditPostMutation, useCreateTagMutation, useGetAllTagsQuery } from '../../services/postsApi';
+import { useUploadImageMutation, useCreatePostMutation, useGetOnePostQuery, useEditPostMutation } from '../../services/postsApi';
 
 const CreatePost = () => {
 	const [image, setImage] = useState('');
 	const [title, setTitle] = useState('');
-	const [tags, setTags] = useState([]);
+	const [category, setCategory] = useState('');
 	const [text, setText] = useState('');
+	const [preview, setPreview] = useState('');
 
 	const navigate = useNavigate();
 
@@ -27,13 +28,13 @@ const CreatePost = () => {
 	const { data } = useGetOnePostQuery(id, { skip: !isEditing });
 	const [editPost] = useEditPostMutation();
 
-	const [createTag] = useCreateTagMutation();
-	const { data: allTags } = useGetAllTagsQuery();
-	
 	const handleChangeFile = async (event) => {
 		const file = event.target.files[0];
-		const formData = new FormData();
 
+		const localUrl = URL.createObjectURL(file);
+		setPreview(localUrl);
+
+		const formData = new FormData();
 		formData.append('image', file);
 
 		const { data } = await uploadImage(formData)
@@ -54,7 +55,7 @@ const CreatePost = () => {
 				title,
 				imageUrl: image,
 				text,
-				tags: tags.map(tag => ({ _id: tag.id, name: tag.text }))
+				category: category || ''
 			};
 			const data = isEditing ? await editPost({ id, fields }) : await createPost(fields);
 			isEditing ? navigate(`/posts/post-detail/${id}`) : navigate(`/posts/post-detail/${data?.data?._id}`);
@@ -66,16 +67,7 @@ const CreatePost = () => {
 	useEffect(() => {
 		if (data) {
 			setTitle(data?.title);
-			setTags(
-				data?.tags.map(tag => {
-				  const foundTag = allTags?.tags.find(allTag => allTag._id === tag);
-				  if (!foundTag) {
-					console.warn(`Tag with id ${tag} not found in allTags`);
-				  }
-				  return foundTag ? { id: foundTag._id, text: foundTag.name } : null;
-				}).filter(Boolean)
-			  );
-			  
+			setCategory(data?.category || '');
 			setText(data?.text);
 			setImage(data?.imageUrl);
 		}
@@ -83,76 +75,91 @@ const CreatePost = () => {
 
 	const removeImage = () => {
 		setImage('');
+		setPreview('');
 	}
 
-	const handleAddition = async (tag) => {
-		const trimmedTag = tag.text.trim();
-
-		if (trimmedTag === '') {
-			return
-		}
-
-		if (allTags && Array.isArray(allTags?.tags)) {
-			const existingTag = allTags?.tags?.find(exTag => exTag.name === trimmedTag);
-
-			if (existingTag) {
-				setTags((prevTags) => ([...prevTags, { id: existingTag._id, text: existingTag.name }]));
-				console.log('Tag already exist', trimmedTag);
-			} else {
-				try {
-					const doc = {
-						name: trimmedTag
-					}
-					const { data: newTag } = await createTag(doc);
-					setTags(prevTags => [...prevTags, { id: newTag._id, text: newTag.name }]);
-				} catch (error) {
-					console.log(error)
-				}
-			}
-		}
-
-
-	}
+	const delay = React.useMemo(() => ({
+		spellChecker: false, // ПОЛНОСТЬЮ ОТКЛЮЧАЕТ КРАСНЫЙ ФОН И ПРОВЕРКУ
+		autosave: {
+			enabled: true,
+			delay: 1000,
+			uniqueId: "create-post-editor",
+		},
+		// Можно также настроить высоту здесь:
+		minHeight: "300px",
+		autofocus: false,
+		placeholder: "Введите текст статьи...",
+		status: false, // убирает нижнюю панель, если она мешает
+	}), []);
 
 	return (
-		<div className='post-editor'>
+		<div className={styles.postEditor}>
 			<div className="container">
-				<div className={styles.image}>
-					<Button variant='outlined' onClick={() => inputRef.current.click()}>Load preview</Button>
-					<input ref={inputRef} type="file" hidden onChange={handleChangeFile} />
-					{
-						image && (
-							<>
-								<Button variant='contained' color="error" onClick={removeImage}>Delete</Button>
-								<img src={`https://blog-backend-m5ss.onrender.com${image}`} alt="Post"/>
-							</>
-						)
-					}
-				</div>
-				<TextField
-					value={title || ''}
-					placeholder='Post Title'
-					fullWidth
-					classes={{ root: styles.title }}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-				<div className={styles.tags}>
-					<ReactTag
-						tags={tags}
-						placeholder='Tags'
-						classes={{ root: styles.tags }}
-						handleAddition={handleAddition}
-						separators={[SEPARATORS.ENTER]}
-						handleDelete={(i) => {
-							const newTags = tags?.filter((tag, index) => index !== i);
-							setTags(newTags);
-						}}
-					/>
-				</div>
-				<SimpleMde className={styles.editor} onChange={changeText} value={text || ''} />
-				<div className={styles.buttons}>
-					<Button variant='contained' color='primary' onClick={onSubmitPost}>{isEditing ? 'Edit Post' : 'Add Post'}</Button>
-					<Button variant='outlined' color='warning' onClick={stepBack}>Cancel</Button>
+				<div className={styles.postEditorWrapper}>
+					<div className={styles.image}>
+						<Button variant='outlined' onClick={() => inputRef.current.click()}>Load preview</Button>
+						<input ref={inputRef} type="file" hidden onChange={handleChangeFile} />
+						{
+							image && (
+								<>
+									<Button variant='outlined' onClick={removeImage}>Delete</Button>
+									<img 
+										src={preview ? preview : `${API_URL}${image}`} 
+										alt="Post"
+										onError={(e) => {
+											e.target.style.display = 'none';
+										}}
+									/>
+								</>
+							)
+						}
+					</div>
+					<div className={styles.formColWrapper}>
+						<TextField
+							value={title || ''}
+							className='field'
+							placeholder='Post Title'
+							fullWidth
+							classes={{ root: styles.title }}
+							onChange={(e) => setTitle(e.target.value)}
+						/>
+						<FormControl fullWidth className={styles.categoryFormControl}>
+							<InputLabel 
+							id="post-category"
+							sx={{ 
+								color: 'var(--grey-50)', 
+								'&.Mui-focused': { color: 'var(--grey-50) !important' } 
+							}}
+							>
+								Category
+							</InputLabel>
+							<Select
+								labelId="post-category"
+								className={styles.selectCategory}
+								id="category"
+								value={category  || ""}
+								label="Category"
+								onChange={(e) => setCategory(e.target.value)}
+								MenuProps={{
+									PaperProps: {
+										className: styles.categoryMenuPaper, // Класс для самого окна
+									},
+								}}
+							>
+								<MenuItem className={styles.categoryMenuItem} value="Quantum">Quantum Computing</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Ethics">AI Ethics</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Space">Space Exploration</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Healthcare">Healthcare</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Biotechnology">Biotechnology</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Energy">Renewable Energy</MenuItem>
+							</Select>
+						</FormControl>
+					</div>
+					<SimpleMde className={styles.editor} options={delay} onChange={changeText} value={text || ''} />
+					<div className={styles.buttons}>
+						<button className='btn' onClick={onSubmitPost}>{isEditing ? 'Edit Post' : 'Add Post'}</button>
+						<button className='btn' onClick={stepBack}>Cancel</button>
+					</div>
 				</div>
 			</div>
 		</div>

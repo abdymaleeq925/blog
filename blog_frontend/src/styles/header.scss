@@ -1,5 +1,5 @@
 .header {
-    background-color: var(--dark-10);
+    background-color: var(--dark-15);
     &__wrapper {
         padding: 1.65rem 0;
         display: flex;
@@ -18,14 +18,90 @@
         display: flex;
         align-items: center;
         gap: 2.5rem;
+        font-family: Inter, sans-serif;
         font-size: 18px;
-        font-weight: 300;
+        font-weight: 400;
+        line-height: 1.5;
+        list-style: none;
+        color: var(--grey-50);
+        cursor: pointer;
     }
 
     &__cta {
         display: flex;
         align-items: center;
         gap: 1rem;
+        &-list {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 1rem;
+        }
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+
+        &__menu {
+            // 1. Начальное скрытое состояние
+            position: absolute;
+            top: calc(100% + 5px);
+            right: 0;
+            min-width: 130px;
+            background-color: var(--yellow-55);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 0.6rem;
+            list-style: none;
+            z-index: 1000;
+
+            // Анимационные свойства
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-15px) scaleY(0.9);
+            transform-origin: top;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            // 2. Состояние при открытии
+            &.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scaleY(1);
+            }
+
+            li {
+                list-style: none;
+                width: 100%;
+
+                &:not(:last-child) {
+                    margin-bottom: 4px;
+                }
+
+                a,
+                .logout-btn {
+                    display: block;
+                    width: 100%;
+                    padding: 0.75rem 1rem;
+                    text-align: left;
+                    background: transparent;
+                    border: none;
+                    color: #141414;
+                    cursor: pointer;
+                    font-size: 15px;
+                    font-weight: 400;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    transition: background 0.2s ease;
+
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.1);
+                        color: #000;
+                    }
+                }
+            }
+        }
     }
 
     .switch {
@@ -45,7 +121,7 @@
                 cursor: pointer;
             }
             &::after {
-                content: '';
+                content: "";
                 position: absolute;
                 background-color: var(--background-color);
                 width: 24px;
@@ -54,9 +130,12 @@
                 top: 8px;
                 right: 15px;
                 left: auto;
-                transition: all .3s ease-in-out;
+                transition: all 0.3s ease-in-out;
             }
-            .day, .night { height: 24px; }
+            .day,
+            .night {
+                height: 24px;
+            }
         }
     }
     .mini-switch {
@@ -73,7 +152,8 @@
 
 @media screen and (width <= 480px) {
     .header {
-        &__navs-list, &__logo {
+        &__navs-list,
+        &__logo {
             font-size: 16px;
         }
     }
@@ -85,7 +165,7 @@
         width: 30px;
         height: 30px;
         border-radius: 5px;
-        transition: all .2s ease-in-out;
+        transition: all 0.2s ease-in-out;
         background-color: var(--text-color);
         color: var(--background-color);
         display: flex;
@@ -109,7 +189,8 @@
                 top: 4px;
                 left: 6px;
             }
-            .day, .night {
+            .day,
+            .night {
                 height: 18px;
                 font-size: 18px;
             }
@@ -119,7 +200,8 @@
 
 @media screen and (width <= 375px) {
     .header {
-        &__navs-list, &__logo {
+        &__navs-list,
+        &__logo {
             font-size: 14px;
             gap: 15px;
         }

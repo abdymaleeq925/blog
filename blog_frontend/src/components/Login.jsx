@@ -18,58 +18,90 @@ const Login = ({ formType, setFormType }) => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const onSubmit = async(vals) => {
-        let email = vals.email;
-        let password = vals.password;
-
-        const userCredentials = { email, password }
-
-        const response = await login(userCredentials);
-        if (response?.data?.token) {
-            localStorage.setItem('token', response?.data?.token);
-            dispatch(setAuthState({isLoggedIn: true, data: response.data}));
-        } else {
-            return alert('Login failured')
+    const onSubmit = async (vals) => {
+        try {
+            // Используем .unwrap(), чтобы попасть в catch при ошибке
+            const response = await login(vals).unwrap();
+            
+            if (response?.token) {
+                localStorage.setItem('token', response.token);
+                dispatch(setAuthState({ isLoggedIn: true, data: response }));
+                navigate(-1);
+            }
+        } catch (err) {
+            // Проверяем, есть ли в ответе массив ошибок от бэкенда
+            const serverErrors = err.data?.errors?.errors;
+    
+            if (Array.isArray(serverErrors)) {
+                serverErrors.forEach((error) => {
+                    // error.path — это имя поля (email или password)
+                    // error.msg — это текст ошибки ("Incorrect format" и т.д.)
+                    setError(error.path, {
+                        type: 'server',
+                        message: error.msg,
+                    });
+                });
+            } else {
+                // Запасной вариант, если пришла общая ошибка (не по полям)
+                alert('Something went wrong. Please try again.');
+            }
         }
-        navigate(-1);
     };
-    const { register, handleSubmit, formState: {errors} } = useForm(
+
+
+    const { register, handleSubmit, setError, formState: {errors} } = useForm(
         {
             defaultValues: {
-                email: 'malikbatyr@mail.com',
-                password: '12345'
+                email: 'username@mail.com',
+                password: '123456'
             },
             mode: 'onChange',
         }
     );
+
+    console.log("errors", errors);
   return (
     <>
-        <h2 className="h2 title-sm">Log In</h2>
+        <h2>Log In</h2>
         <form aria-labelledby="login-title" className='login-form form-col' onSubmit={handleSubmit(onSubmit)}>
             <TextField
                 label = 'E-Mail'
                 className='field'
-                error={Boolean(errors.fullName?.message)}
-                helperText={errors.fullName?.message}
-                {...register('email', {required: 'Put valid name'})}
+                error={Boolean(errors.email)}
+                helperText={errors.email?.message}
+                {...register('email', {required: 'Email is required'})}
             />
             <div className='password' style={{width: '100%'}}>
                 <TextField
                     label = 'Password'
                     className='field'
                     type={showPassword ? 'text' : 'password'}
-                    error={Boolean(errors.password?.message)}
+                    error={Boolean(errors.password)}
                     helperText={errors.password?.message}
-                    {...register('password', {required: 'Put valid password'})}
+                    {...register('password', {required: 'Password is required'})}
+                    InputProps={{
+                        endAdornment: (
+                            <button
+                                className='btn-showpassword'
+                                type='button'
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                style={{ 
+                                    background: 'none', 
+                                    border: 'none', 
+                                    color: 'white', 
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    padding: 0
+                                }}
+                            >
+                                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                            </button>
+                        ),
+                    }}
                 />
-                <button
-                    className='btn-showpassword'
-                    type='button'
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    onClick={() => setShowPassword((prev) => !prev)}
-                >{showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}</button>
+                
             </div>
-            <button className="btn btn-primary" type="submit">Log In</button>
+            <button className="btn" type="submit">Log In</button>
         </form>
         <p className='sign-up-button'>
             Don't have an account?

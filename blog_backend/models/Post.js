@@ -41,10 +41,10 @@ const PostSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        tags: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tag'
-        }],
+        category: {
+            type: String,
+            default: ''
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
@@ -58,6 +58,13 @@ const PostSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }],
+        shares: {
+            type: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }],
+            default: []
+        },
         comments: [CommentSchema],
         imageUrl: String,
     },

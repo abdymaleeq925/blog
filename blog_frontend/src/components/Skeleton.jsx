@@ -13,9 +13,7 @@ const PostSkeleton = () => {
                 </div>
                 <Skeleton variant="text" width="70%" height={36}/>
                 <Skeleton variant="text" width="100%" height={72}/>
-                <div className="skeleton-tags">
-                    <Skeleton variant="text" width="20%" height={24}/>
-                    <Skeleton variant="text" width="20%" height={24}/>
+                <div className="skeleton-category">
                     <Skeleton variant="text" width="20%" height={24}/>
                 </div>
             </div>

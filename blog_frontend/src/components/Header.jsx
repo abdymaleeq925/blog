@@ -1,17 +1,31 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { IoSunnyOutline } from 'react-icons/io5';
 import { FaRegMoon } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from '../redux/themeSlice';
+import { setLogOut } from '../redux/authSlice';
 import Icon from '../assets/icon.svg';
-import '../styles/header.css';
+import '../styles/header.scss';
 
 const Header = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const theme = useSelector((state) => state.theme.value);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.data);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const handleLogout = () => {
+    dispatch(setLogOut());
+    window.localStorage.removeItem('token');
+    setIsDropdownOpen(false);
+    navigate('/');
+  }
   
   const handleToggle = () => {
     dispatch(toggleTheme());
@@ -20,6 +34,16 @@ const Header = () => {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="header">
@@ -30,19 +54,44 @@ const Header = () => {
             <h2>FutureTech</h2>
           </div>
           <ul className="header__navs">
-            <a href="/" data-hover="Home">Home</a>
-            <a href="/news" data-hover="Posts">News</a>
-            <a href="/podcasts" data-hover="Posts">Podcasts</a>
-            <a href="/resources" data-hover="Posts">Resources</a>
+            <li>
+              <NavLink to="/" end>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/news">News</NavLink>
+            </li>
+            <li>
+              <NavLink to="/podcasts">Podcasts</NavLink>
+            </li>
+            <li>
+              <NavLink to="/resources">Resources</NavLink>
+            </li>
           </ul>
           
           <div className="header__cta">
           {
                 isLoggedIn ? (
-                  <>
-                    <li className='btn-primary'><Link to="/create-post">Create Post</Link></li>
-                    <li className='btn-primary'><Link to="/create-post">+</Link></li>
-                  </>
+                  <div className='header__cta-list' ref={dropdownRef}>
+                    <Link className='btn' to="/create-post">Create Post</Link>
+                    <div className="dropdown">
+                      <button className="btn dropdown__toggle" onClick={toggleDropdown}>
+                        {user?.fullName}
+                      </button>
+                      
+                      <ul className={`dropdown__menu ${isDropdownOpen ? 'active' : ''}`}>
+                        <li>
+                          <Link to={`/profile/${user?._id}`} onClick={() => setIsDropdownOpen(false)}>
+                            My Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <button onClick={handleLogout} className="logout-btn">
+                            Log Out
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 ) : (
                   <Link className='btn' to="profile/registration">Log In</Link>
                 )

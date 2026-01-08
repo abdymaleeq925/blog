@@ -1,7 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import { useRemovePostMutation } from "../services/postsApi";
-import "../styles/postItem.css";
+import "../styles/postItem.scss";
 import PostSkeleton from "./Skeleton";
 import exploreIcon from "../assets/exploreIcon.svg";
 import likeIcon from "../assets/likeIcon.svg";
@@ -86,7 +86,7 @@ const PostItem = ({ isLoading, post, isEditing, handlePostDelete }) => {
           <DefaultAvatar className="author-avatar" />
           <div className="author-content">
             <p className="author-name">{post.user.fullName}</p>
-            <p className="post-item-topic">{post.tags[0].name}</p>
+            <p className="post-item-topic">{post.category || 'Uncategorized'}</p>
           </div>
         </div>
         <div className="post-item-content">

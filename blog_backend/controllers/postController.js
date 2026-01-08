@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
 import { Post, Comment } from "../models/Post.js";
-import Tag from "../models/Tag.js";
 
 export const create = async (request, response) => {
   try {
     const doc = new Post({
       title: request.body.title,
       text: request.body.text,
-      tags: request.body.tags,
+      category: request.body.category || '',
       imageUrl: request.body.imageUrl,
       user: request.userId,
+      shares: [],
     });
     const post = await doc.save();
 
@@ -22,7 +22,10 @@ export const create = async (request, response) => {
 
 export const getAll = async (request, response) => {
   try {
-    const posts = await Post.find().populate("user").populate("tags");
+    const posts = await Post.find()
+      .populate("user")
+      .populate("likes", "fullName")
+      .populate("shares", "fullName");
     if (!posts) {
       response.status(404).json({ message: "Posts not found" });
     }
@@ -48,6 +51,7 @@ export const getOne = async (request, response) => {
     )
       .populate("user")
       .populate("likes", "fullName")
+      .populate("shares", "fullName")
       .populate({
         path: "comments",
         populate: [
@@ -97,7 +101,7 @@ export const update = async (request, response) => {
       {
         title: request.body.title,
         text: request.body.text,
-        tags: request.body.tags,
+        category: request.body.category || '',
         imageUrl: request.body.imageUrl,
       }
     );
@@ -120,30 +124,6 @@ export const remove = async (request, response) => {
   }
 };
 
-export const createTag = async (request, response) => {
-  try {
-    const doc = new Tag({
-      name: request.body.name,
-    });
-    const tags = await doc.save();
-
-    return response.status(201).json(tags);
-  } catch (error) {
-    response.status(500).json({ message: error });
-  }
-};
-
-export const getAllTags = async (request, response) => {
-  try {
-    const tags = await Tag.find();
-    if (!tags) {
-      response.status(404).json({ message: "Tags not found" });
-    }
-    return response.status(200).json({ tags });
-  } catch (error) {
-    response.status(404).json({ message: "Not found" });
-  }
-};
 
 export const likeTogglePost = async (request, response) => {
   try {
@@ -235,6 +215,28 @@ export const likeToggleComment = async (request, response) => {
   } catch (error) {
     console.error("Error in likeToggleComment:", error);
     response.status(500).json({ message: "Like comment error" });
+  }
+};
+
+export const shareTogglePost = async (request, response) => {
+  try {
+    const { postId } = request.params;
+    const { userId, state } = request.body;
+    const objectedUserId = new mongoose.Types.ObjectId(userId);
+
+    const shareState = state
+      ? { $addToSet: { shares: objectedUserId } }
+      : { $pull: { shares: objectedUserId } };
+
+    const post = await Post.findByIdAndUpdate(postId, shareState, {
+      new: true,
+    }).populate("shares", "fullName");
+    if (!post) {
+      return response.status(404).json({ message: "Post not found" });
+    }
+    return response.json(post);
+  } catch (error) {
+    response.status(500).json({ message: error.message || "Server error" });
   }
 };
 

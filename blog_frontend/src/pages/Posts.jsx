@@ -30,7 +30,7 @@ const Posts = () => {
                   author = {post.user.fullName}
                   date = {post.updatedAt}
                   text = {post.text}
-                  tags = {post.tags}
+                  category = {post.category}
                   image = {post.imageUrl}
                   views = {post.viewsCount}
                   size = "post-item--lg"

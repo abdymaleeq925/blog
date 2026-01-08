@@ -21,6 +21,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log("PROFILE", profile)
+
   const logOut = () => {
     dispatch(setLogOut());
     window.localStorage.removeItem('token');
@@ -67,6 +69,7 @@ const Profile = () => {
         />
       <div className="container">
         <div className="profile__wrapper">
+          <img src={`http://localhost:4444${profile?.avatarUrl}`} alt="avatar" />
           <h1 className="h1">{profile?.fullName}</h1>
           <p>Registration date: {formatedDate}</p>
           <button className='btn btn-primary' type="button" onClick={logOut}>Log Out</button>    
@@ -84,7 +87,7 @@ const Profile = () => {
                   author = {post?.user.fullName}
                   date = {post?.createdAt}
                   text = {post?.text}
-                  tags = {post?.tags}
+                  category = {post?.category}
                   views = {post?.viewsCount}
                   image = {post?.imageUrl}
                   size = "post-item--sm"

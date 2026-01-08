@@ -38,7 +38,9 @@ function App() {
         <Route path='/profile/registration' element={<Registration/>}/>
         <Route path='/*' element={<FourOFour/>}/>
       </Routes>
-      <Footer/>
+      {
+        lastPath !== 'registration' && <Footer/>
+      }
     </div>
   );
 }

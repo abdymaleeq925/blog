@@ -15,11 +15,38 @@
   align-items: center;
   gap: 5px;
 }
+.single-post-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 .single-post-heading h4 {
   display: flex;
   gap: 10px;
   align-items: center;
   color: #667085;
+}
+.single-post-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  font-family: inherit;
+}
+.single-post-edit-btn:hover {
+  background-color: #1565c0;
+}
+.single-post-edit-btn svg {
+  font-size: 18px;
 }
 .single-post-title {
   margin: 32px 0;

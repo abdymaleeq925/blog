@@ -27,14 +27,11 @@ export const postsApi = createApi({
         getOnePost: builder.query({
             query: (id) => createRequest(`/post/${id}`, 'GET')
         }),
-        createTag: builder.mutation({
-            query: (tag) => createRequest('/tags/create', 'POST', tag) 
-        }),
-        getAllTags: builder.query({
-            query: () => createRequest('/tags/get-all', 'GET')
-        }),
         likeTogglePost: builder.mutation({
             query: ({postId, userId, state}) => createRequest(`/post/${postId}/likeToggle`, 'PATCH', {userId, state})
+        }),
+        shareTogglePost: builder.mutation({
+            query: ({postId, userId, state}) => createRequest(`/post/${postId}/shareToggle`, 'PATCH', {userId, state})
         }),
         toggleComment: builder.mutation({
             query: ({postId, userId, commentText, booleanState, commentId}) => createRequest(`/post/${postId}/toggleComment`, 'PATCH', {userId, commentText, booleanState, commentId})
@@ -55,9 +52,8 @@ export const {
     useRemovePostMutation,
     useEditPostMutation,
     useGetOnePostQuery,
-    useCreateTagMutation,
-    useGetAllTagsQuery,
     useLikeTogglePostMutation,
+    useShareTogglePostMutation,
     useToggleCommentMutation,
     useLikeToggleCommentMutation,
     useReplyToggleCommentMutation } = postsApi

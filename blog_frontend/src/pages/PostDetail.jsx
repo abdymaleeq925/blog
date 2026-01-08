@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import Modal from "react-modal";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ClearIcon from "@mui/icons-material/Clear";
+import ShareIcon from "@mui/icons-material/Share";
+import CommentIcon from "@mui/icons-material/Comment";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import EditIcon from "@mui/icons-material/Edit";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 
@@ -14,24 +18,30 @@ import {
   useGetOnePostQuery,
   useGetPostsQuery,
   useLikeTogglePostMutation,
+  useShareTogglePostMutation,
   useToggleCommentMutation,
   useLikeToggleCommentMutation,
   useReplyToggleCommentMutation,
 } from "../services/postsApi";
-import "../styles/postDetail.css";
+import { calculateReadingTime } from "../utils/readingTime";
+import { generateTableOfContents, scrollToHeading } from "../utils/tableOfContents";
+import "../styles/postDetail.scss";
 import Comment from "../components/Comment";
+import { API_URL } from "../constants";
 
 Modal.setAppElement("#root");
 
 const PostDetail = () => {
   const { postId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const userId = useSelector((state) => state?.auth?.data?._id);
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
 
   const { data, refetch } = useGetOnePostQuery(postId);
   const { data: postList } = useGetPostsQuery();
   const [likeTogglePost] = useLikeTogglePostMutation();
+  const [shareTogglePost] = useShareTogglePostMutation();
   const [toggleComment] = useToggleCommentMutation();
   const [likeToggleComment] = useLikeToggleCommentMutation();
   const [replyToggleComment] = useReplyToggleCommentMutation();
@@ -39,6 +49,7 @@ const PostDetail = () => {
   const [state, setState] = useState({
     post: null,
     likes: [],
+    shares: [],
     commentLikes: {},
     comment: "",
     replyComment: "",
@@ -46,6 +57,15 @@ const PostDetail = () => {
     selectedComment: null,
     isReplyOpen: {},
   });
+
+  // Вычисляем reading time и table of contents
+  const readingTime = useMemo(() => {
+    return state.post?.text ? calculateReadingTime(state.post.text) : 1;
+  }, [state.post?.text]);
+
+  const tableOfContents = useMemo(() => {
+    return state.post?.text ? generateTableOfContents(state.post.text) : [];
+  }, [state.post?.text]);
 
   const recentList = postList
     ? postList?.posts.filter((el) => el._id !== postId).length > 3
@@ -62,7 +82,7 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    setState((prev) => ({ ...prev, post: data, likes: data?.likes }));
+    setState((prev) => ({ ...prev, post: data, likes: data?.likes || [], shares: data?.shares || [] }));
   }, [data]);
 
   useEffect(() => {
@@ -108,6 +128,73 @@ const PostDetail = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const handleToggleSharePost = async (state) => {
+    try {
+      const response = await shareTogglePost({ postId, userId, state }).unwrap();
+      if (response) {
+        setState((prev) => ({ ...prev, shares: response.shares || [] }));
+      } else {
+        console.error("Share error");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // Функция для генерации ID из текста заголовка
+  const generateHeadingId = (children) => {
+    if (!children) return '';
+    
+    // Извлекаем текст из всех дочерних элементов
+    const extractText = (node) => {
+      if (typeof node === 'string') return node;
+      if (typeof node === 'number') return String(node);
+      if (Array.isArray(node)) {
+        return node.map(extractText).join('');
+      }
+      if (node && node.props && node.props.children) {
+        return extractText(node.props.children);
+      }
+      return '';
+    };
+    
+    const text = extractText(children);
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
+  // Компонент для рендеринга заголовков с ID
+  const components = {
+    h1: ({ node, children, ...props }) => {
+      const id = generateHeadingId(children);
+      return <h1 id={id} {...props}>{children}</h1>;
+    },
+    h2: ({ node, children, ...props }) => {
+      const id = generateHeadingId(children);
+      return <h2 id={id} {...props}>{children}</h2>;
+    },
+    h3: ({ node, children, ...props }) => {
+      const id = generateHeadingId(children);
+      return <h3 id={id} {...props}>{children}</h3>;
+    },
+    h4: ({ node, children, ...props }) => {
+      const id = generateHeadingId(children);
+      return <h4 id={id} {...props}>{children}</h4>;
+    },
+    h5: ({ node, children, ...props }) => {
+      const id = generateHeadingId(children);
+      return <h5 id={id} {...props}>{children}</h5>;
+    },
+    h6: ({ node, children, ...props }) => {
+      const id = generateHeadingId(children);
+      return <h6 id={id} {...props}>{children}</h6>;
+    },
   };
 
   const handleToggleComment = async (booleanState, commentId) => {
@@ -252,7 +339,7 @@ const PostDetail = () => {
                   author={post?.user.fullName}
                   date={post?.createdAt}
                   text={post?.text}
-                  tags={post?.tags}
+                  category={post?.category}
                   views={post?.viewsCount}
                   image={post?.imageUrl}
                   size="post-item--lg"
@@ -272,18 +359,32 @@ const PostDetail = () => {
                     <VisibilityIcon /> {state.post?.viewsCount}
                   </h4>
                 </div>
+                {userId === state.post?.user?._id && (
+                  <button
+                    className="single-post-edit-btn"
+                    onClick={() => navigate(`/posts/edit/${postId}`)}
+                  >
+                    <EditIcon />
+                    Edit Post
+                  </button>
+                )}
               </div>
               <div className="single-post-title">
                 <h1>{state.post?.title}</h1>
               </div>
               <div className="single-post-image">
-                <img
-                  src={`https://blog-backend-m5ss.onrender.com${state.post?.imageUrl}`}
-                  alt="post-illustration"
-                />
+                {state.post?.imageUrl && (
+                  <img
+                    src={`${API_URL}${state.post?.imageUrl}`}
+                    alt="post-illustration"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                )}
               </div>
               <div className="single-post__content">
-                <ReactMarkdown>{state.post?.text}</ReactMarkdown>
+                <ReactMarkdown components={components}>{state.post?.text}</ReactMarkdown>
               </div>
               <div className="likes">
                 <h2>Likes</h2>
@@ -352,6 +453,62 @@ const PostDetail = () => {
                       setState={setState}
                     />
                   ))}
+              </div>
+            </div>
+            <div className="post-sidebar">
+              <div className="post-sidebar__content">
+                <div className="post-meta">
+                  <div className="post-meta__item">
+                    <AiOutlineLike style={{ fontSize: "20px" }} />
+                    <span>{state.likes?.length || 0} likes</span>
+                  </div>
+                  <div className="post-meta__item">
+                    <CommentIcon style={{ fontSize: "20px" }} />
+                    <span>{state.post?.comments?.length || 0} comments</span>
+                  </div>
+                  <div className="post-meta__item">
+                    <ShareIcon style={{ fontSize: "20px" }} />
+                    <span>{state.shares?.length || 0} shares</span>
+                  </div>
+                  <div className="post-meta__item">
+                    <AccessTimeIcon style={{ fontSize: "20px" }} />
+                    <span>{readingTime} min read</span>
+                  </div>
+                </div>
+                {tableOfContents.length > 0 && (
+                  <div className="post-toc">
+                    <h3 className="post-toc__title">Table of Contents</h3>
+                    <ul className="post-toc__list">
+                      {tableOfContents.map((item, index) => (
+                        <li
+                          key={index}
+                          className={`post-toc__item post-toc__item--level-${item.level}`}
+                        >
+                          <button
+                            onClick={() => scrollToHeading(item.id)}
+                            className="post-toc__link"
+                          >
+                            {item.title}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {isLoggedIn && (
+                  <div className="post-sidebar__actions">
+                    <button
+                      className={`post-sidebar__share-btn ${state.shares?.some((share) => share._id === userId) ? 'post-sidebar__share-btn--active' : ''}`}
+                      onClick={() => {
+                        const hasShared = state.shares?.some((share) => share._id === userId);
+                        handleToggleSharePost(!hasShared);
+                      }}
+                    >
+                      <ShareIcon />
+                      {state.shares?.some((share) => share._id === userId) ? 'Shared' : 'Share Post'}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             <Modal
