@@ -101,7 +101,7 @@ const Login = ({ formType, setFormType }) => {
                 />
                 
             </div>
-            <button className="btn" type="submit">Log In</button>
+            <button className="action-btn-yellow" type="submit">Log In</button>
         </form>
         <p className='sign-up-button'>
             Don't have an account?

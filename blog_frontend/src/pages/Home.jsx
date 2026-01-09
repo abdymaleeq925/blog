@@ -27,18 +27,6 @@ const Home = () => {
         <HomeBlogs/>
         <HomeResources/>
         <HomeTestimonials/>
-
-        <div className="add-first-post">
-          <h2>
-            There is no post yet. You can be the first one who can post!
-          </h2>
-          <Link
-            to={isLoggedIn ? "/create-post" : "/profile/registration"}
-            className="btn btn-primary"
-          >
-            Create Post
-          </Link>
-        </div>
     </div>
   );
 };

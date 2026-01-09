@@ -7,7 +7,7 @@
     --border-color: --dark-15;
     --blog-text-color: #C0C5D0;
     --comment-border-color: rgb(255 255 255 / 54%);
-    --avatar-icon-color: #000;
+    --avatar-icon-color: #fff;
     --dark-08: #141414;
     --dark-10: #1A1A1A;
     --dark-15: #262626;
@@ -113,49 +113,38 @@ img {
 
 }
 
-.btn {
-    background-color: var(--yellow-55);
-    padding: 0.875rem 1.25rem;
-    color: #141414;
-    font-size: 18px;
-    line-height: 150%;
-    font-weight: 500;
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
+// .btn {
+//     background-color: var(--yellow-55);
+//     padding: 0.875rem 1.25rem;
+//     color: #141414;
+//     font-size: 18px;
+//     line-height: 150%;
+//     font-weight: 500;
+//     border-radius: 10px;
+//     text-align: center;
+//     cursor: pointer;
 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
+    
+// }
 
-    &:hover {
-        transform: translateY(-2px); // Легкий подъем
-        background-color: #ffe033; // Чуть более яркий желтый
-        // Мягкое свечение в цвет кнопки
-        box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
-    }
+// .action-btn {
+//     font-family: Inter;
+//     width: fit-content;
+//     padding: 1.125rem 1.5rem;
+//     font-size: 1.125rem;
+//     background-color: transparent;
+//     color: var(--grey-60);
+//     font-weight: 400;
+//     line-height: 150%;
+//     border: 0.5px solid var(--grey-60);
+//     border-radius: 0.75rem;
+//     display: flex;
+//     align-items: center;
+//     gap: 0.625rem;
+//     cursor: pointer;
 
-    &:active {
-        transform: translateY(0); // Возврат при клике
-        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
-    }
-}
-
-.action-btn {
-    font-family: Inter;
-    width: fit-content;
-    padding: 1.125rem 1.5rem;
-    font-size: 1.125rem;
-    background-color: transparent;
-    color: var(--grey-60);
-    font-weight: 400;
-    line-height: 150%;
-    border: 0.5px solid var(--grey-60);
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    cursor: pointer;
-}
+    
+// }
 
 .title-wrapper {
     padding: 7.5rem 10rem;
@@ -163,6 +152,8 @@ img {
     align-items: center;
     justify-content: space-between;
     background-color: var(--dark-10);
+    border-top: 0.5px solid var(--dark-15);
+    border-bottom: 0.5px solid var(--dark-15);
 }
 
 .title-text-container {

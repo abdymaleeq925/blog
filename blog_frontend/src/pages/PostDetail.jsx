@@ -10,8 +10,13 @@ import ShareIcon from "@mui/icons-material/Share";
 import CommentIcon from "@mui/icons-material/Comment";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EditIcon from "@mui/icons-material/Edit";
-import { AiOutlineLike } from "react-icons/ai";
-import { AiFillLike } from "react-icons/ai";
+import DeleteIcon from '@mui/icons-material/Delete';
+import likedIcon from "../assets/likedIcon.svg";
+import likeIcon from "../assets/likeIcon.svg";
+import viewsIcon from "../assets/viewsIcon.svg";
+import shareIcon from "../assets/shareIcon.svg";
+import arrowDownIcon from "../assets/arrowDownIcon.svg";
+
 
 import { PostItem } from "../components";
 import {
@@ -22,12 +27,15 @@ import {
   useToggleCommentMutation,
   useLikeToggleCommentMutation,
   useReplyToggleCommentMutation,
+  useRemovePostMutation,
 } from "../services/postsApi";
 import { calculateReadingTime } from "../utils/readingTime";
 import { generateTableOfContents, scrollToHeading } from "../utils/tableOfContents";
 import "../styles/postDetail.scss";
 import Comment from "../components/Comment";
 import { API_URL } from "../constants";
+import { Button } from "../components/ui/Button";
+import exploreIcon from '../assets/exploreIcon.svg';
 
 Modal.setAppElement("#root");
 
@@ -45,6 +53,7 @@ const PostDetail = () => {
   const [toggleComment] = useToggleCommentMutation();
   const [likeToggleComment] = useLikeToggleCommentMutation();
   const [replyToggleComment] = useReplyToggleCommentMutation();
+  const [removePost] = useRemovePostMutation();
 
   const [state, setState] = useState({
     post: null,
@@ -54,9 +63,12 @@ const PostDetail = () => {
     comment: "",
     replyComment: "",
     isModalOpen: false,
+    isFullText: false,
     selectedComment: null,
     isReplyOpen: {},
   });
+
+  const isLiked = state.likes?.some((like) => like._id === userId);
 
   // Вычисляем reading time и table of contents
   const readingTime = useMemo(() => {
@@ -70,15 +82,14 @@ const PostDetail = () => {
   const recentList = postList
     ? postList?.posts.filter((el) => el._id !== postId).length > 3
       ? postList?.posts
-          .filter((el) => el._id !== postId)
-          .slice(-3)
-          .reverse()
+        .filter((el) => el._id !== postId)
+        .slice(-3)
+        .reverse()
       : [...postList?.posts]?.filter((el) => el._id !== postId).reverse()
     : [];
 
   const closeModal = () => {
     setState((prev) => ({ ...prev, isModalOpen: !prev.isModalOpen }));
-    setState((prev) => ({ ...prev, selectedComment: null }));
   };
 
   useEffect(() => {
@@ -117,16 +128,26 @@ const PostDetail = () => {
     refetch();
   }, [location.pathname, refetch]);
 
-  const handleToggleLikePost = async (state) => {
+  const handleToggleLikePost = async (shouldLike) => {
+    // Сохраняем старые лайки на случай ошибки
+    const oldLikes = [...state.likes];
+    
+    // Создаем новый массив лайков локально
+    const newLikes = shouldLike 
+      ? [...oldLikes, { _id: userId }] // Добавляем временный объект лайка
+      : oldLikes.filter(like => like._id !== userId); // Удаляем лайк
+  
+    // Обновляем экран мгновенно
+    setState(prev => ({ ...prev, likes: newLikes }));
+  
     try {
-      const response = await likeTogglePost({ postId, userId, state }).unwrap();
-      if (response) {
-        setState((prev) => ({ ...prev, likes: response.likes }));
-      } else {
-        console.error("Like error");
-      }
+      const response = await likeTogglePost({ postId, userId, state: shouldLike }).unwrap();
+      // Синхронизируем с финальным ответом сервера (там будут полные данные лайка)
+      setState(prev => ({ ...prev, likes: response.likes }));
     } catch (error) {
-      console.error("Error:", error);
+      // Если ошибка — откатываем изменения
+      setState(prev => ({ ...prev, likes: oldLikes }));
+      console.error("Error liking post:", error);
     }
   };
 
@@ -146,7 +167,7 @@ const PostDetail = () => {
   // Функция для генерации ID из текста заголовка
   const generateHeadingId = (children) => {
     if (!children) return '';
-    
+
     // Извлекаем текст из всех дочерних элементов
     const extractText = (node) => {
       if (typeof node === 'string') return node;
@@ -159,7 +180,7 @@ const PostDetail = () => {
       }
       return '';
     };
-    
+
     const text = extractText(children);
     return text
       .toLowerCase()
@@ -214,8 +235,8 @@ const PostDetail = () => {
             comments: booleanState
               ? [...(prev.comments || []), response.comment]
               : (prev.comments || [])?.filter(
-                  (comment) => comment?._id !== commentId
-                ),
+                (comment) => comment?._id !== commentId
+              ),
           },
           comment: "",
           isModalOpen: false,
@@ -323,228 +344,201 @@ const PostDetail = () => {
     }
   };
 
+
+  console.log(state)
   return (
-    <div>
-      <div className="single-post">
-        <div className="container">
-          <div className="post-detail__wrapper">
-            <div className="recent-posts">
-              <h1 className="h1">Recent blogs</h1>
-              {recentList?.map((post) => (
-                <PostItem
-                  isLoading={false}
-                  key={post?._id}
-                  id={post?._id}
-                  title={post?.title}
-                  author={post?.user.fullName}
-                  date={post?.createdAt}
-                  text={post?.text}
-                  category={post?.category}
-                  views={post?.viewsCount}
-                  image={post?.imageUrl}
-                  size="post-item--lg"
-                  direction="column"
-                  location="post-img"
+    <div className="single-post">
+      <div className="single-post-heading-container">
+        {state.post?.imageUrl && (
+          <img
+            className="single-post-image"
+            src={`${API_URL}${state.post?.imageUrl}`}
+            alt="post-illustration"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+          />
+        )}
+        <h1 className="single-post-title">{state.post?.title}</h1>
+      </div>
+      <div className="container">
+        <div className="single-post__wrapper">
+          <div className="single-post__content">
+          <div className={`content-clipper ${!state.isFullText ? 'clipped' : ''}`}>
+            <ReactMarkdown components={components}>
+              {state.post?.text}
+            </ReactMarkdown>
+            
+            {!state.isFullText && (
+              <div className="read-more-overlay">
+                <button 
+                  className="action-btn" 
+                  onClick={() => setState(prev => ({ ...prev, isFullText: true }))}
+                >
+                  Read Full Blog <img src={arrowDownIcon} alt="arrow"/>
+                </button>
+              </div>
+            )}
+          </div>
+            <div className="comments">
+            <h2>Comments</h2>
+            {isLoggedIn && (
+              <div className="comments-input-box">
+                <textarea
+                  id="newComment"
+                  placeholder="Write your comment..."
+                  value={state.comment}
+                  onChange={(e) =>
+                    setState((prev) => ({
+                      ...prev,
+                      comment: e.target.value,
+                    }))
+                  }
+                ></textarea>
+                <button
+                  className="submit-button"
+                  onClick={() => handleToggleComment(true)}
+                >
+                  Send
+                </button>
+              </div>
+            )}
+            {state.post?.comments.length > 0 &&
+              state.post?.comments?.map((comment) => (
+                <Comment
+                  key={comment?._id}
+                  comment={comment}
+                  userId={userId}
+                  isLoggedIn={isLoggedIn}
+                  handleLikeToggleComment={handleLikeToggleComment}
+                  handleReplyToggle={handleReplyToggle}
+                  handleReply={handleReply}
+                  state={state}
+                  setState={setState}
                 />
               ))}
+          </div>
+          </div>
+          <div className="single-post__details">
+            <div className="cta-counters">
+              <div 
+                className="counts"
+                onClick={() => {
+                  isLoggedIn 
+                    ? handleToggleLikePost(!isLiked) 
+                    : (window.location.href = "/profile/registration");
+                }}
+                >
+                <img src={isLiked ? likedIcon : likeIcon} alt="like" />
+                <span>{state.post?.likes.length}</span>
+              </div>
+              <div className="counts">
+                
+                    <img src={viewsIcon} alt="views-icon"/> <span>{state.post?.viewsCount}</span>
+                
+              </div>
+              <div className="counts" onClick={() => { handleToggleSharePost(); }}>
+                
+                  <img src={shareIcon} alt="share-icon"/> <span>{state.shares?.length}</span>
+                
+              </div>
             </div>
-            <div className="single-post__wrapper">
-              <div className="single-post-heading">
-                <div className="single-post-author">
-                  <span>{state.post?.user?.fullName},</span>
-                  <span>
-                    {new Date(state.post?.createdAt).toLocaleDateString()}
-                  </span>
-                  <h4>
-                    <VisibilityIcon /> {state.post?.viewsCount}
-                  </h4>
+            <div className="info">
+              <div className="info-text">
+                <p>Publication Date</p>
+                <span>{new Date(state.post?.createdAt).toLocaleDateString()}</span>
+              </div>
+              <div className="info-text">
+                <p>Category</p>
+                <span>{state.post?.category}</span>
+              </div>
+              <div className="info-text">
+                <p>Reading Time</p>
+                <span>{readingTime} min</span>
+              </div>
+              <div className="info-text">
+                <p>Author Name</p>
+                <span>{state.post?.user?.fullName}</span>
+              </div>
+            </div>
+            {tableOfContents.length > 0 && (
+                <div className="table-contents">
+                  <p>Table of Contents</p>
+                  <ol className="content-list">
+                    {tableOfContents.map((item, index) => (
+                      <li
+                        key={index}
+                        className={`content-title ${item.level}`}
+                      >
+                        <button
+                          onClick={() => scrollToHeading(item.id)}
+                          className="content-link"
+                        >
+                          {item.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
-                {userId === state.post?.user?._id && (
+            )}
+            {userId === state.post?.user?._id && (
+                <div className="post-cta">
                   <button
-                    className="single-post-edit-btn"
-                    onClick={() => navigate(`/posts/edit/${postId}`)}
+                  className="action-btn"
+                  onClick={() => navigate(`/posts/edit/${postId}`)}
                   >
                     <EditIcon />
                     Edit Post
                   </button>
-                )}
-              </div>
-              <div className="single-post-title">
-                <h1>{state.post?.title}</h1>
-              </div>
-              <div className="single-post-image">
-                {state.post?.imageUrl && (
-                  <img
-                    src={`${API_URL}${state.post?.imageUrl}`}
-                    alt="post-illustration"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
-                  />
-                )}
-              </div>
-              <div className="single-post__content">
-                <ReactMarkdown components={components}>{state.post?.text}</ReactMarkdown>
-              </div>
-              <div className="likes">
-                <h2>Likes</h2>
-                <div className="likes-amount">
-                  {state.likes?.some((like) => like._id === userId) ? (
-                    <AiFillLike
-                      onClick={() => handleToggleLikePost(false)}
-                      style={{ cursor: "pointer", fontSize: "25px" }}
-                    />
-                  ) : (
-                    <AiOutlineLike
-                      onClick={() =>
-                        isLoggedIn
-                          ? handleToggleLikePost(true)
-                          : (window.location.href = "/profile/registration")
-                      }
-                      style={{ cursor: "pointer", fontSize: "25px" }}
-                    />
-                  )}
-                  {state.likes?.length < 4 ? (
-                    state.likes.map((like, index) => (
-                      <p key={index} style={{ margin: "0" }}>
-                        {like.fullName}
-                        {index !== state.likes.length - 1 && ","}
-                      </p>
-                    ))
-                  ) : (
-                    <p> {state.likes?.length} people liked this post </p>
-                  )}
-                </div>
-              </div>
-              <div className="comments">
-                <h2>Comments</h2>
-                {isLoggedIn && (
-                  <div className="comments-input-box">
-                    <textarea
-                      id="newComment"
-                      placeholder="Write your comment..."
-                      value={state.comment}
-                      onChange={(e) =>
-                        setState((prev) => ({
-                          ...prev,
-                          comment: e.target.value,
-                        }))
-                      }
-                    ></textarea>
-                    <button
-                      className="submit-button"
-                      onClick={() => handleToggleComment(true)}
-                    >
-                      Send
-                    </button>
-                  </div>
-                )}
-                {state.post?.comments.length > 0 &&
-                  state.post?.comments?.map((comment) => (
-                    <Comment
-                      key={comment?._id}
-                      comment={comment}
-                      userId={userId}
-                      isLoggedIn={isLoggedIn}
-                      handleLikeToggleComment={handleLikeToggleComment}
-                      handleReplyToggle={handleReplyToggle}
-                      handleReply={handleReply}
-                      state={state}
-                      setState={setState}
-                    />
-                  ))}
-              </div>
-            </div>
-            <div className="post-sidebar">
-              <div className="post-sidebar__content">
-                <div className="post-meta">
-                  <div className="post-meta__item">
-                    <AiOutlineLike style={{ fontSize: "20px" }} />
-                    <span>{state.likes?.length || 0} likes</span>
-                  </div>
-                  <div className="post-meta__item">
-                    <CommentIcon style={{ fontSize: "20px" }} />
-                    <span>{state.post?.comments?.length || 0} comments</span>
-                  </div>
-                  <div className="post-meta__item">
-                    <ShareIcon style={{ fontSize: "20px" }} />
-                    <span>{state.shares?.length || 0} shares</span>
-                  </div>
-                  <div className="post-meta__item">
-                    <AccessTimeIcon style={{ fontSize: "20px" }} />
-                    <span>{readingTime} min read</span>
-                  </div>
-                </div>
-                {tableOfContents.length > 0 && (
-                  <div className="post-toc">
-                    <h3 className="post-toc__title">Table of Contents</h3>
-                    <ul className="post-toc__list">
-                      {tableOfContents.map((item, index) => (
-                        <li
-                          key={index}
-                          className={`post-toc__item post-toc__item--level-${item.level}`}
-                        >
-                          <button
-                            onClick={() => scrollToHeading(item.id)}
-                            className="post-toc__link"
-                          >
-                            {item.title}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {isLoggedIn && (
-                  <div className="post-sidebar__actions">
-                    <button
-                      className={`post-sidebar__share-btn ${state.shares?.some((share) => share._id === userId) ? 'post-sidebar__share-btn--active' : ''}`}
-                      onClick={() => {
-                        const hasShared = state.shares?.some((share) => share._id === userId);
-                        handleToggleSharePost(!hasShared);
-                      }}
-                    >
-                      <ShareIcon />
-                      {state.shares?.some((share) => share._id === userId) ? 'Shared' : 'Share Post'}
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-            <Modal
-              isOpen={state.isModalOpen}
-              onRequestClose={closeModal}
-              contentLabel="Post Modal"
-              className="modal"
-              overlayClassName="overlay"
-            >
-              <ClearIcon onClick={closeModal} style={{cursor: "pointer"}}/>
-              <h2>Are you sure you want to delete this comment?</h2>
-              <p>"{state.selectedComment?.text}"</p>
-              <div className="modal-buttons">
-                <button
-                  className="btn btn-primary btn-modal"
-                  onClick={() => {
-                    // If it is 1st level of comment
-                    if (!state.selectedComment?.parentCommentId) {
-                      handleToggleComment(false, state.selectedComment?._id); // For the 1st level
-                    } else {
-                      handleReply(
-                        false,
-                        state.selectedComment?.parentCommentId,
-                        state.selectedComment?._id
-                      ); // For replies
-                    }
-                    closeModal();
-                  }}
+                  <button
+                  className="action-btn"
+                  onClick={() => setState((prev) => ({ ...prev, isModalOpen: !prev.isModalOpen }))}
                 >
-                  Yes
+                  <DeleteIcon />
+                  Delete Post
                 </button>
-                <button className="btn btn-primary btn-modal" onClick={() => closeModal()}>No</button>
-              </div>
-            </Modal>
+                </div>
+              )}
           </div>
         </div>
+        <div className="similar-posts">
+            <div className="recommended-posts-title">
+              <h2>Similar News</h2>
+              <Button onClick={() => navigate('/news')} btnName="View All News" btnIcon={exploreIcon}/>
+            </div>
+            {recentList?.map((post) => (
+              <PostItem 
+                key={post._id} 
+                isLoading={false} 
+                userId={userId} 
+                post={post} 
+              />
+            ))}
+          </div>
+          <Modal
+            isOpen={state.isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Post Modal"
+            className="modal"
+            overlayClassName="overlay"
+          >
+            <ClearIcon onClick={closeModal} />
+            <h2>Are you sure you want to delete this post?</h2>
+            <p>"{state.post?.title}"</p>
+            <div className="modal-buttons">
+              <button
+                className="btn"
+                onClick={() => {
+                  removePost(postId);
+                  closeModal();
+                  navigate('/');
+                }}
+              >
+                Yes
+              </button>
+              <button className="btn" onClick={() => closeModal()}>No</button>
+            </div>
+          </Modal>
       </div>
     </div>
   );

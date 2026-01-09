@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import { useRemovePostMutation } from "../services/postsApi";
+
 import "../styles/postItem.scss";
 import PostSkeleton from "./Skeleton";
 import exploreIcon from "../assets/exploreIcon.svg";
@@ -8,72 +8,27 @@ import likeIcon from "../assets/likeIcon.svg";
 import likedIcon from "../assets/likedIcon.svg";
 import commentIcon from "../assets/commentIcon.svg";
 import shareIcon from "../assets/shareIcon.svg";
+import { Link } from "react-router-dom";
+
 
 const DefaultAvatar = ({ className = "" }) => (
-  <svg
+  <svg 
     className={className}
-    viewBox="0 0 512 512"
-    fill="currentColor"
-    stroke="currentColor"
-    strokeWidth="0"
+    viewBox="0 0 35 35" 
+    fill="currentColor" // Позволяет менять цвет через CSS свойство color
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <g>
-      <path
-        d="M472.412,0H39.588C17.758,0,0,17.758,0,39.588v432.825C0,494.242,17.758,512,39.588,512h432.825 
-          C494.242,512,512,494.242,512,472.412V39.588C512,17.758,494.242,0,472.412,0z M496.165,472.412 
-          c0,13.097-10.656,23.753-23.753,23.753H39.588c-13.097,0-23.753-10.656-23.753-23.753V39.588 
-          c0-13.097,10.656-23.753,23.753-23.753h432.825c13.097,0,23.753,10.656,23.753,23.753V472.412z"
-      />
-      <polygon points="42.227,42.227 42.227,87.093 58.062,87.093 58.062,58.062 87.093,58.062 87.093,42.227" />
-      <polygon points="424.907,42.227 424.907,58.062 453.938,58.062 453.938,87.093 469.773,87.093 469.773,42.227" />
-      <polygon points="58.062,453.938 58.062,424.907 42.227,424.907 42.227,469.773 87.093,469.773 87.093,453.938" />
-      <polygon points="453.938,424.907 453.938,453.938 424.907,453.938 424.907,469.773 469.773,469.773 469.773,424.907" />
-      <path
-        d="M380.597,358.588V148.199c0-26.271-8.61-47.385-25.592-62.752c-15.331-13.875-36.844-22.596-63.942-25.921 
-          c-17.52-2.149-31.576-1.238-35.047-0.951c-3.47-0.3-17.528-1.27-35.055,0.813c-27.109,3.22-48.628,11.86-63.966,25.686 
-          c-16.982,15.307-25.592,36.39-25.592,62.66v211.083c-30.313,23.153-31.096,48.273-31.114,49.373l-0.001,27.491h311.423v-27.415 
-          C411.704,407.155,411.16,381.791,380.597,358.588z M147.24,147.733c-0.001-21.575,6.834-38.687,20.316-50.86 
-          c30.906-27.91,88.429-22.39,88.429-22.39s57.367-5.375,88.394,22.705c13.525,12.239,20.383,29.403,20.383,51.011v200.175 
-          c-8.475-4.665-17.936-8.796-28.318-12.313c-1.313-0.491-2.461-0.888-3.542-1.225c-1.653-0.868-6.463-3.429-11.96-6.715 
-          c-9.847-5.986-15.206-9.982-18.131-12.579v-16.767c28.906-17.097,46.672-50.634,46.672-88.811v-50.7h-7.918 
-          c-47.738,0-84.52-25.518-84.877-25.769l-12.495-8.853v15.314c0,2.227-6.156,9.188-34.265,14.56 
-          c-19.642,3.755-39.671,4.747-39.872,4.758l-7.54,0.361v50.33c0,38.178,17.765,71.715,46.672,88.811v16.777 
-          c-3.635,3.236-9.764,7.504-17.412,12.094c-5.817,3.513-10.958,6.277-12.694,7.198c-1.082,0.338-2.232,0.736-3.548,1.228 
-          c-10.429,3.599-19.897,7.762-28.296,12.422V147.733z M256,295.388c-12.822,0-24.677-2.788-35.237-8.284l-0.024-0.014 
-          c-26.145-13.491-42.385-43.045-42.385-77.129v-35.38c7.94-0.631,21.094-1.953,34.402-4.488 
-          c22.267-4.242,36.524-10.345,43.074-18.503c13.461,7.718,42.101,21.469,77.819,23.301v35.069 
-          c-0.001,34.084-16.242,63.638-42.411,77.143C280.677,292.6,268.822,295.388,256,295.388z M286.975,306.136v9.616 
-          c-4.363,4.379-16.167,14.639-30.975,14.639c-14.818,0-26.627-10.274-30.975-14.637v-9.619c9.69,3.375,20.06,5.087,30.975,5.087 
-          C266.919,311.222,277.292,309.509,286.975,306.136z M116.124,419.845v-11.424c0.042-0.815,1.512-20.799,28.313-39.534 
-          c9.796-6.928,22.028-12.944,36.355-17.881l0.201-0.072c1.316-0.494,2.381-0.857,3.346-1.141l1.407-0.566 
-          c0.267-0.138,6.618-3.438,14.197-8.018c5.227-3.136,11.66-7.259,16.876-11.413c7.41,6.623,21.383,16.429,39.179,16.429 
-          c17.802,0,31.779-9.811,39.185-16.436c4.335,3.444,10.153,7.377,17.58,11.892c7.293,4.36,13.266,7.431,13.517,7.56l1.378,0.55 
-          c0.966,0.285,2.03,0.647,3.346,1.141l0.244,0.087c14.213,4.805,26.467,10.772,36.442,17.747 
-          c26.875,18.693,28.13,38.335,28.184,39.653v11.425H116.124z"
-      />
-      <polygon points="263.918,240.937 263.918,225.442 248.082,225.442 248.082,256.772 271.556,256.772 271.556,240.937" />
-      <rect x="248.072" y="360.3" width="15.835" height="47.505" />
+    <g id="SVGRepo_iconCarrier">
+      <path d="M17.5,16.383a8.067,8.067,0,1,1,8.067-8.067A8.076,8.076,0,0,1,17.5,16.383Zm0-13.633a5.567,5.567,0,1,0,5.567,5.566A5.573,5.573,0,0,0,17.5,2.75Z" />
+      <path d="M31.477,34.75a1.25,1.25,0,0,1-1.23-1.037A12.663,12.663,0,0,0,17.5,22.852,12.663,12.663,0,0,0,4.753,33.713a1.25,1.25,0,0,1-2.464-.426A15.1,15.1,0,0,1,17.5,20.352,15.1,15.1,0,0,1,32.711,33.287a1.25,1.25,0,0,1-1.02,1.444A1.2,1.2,0,0,1,31.477,34.75Z" />
     </g>
   </svg>
 );
 
-const PostItem = ({ isLoading, post, isEditing, handlePostDelete }) => {
+const PostItem = ({ isLoading, post, userId }) => {
   const totalComments = post?.comments.reduce((sum, comment) => {
     return sum + 1 + (comment.replies ? comment.replies.length : 0);
   }, 0);
-
-  const [removePost] = useRemovePostMutation();
-
-  const deletePost = async () => {
-    if (window.confirm("Are you sure you want delete this post?")) {
-      try {
-        await removePost(post.id);
-        handlePostDelete(post.id);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
 
   if (isLoading) {
     return <PostSkeleton />;
@@ -83,6 +38,10 @@ const PostItem = ({ isLoading, post, isEditing, handlePostDelete }) => {
     <div className="post-item">
       <div className="post-item-wrapper">
         <div className="post-item-author">
+          {
+            post.user.avatarUrl ? <img className="author-avatar" src={post.user.avatarUrl} alt="avatar"/> :
+            <DefaultAvatar className="author-avatar" />
+          }
           <DefaultAvatar className="author-avatar" />
           <div className="author-content">
             <p className="author-name">{post.user.fullName}</p>
@@ -101,7 +60,11 @@ const PostItem = ({ isLoading, post, isEditing, handlePostDelete }) => {
           </div>
           <div className="cta-icons">
             <button className="cta-btn">
-              <img src={likedIcon} alt="like-icon" />
+              {post.likes.some((like) => like._id === userId) ? 
+              <img src={likedIcon} alt="liked-icon" /> : 
+              <img src={likeIcon} alt="like-icon" />
+              }
+              
               {post.likes.length}
             </button>
             <button className="cta-btn">
@@ -110,12 +73,13 @@ const PostItem = ({ isLoading, post, isEditing, handlePostDelete }) => {
             </button>
             <button className="cta-btn">
               <img src={shareIcon} alt="share-icon" />
+              {post.shares.length}
             </button>
           </div>
         </div>
-        <button className="action-btn">
+        <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>
           View Blog <img src={exploreIcon} alt="explore" />
-        </button>
+        </Link>
       </div>
     </div>
   );

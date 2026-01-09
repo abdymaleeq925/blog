@@ -1,5 +1,5 @@
 import React from "react";
-import './button.css';
+import './button.scss';
 
 export const Button = ({ onClick, btnName, btnIcon=null, isYellow=false }) => {
   return (

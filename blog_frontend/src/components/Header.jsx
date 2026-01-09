@@ -72,9 +72,9 @@ const Header = () => {
           {
                 isLoggedIn ? (
                   <div className='header__cta-list' ref={dropdownRef}>
-                    <Link className='btn' to="/create-post">Create Post</Link>
+                    <Link className='action-btn-yellow' to="/create-post">Create Post</Link>
                     <div className="dropdown">
-                      <button className="btn dropdown__toggle" onClick={toggleDropdown}>
+                      <button className="action-btn-yellow dropdown__toggle" onClick={toggleDropdown}>
                         {user?.fullName}
                       </button>
                       
@@ -93,7 +93,7 @@ const Header = () => {
                     </div>
                   </div>
                 ) : (
-                  <Link className='btn' to="profile/registration">Log In</Link>
+                  <Link className='action-btn-yellow' to="profile/registration">Log In</Link>
                 )
               }
             <div className="switch" onClick={handleToggle}>

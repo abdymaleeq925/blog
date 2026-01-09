@@ -190,7 +190,7 @@ const Register = ({ setFormType }) => {
         }}
         />        
 
-        <button className="btn" type="submit">
+        <button className="action-btn-yellow" type="submit">
           Sign Up
         </button>
       </form>

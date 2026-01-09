@@ -13,6 +13,7 @@ const HomeBlogs = () => {
     "Quantum Computing",
     "AI Ethics",
     "Space Exploration",
+    "Healthcare",
     "Biotechnology",
     "Renewable Energy",
   ];
@@ -67,23 +68,28 @@ const HomeBlogs = () => {
         ))}
       </div>
       <div className="homeblogs-blogs">
-        {(isFetching ? [...Array(3)] : currentData)?.map((post, index) =>
-          isFetching ? (
-            <PostItem
-              key={index}
-              post={post}
-              isLoading={true}
-              handlePostDelete={handlePostDelete}
-            />
-          ) : (
-            <PostItem
-              isLoading={false}
-              post={post}
-              isEditing={userId === post?.user?._id}
-              handlePostDelete={handlePostDelete}
-            />
-          )
-        )}
+      {isFetching ? (
+  // Состояние 1: Загрузка (Скелетоны)
+  [...Array(3)].map((_, index) => (
+    <PostItem key={index} isLoading={true} userId={userId} />
+  ))
+) : currentData && currentData.length > 0 ? (
+  // Состояние 2: Посты есть (Отрисовка)
+  currentData.map((post) => (
+    <PostItem 
+      key={post._id} 
+      isLoading={false} 
+      userId={userId} 
+      post={post} 
+    />
+  ))
+) : (
+  // Состояние 3: Постов нет (Заглушка)
+  <div className="posts-empty">
+    <h3>No posts found</h3>
+    <p>Try changing the category or check back later.</p>
+  </div>
+)}
         {postList?.length > 3 && (
           <div className="pagination">
             <IoArrowBackCircle
