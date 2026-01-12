@@ -41,6 +41,10 @@ const PostSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        description: {
+            type: String,
+            required: true
+        },
         category: {
             type: String,
             default: ''
@@ -64,6 +68,10 @@ const PostSchema = new mongoose.Schema(
                 ref: 'User'
             }],
             default: []
+        },
+        anonSharesCount: {
+            type: Number,
+            default: 0
         },
         comments: [CommentSchema],
         imageUrl: String,

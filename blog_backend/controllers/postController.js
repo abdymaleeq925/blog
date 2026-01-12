@@ -7,6 +7,7 @@ export const create = async (request, response) => {
     const doc = new Post({
       title: request.body.title,
       text: request.body.text,
+      description: request.body.description,
       category: request.body.category || '',
       imageUrl: request.body.imageUrl,
       user: request.userId,
@@ -101,6 +102,7 @@ export const update = async (request, response) => {
       {
         title: request.body.title,
         text: request.body.text,
+        description: request.body.description,
         category: request.body.category || '',
         imageUrl: request.body.imageUrl,
       }
@@ -222,13 +224,17 @@ export const shareTogglePost = async (request, response) => {
   try {
     const { postId } = request.params;
     const { userId, state } = request.body;
-    const objectedUserId = new mongoose.Types.ObjectId(userId);
+    
+    let updateAction;
 
-    const shareState = state
-      ? { $addToSet: { shares: objectedUserId } }
-      : { $pull: { shares: objectedUserId } };
+    if(userId) {
+      const objectedUserId = new mongoose.Types.ObjectId(userId);
+      updateAction = { $addToSet: { shares: objectedUserId }}
+    } else {
+      updateAction = { $inc: { anonSharesCount: 1 } };
+    }
 
-    const post = await Post.findByIdAndUpdate(postId, shareState, {
+    const post = await Post.findByIdAndUpdate(postId, updateAction, {
       new: true,
     }).populate("shares", "fullName");
     if (!post) {
@@ -309,40 +315,8 @@ export const replyToggleComment = async (request, response) => {
       }
 
       parent.replies.push(newReply._id);
-      await parent.save();
-    } else {
-      // Comment deleting
-    //   const commentToDelete = findCommentRecursively(
-    //     post.comments,
-    //     replyId || commentId
-    //   );
-    //   if (!commentToDelete) {
-    //     return response
-    //       .status(404)
-    //       .json({ message: "Nested comment not found" });
-    //   }
-
-    //   if (commentToDelete.replies.length > 0) {
-    //     // If the comment has replies just adjust text
-    //     commentToDelete.text = "Comment was deleted";
-    //     await commentToDelete.save();
-    //   } else {
-    //     // Delete whole comment if there is no reply in it
-    //     await Comment.deleteOne({ _id: commentToDelete._id });
-
-    //     // Take out the link at deleted comment from replies
-    //     const parent = findCommentRecursively(
-    //       post.comments,
-    //       commentToDelete.parentCommentId
-    //     );
-    //     if (parent) {
-    //       parent.replies = parent.replies.filter(
-    //         (reply) => reply.toString() !== commentToDelete._id.toString()
-    //       );
-    //       await parent.save();
-    //     }
-    //   }
-    // ✅ Удаление комментария (если `booleanState === false`)
+      // await parent.save();
+    } else { 
 
     const commentToDelete = findCommentRecursively(post.comments, replyId || commentId);
     if (!commentToDelete) {
@@ -366,7 +340,7 @@ export const replyToggleComment = async (request, response) => {
     const parent = findCommentRecursively(post.comments, commentToDelete.parentCommentId);
     if (parent) {
         parent.replies = parent.replies.filter(reply => reply.toString() !== commentToDelete._id.toString());
-        await parent.save();
+        // await parent.save();
     }
     }
 

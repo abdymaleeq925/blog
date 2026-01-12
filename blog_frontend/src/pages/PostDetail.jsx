@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import Modal from "react-modal";
 
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import ClearIcon from "@mui/icons-material/Clear";
-import ShareIcon from "@mui/icons-material/Share";
-import CommentIcon from "@mui/icons-material/Comment";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
+import TelegramIcon from "@mui/icons-material/Telegram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import EmailIcon from "@mui/icons-material/Email";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import likedIcon from "../assets/likedIcon.svg";
 import likeIcon from "../assets/likeIcon.svg";
 import viewsIcon from "../assets/viewsIcon.svg";
@@ -41,7 +41,6 @@ Modal.setAppElement("#root");
 
 const PostDetail = () => {
   const { postId } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const userId = useSelector((state) => state?.auth?.data?._id);
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
@@ -57,18 +56,32 @@ const PostDetail = () => {
 
   const [state, setState] = useState({
     post: null,
-    likes: [],
-    shares: [],
     commentLikes: {},
     comment: "",
     replyComment: "",
     isModalOpen: false,
+    isShareModalOpen: false,
     isFullText: false,
-    selectedComment: null,
     isReplyOpen: {},
   });
 
-  const isLiked = state.likes?.some((like) => like._id === userId);
+  // Текущий URL страницы и текст сообщения
+const shareUrl = window.location.href;
+const shareText = `Почитай мой пост: "${state.post?.title}"`;
+
+const shareLinks = {
+  whatsapp: `https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
+  telegram: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
+  gmail: `mailto:?subject=${encodeURIComponent(state.post?.title)}&body=${encodeURIComponent(shareText + " " + shareUrl)}`
+};
+
+// Функция для копирования ссылки
+const copyToClipboard = () => {
+  navigator.clipboard.writeText(shareUrl);
+  alert("Link copied to clipboard!"); // Позже можно заменить на красивый Toast
+};
+
+  const isLiked = state.post?.likes?.some((like) => like._id === userId);
 
   // Вычисляем reading time и table of contents
   const readingTime = useMemo(() => {
@@ -93,44 +106,27 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    setState((prev) => ({ ...prev, post: data, likes: data?.likes || [], shares: data?.shares || [] }));
+    setState((prev) => ({ ...prev, post: data }));
   }, [data]);
 
   useEffect(() => {
-    if (data) {
-      // Recursive function for likes
-      const collectLikesRecursively = (comment, likesMap) => {
-        // Adding current comment likes
-        likesMap[comment._id] = comment.likes || [];
-
-        // Go through all replies
-        if (comment.replies && comment.replies.length > 0) {
-          comment.replies.forEach((reply) => {
-            collectLikesRecursively(reply, likesMap);
-          });
-        }
-      };
-
-      // For like storage
-      const allLikesMap = {};
-
-      // Go through all main comments
-      data.comments.forEach((comment) => {
-        collectLikesRecursively(comment, allLikesMap);
-      });
-
-      // Updating state
-      setState((prev) => ({ ...prev, commentLikes: allLikesMap }));
-    }
-  }, [data]);
-
-  useEffect(() => {
-    refetch();
-  }, [location.pathname, refetch]);
+    if (!data?.comments) return;
+  
+    const newCommentLikes = {};
+  
+    const collect = (comment) => {
+      newCommentLikes[comment._id] = comment.likes || [];
+      comment.replies?.forEach(collect);
+    };
+  
+    data.comments.forEach(collect);
+  
+    setState((prev) => ({...prev, commentLikes: newCommentLikes}));
+  }, [data?.comments]);
 
   const handleToggleLikePost = async (shouldLike) => {
     // Сохраняем старые лайки на случай ошибки
-    const oldLikes = [...state.likes];
+    const oldLikes = [...(state.post?.likes || [])];
     
     // Создаем новый массив лайков локально
     const newLikes = shouldLike 
@@ -138,29 +134,44 @@ const PostDetail = () => {
       : oldLikes.filter(like => like._id !== userId); // Удаляем лайк
   
     // Обновляем экран мгновенно
-    setState(prev => ({ ...prev, likes: newLikes }));
+    setState(prev => ({ 
+      ...prev, 
+      post: { ...prev.post, likes: newLikes }
+    }));
   
     try {
       const response = await likeTogglePost({ postId, userId, state: shouldLike }).unwrap();
       // Синхронизируем с финальным ответом сервера (там будут полные данные лайка)
-      setState(prev => ({ ...prev, likes: response.likes }));
+      setState(prev => ({ 
+        ...prev, 
+        post: { ...prev.post, likes: response.likes }
+      }));
     } catch (error) {
       // Если ошибка — откатываем изменения
-      setState(prev => ({ ...prev, likes: oldLikes }));
+      setState(prev => ({ 
+        ...prev, 
+        post: { ...prev.post, likes: oldLikes }
+      }));
       console.error("Error liking post:", error);
     }
   };
 
-  const handleToggleSharePost = async (state) => {
+  const handleToggleSharePost = async () => {
+    // 1. Сразу открываем модалку
+    setState(prev => ({ ...prev, isShareModalOpen: true }));
+  
     try {
-      const response = await shareTogglePost({ postId, userId, state }).unwrap();
-      if (response) {
-        setState((prev) => ({ ...prev, shares: response.shares || [] }));
-      } else {
-        console.error("Share error");
-      }
+      // 2. Отправляем запрос. Сервер вернет ОБНОВЛЕННЫЙ объект поста
+      const updatedPost = await shareTogglePost({ postId, userId }).unwrap();
+      
+      // 3. ОБЯЗАТЕЛЬНО обновляем локальный стейт результатом с сервера
+      setState(prev => ({ 
+        ...prev, 
+        post: updatedPost 
+      }));
+      
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error updating share count:", error);
     }
   };
 
@@ -316,8 +327,8 @@ const PostDetail = () => {
               return {
                 ...comment,
                 replies: comment.replies.filter(
-                  (reply) => reply._id !== commentId
-                ),
+                  (reply) => reply._id !== replyId
+                ) || [],
               };
             }
             return comment;
@@ -344,8 +355,6 @@ const PostDetail = () => {
     }
   };
 
-
-  console.log(state)
   return (
     <div className="single-post">
       <div className="single-post-heading-container">
@@ -386,6 +395,7 @@ const PostDetail = () => {
               <div className="comments-input-box">
                 <textarea
                   id="newComment"
+                  spellCheck="false"
                   placeholder="Write your comment..."
                   value={state.comment}
                   onChange={(e) =>
@@ -396,7 +406,7 @@ const PostDetail = () => {
                   }
                 ></textarea>
                 <button
-                  className="submit-button"
+                  className="action-btn"
                   onClick={() => handleToggleComment(true)}
                 >
                   Send
@@ -430,7 +440,7 @@ const PostDetail = () => {
                 }}
                 >
                 <img src={isLiked ? likedIcon : likeIcon} alt="like" />
-                <span>{state.post?.likes.length}</span>
+                <span>{state.post?.likes?.length || 0}</span>
               </div>
               <div className="counts">
                 
@@ -439,14 +449,20 @@ const PostDetail = () => {
               </div>
               <div className="counts" onClick={() => { handleToggleSharePost(); }}>
                 
-                  <img src={shareIcon} alt="share-icon"/> <span>{state.shares?.length}</span>
+                  <img src={shareIcon} alt="share-icon"/> <span>{(state.post?.shares?.length || 0) + (state.post?.anonSharesCount || 0)}</span>
                 
               </div>
             </div>
             <div className="info">
               <div className="info-text">
                 <p>Publication Date</p>
-                <span>{new Date(state.post?.createdAt).toLocaleDateString()}</span>
+                <span>
+                  {new Date(state.post?.createdAt).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </span>
               </div>
               <div className="info-text">
                 <p>Category</p>
@@ -539,6 +555,36 @@ const PostDetail = () => {
               <button className="btn" onClick={() => closeModal()}>No</button>
             </div>
           </Modal>
+          <Modal
+  isOpen={state.isShareModalOpen}
+  onRequestClose={() => setState(prev => ({ ...prev, isShareModalOpen: false }))}
+  className="modal share-modal"
+  overlayClassName="overlay"
+>
+  <div className="modal-header">
+    <h2>Share this post</h2>
+    <ClearIcon onClick={() => setState(prev => ({ ...prev, isShareModalOpen: false }))} />
+  </div>
+
+  <div className="share-grid">
+    <a href={shareLinks.telegram} target="_blank" rel="noreferrer" className="share-option">
+      <TelegramIcon className="tg-icon" />
+      <span>Telegram</span>
+    </a>
+    <a href={shareLinks.whatsapp} target="_blank" rel="noreferrer" className="share-option">
+      <WhatsAppIcon className="wa-icon" />
+      <span>WhatsApp</span>
+    </a>
+    <a href={shareLinks.gmail} className="share-option">
+      <EmailIcon className="mail-icon" />
+      <span>Gmail</span>
+    </a>
+    <div className="share-option" onClick={copyToClipboard}>
+      <ContentCopyIcon />
+      <span>Copy Link</span>
+    </div>
+  </div>
+</Modal>
       </div>
     </div>
   );

@@ -2,10 +2,119 @@
     background-color: var(--dark-08);
     padding: 5rem 10rem;
     border-bottom: 1px solid var(--dark-15);
+
+    &--recent {
+        border-bottom: none;
+        .post-item-wrapper {
+          gap: 5rem;               // расстояние между картинкой и текстом
+          align-items: end;
+        }
+    
+        .post-image-container {
+          flex: 0 0 33%;             // ~1/3 ширины
+          max-width: 445px;
+          aspect-ratio: 4 / 3;       // или 16/9, 3/2 — на ваш вкус
+          overflow: hidden;
+          border-radius: 12px;
+          background: var(--dark-12);
+    
+          .post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+    
+          .post-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2a2a3a, #1e1e2e);
+          }
+        }
+    
+        .post-item-author {
+          display: none;             // прячем автора в режиме recent
+        }
+    
+        .post-item-content {
+          flex: 1;
+        }
+      }
+
+    &--list {
+        border-bottom: none;
+        padding: 0;
+    .post-item-wrapper {
+        display: grid;
+        grid-template-rows: auto 1fr auto;     // картинка | основной контент | кнопки
+        gap: 1.125rem;
+        height: 100%;
+    }
+
+    .post-image-container {
+        width: 512px;
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .post-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;         // ← самое важное: обрезает без искажения пропорций
+        object-position: center;
+        display: block;
+        }
+
+    .post-item-content {
+        display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 512px;
+        .post-item-context {
+            flex-grow: 1;                        // занимает всё доступное пространство
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+            .post-item-title {
+                font-size: 1.25rem;
+                display: -webkit-box;
+          -webkit-line-clamp: 2;             // максимум 2 строки
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          min-height: 3.2rem;
+            }
+        }
+    }
+    
+
+    .post-item-category {
+        color: var(--grey-60);
+        font-size: 1.25rem;
+        line-height: 1.5;
+        margin-top: auto;
+    }
+    } 
+
     &-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .post-image {
+            flex: 1;
+        }
+    }
+
+    &-details {
+        display: flex;
+        gap: 3.125rem;
+        p, span {
+            font-size: 1.125rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+        p {
+            color: var(--grey-60);
+        }
     }
     &-author {
         display: flex;
@@ -68,8 +177,13 @@
 
         .cta-icons {
             display: flex;
-            gap: 0.625rem;
+            align-items: center;
+            justify-content: space-between;
 
+            .cta-btns {
+                display: flex;
+                gap: 0.625rem;
+            }
             .cta-btn {
                 display: flex;
                 gap: 0.25rem;

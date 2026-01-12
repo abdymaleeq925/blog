@@ -9,6 +9,7 @@ import likedIcon from "../assets/likedIcon.svg";
 import commentIcon from "../assets/commentIcon.svg";
 import shareIcon from "../assets/shareIcon.svg";
 import { Link } from "react-router-dom";
+import { API_URL } from "../constants";
 
 
 const DefaultAvatar = ({ className = "" }) => (
@@ -25,7 +26,7 @@ const DefaultAvatar = ({ className = "" }) => (
   </svg>
 );
 
-const PostItem = ({ isLoading, post, userId }) => {
+const PostItem = ({ type="", isLoading, post, userId }) => {
   const totalComments = post?.comments.reduce((sum, comment) => {
     return sum + 1 + (comment.replies ? comment.replies.length : 0);
   }, 0);
@@ -35,53 +36,118 @@ const PostItem = ({ isLoading, post, userId }) => {
   }
 
   return (
-    <div className="post-item">
-      <div className="post-item-wrapper">
-        <div className="post-item-author">
-          {
-            post.user.avatarUrl ? <img className="author-avatar" src={post.user.avatarUrl} alt="avatar"/> :
-            <DefaultAvatar className="author-avatar" />
-          }
+    <div className={`post-item ${type === "recent" ? "post-item--recent" : type === "list" ? "post-item--list" : ""}`}>
+  <div className="post-item-wrapper">
+    {type !== "" ? (
+      <div className="post-image-container">
+        {post?.imageUrl ? (
+          <img
+            className="post-image"
+            src={`${API_URL}${post.imageUrl}`}
+            alt={post.title || "post image"}
+            loading="lazy"
+          />
+        ) : (
+          <div className="post-image-placeholder" />
+        )}
+      </div>
+    ) : (
+      <div className="post-item-author">
+        {post.user.avatarUrl ? (
+          <img
+            className="author-avatar"
+            src={`${API_URL}${post.user.avatarUrl}`}
+            alt={`${post.user.fullName} avatar`}
+          />
+        ) : (
           <DefaultAvatar className="author-avatar" />
-          <div className="author-content">
-            <p className="author-name">{post.user.fullName}</p>
-            <p className="post-item-topic">{post.category || 'Uncategorized'}</p>
+        )}
+        <div className="author-content">
+          <p className="author-name">{post.user.fullName}</p>
+          <p className="post-item-topic">{post.category || "Uncategorized"}</p>
+        </div>
+      </div>
+    )}
+
+    <div className="post-item-content">
+      { type === "" && (  
+        <p className="post-item-content-date">
+          {dayjs(post.createdAt).format("MMMM D, YYYY")}
+        </p>
+      )}
+
+      <div className="post-item-context">
+        <h2 className="post-item-title">{post.title}</h2>
+        { type === "" ? (  
+          <article className="post-item-description">
+            {post.text?.slice(0, 120) + (post.text?.length > 120 ? "..." : "")}
+          </article>
+        ) : type ==="recent" ? (
+          <p className="post-item-description">{post.description}</p>
+        ) : (
+          <p className="post-item-category">{post.category}</p>
+        )}
+      </div>
+
+      { type === "recent" && (  
+        <div className="post-item-details">
+          <div className="info-text">
+            <p>Category</p>
+            <span>{post?.category}</span>
+          </div>
+          <div className="info-text">
+                <p>Publication Date</p>
+                <span>
+                  {new Date(post?.createdAt).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </span>
+          </div>
+          <div className="info-text">
+            <p>Author Name</p>
+            <span>{post?.user?.fullName}</span>
           </div>
         </div>
-        <div className="post-item-content">
-          <p className="post-item-content-date">
-            {dayjs(post.createdAt).format("MMMM D, YYYY")}
-          </p>
-          <div className="post-item-context">
-            <h2 className="post-item-title">{post.title}</h2>
-            <article className="post-item-description">
-              {post.text.slice(0, 100) + "..."}
-            </article>
-          </div>
-          <div className="cta-icons">
-            <button className="cta-btn">
-              {post.likes.some((like) => like._id === userId) ? 
-              <img src={likedIcon} alt="liked-icon" /> : 
-              <img src={likeIcon} alt="like-icon" />
-              }
-              
-              {post.likes.length}
-            </button>
-            <button className="cta-btn">
-              <img src={commentIcon} alt="comment-icon" />
-              {totalComments}
-            </button>
-            <button className="cta-btn">
-              <img src={shareIcon} alt="share-icon" />
-              {post.shares.length}
-            </button>
-          </div>
+      )}
+
+      <div className="cta-icons">
+        <div className="cta-btns">
+        <button className="cta-btn">
+          {post.likes.some((like) => like._id === userId) ? (
+            <img src={likedIcon} alt="liked" />
+          ) : (
+            <img src={likeIcon} alt="like" />
+          )}
+          {post.likes.length}
+        </button>
+        <button className="cta-btn">
+          <img src={commentIcon} alt="comment" />
+          {totalComments}
+        </button>
+        <button className="cta-btn">
+          <img src={shareIcon} alt="share" />
+          {post.shares.length}
+        </button>
         </div>
-        <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>
-          View Blog <img src={exploreIcon} alt="explore" />
-        </Link>
+        {
+          type === "list" && (
+            <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>Read More <img src={exploreIcon} alt="explore" /></Link>
+          )
+        }
       </div>
     </div>
+
+    {type !== "list" && (
+      <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>
+      {type !== "recent" 
+      ? <>View Blog <img src={exploreIcon} alt="explore" /></> 
+      : "Read More"}
+      </Link>
+    )}
+  </div>
+</div>
   );
 };
 

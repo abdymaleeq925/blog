@@ -21,11 +21,19 @@ const Comment = ({
   return (
     <div className="comments-box" key={comment?._id}>
       <div className="comment-header">
-        {comment?.user?.fullName}{" "}
+        <div className="comment-user-info">
+          <span className="user-name">{comment?.user?.fullName}</span>
+
+          {/* Проверка: является ли автор комментария автором поста */}
+          {comment?.user?._id === state.post?.user?._id && (
+            <span className="author-badge">Author</span>
+          )}
+        </div>
+
         {comment?.user?._id === userId && (
           <ClearIcon
             onClick={() => openModal(comment)}
-            style={{ cursor: "pointer" }}
+            className="delete-comment-icon"
           />
         )}
       </div>
@@ -41,9 +49,9 @@ const Comment = ({
       <div className="comment-actions">
         <div className="comment-like">
           {state.commentLikes[comment?._id] &&
-          state.commentLikes[comment?._id]?.some(
-            (like) => like?._id === userId
-          ) ? (
+            state.commentLikes[comment?._id]?.some(
+              (like) => like?._id === userId
+            ) ? (
             <AiFillLike
               onClick={() =>
                 handleLikeToggleComment(
@@ -59,10 +67,10 @@ const Comment = ({
               onClick={() =>
                 isLoggedIn
                   ? handleLikeToggleComment(
-                      true,
-                      comment?._id,
-                      comment?.parentCommentId !== null ? true : false
-                    )
+                    true,
+                    comment?._id,
+                    comment?.parentCommentId !== null ? true : false
+                  )
                   : (window.location.href = "/profile/registration")
               }
               style={{ cursor: "pointer", fontSize: "25px" }}

@@ -1,51 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetPostsQuery } from '../services/postsApi';
-import { Title, PostItem } from '../components';
+import '../styles/posts.scss';
+import { Title, PostItem, HomeBlogs, Podcasts } from '../components';
+import { fetchAIVideos } from '../api/videos';
 
 const Posts = () => {
   const { data : posts } = useGetPostsQuery();
-  
+
+
   return (
     <div className='posts'>
-      <Title
-          title="Posts"
-          flex={true}
-          alpha={false}
-          stroke={false}
-          width={true}
-          weight={true}
-          italic={true}
-          strokeColor="#ff0000"
-          minFontSize={36}
-        />
+      <div className="posts__title">
         <div className="container">
-          <div className="posts__wrapper">
-          {
-            posts?.posts?.length > 0 ? (
-              posts?.posts.map(post => (
-                <PostItem
-                  key = {post._id}
-                  id={post?._id}
-                  title = {post.title}
-                  author = {post.user.fullName}
-                  date = {post.updatedAt}
-                  text = {post.text}
-                  category = {post.category}
-                  image = {post.imageUrl}
-                  views = {post.viewsCount}
-                  size = "post-item--lg"
-                  direction = "col"
-                  location = "post-img posts-w"
-                />
-              ))
-            ) : (
-              <div className="posts__empty">
-                <h2>No posts yet</h2>
-              </div>
-            )
-          }
+          <div className="banner">
+            <h1>Today's Headlines: Stay</h1>
+            <div className="subbanner">
+              <h1>Informed</h1>
+              <p>Explore published posts from our users. We bring you interesting news on the most significant events, trends, and stories. Discover the world through our news coverage.</p>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="posts__recent">         
+          <PostItem type="recent" post={posts.posts[0]}/>
+      </div>
+      <div className="posts__list">
+        {
+          posts.posts.map((post, index) => (
+            <PostItem type="list" post={post}/>
+          ))
+        }
+      </div>
+      <HomeBlogs/>
+      <Podcasts/>
     </div>
   )
 }

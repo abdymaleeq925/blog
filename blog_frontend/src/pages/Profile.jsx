@@ -6,6 +6,7 @@ import { useGetPostsQuery, useRemovePostMutation } from '../services/postsApi';
 import { setLogOut } from '../redux/authSlice';
 import { Title, PostItem } from '../components';
 import '../styles/profile.scss';
+import { API_URL } from '../constants';
 
 const Profile = () => {
   
@@ -69,7 +70,7 @@ const Profile = () => {
         />
       <div className="container">
         <div className="profile__wrapper">
-          <img src={`http://localhost:4444${profile?.avatarUrl}`} alt="avatar" />
+          <img src={`${API_URL}${profile?.avatarUrl}`} alt="avatar" />
           <h1 className="h1">{profile?.fullName}</h1>
           <p>Registration date: {formatedDate}</p>
           <button className='btn btn-primary' type="button" onClick={logOut}>Log Out</button>    

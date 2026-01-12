@@ -12,6 +12,7 @@ import { useUploadImageMutation, useCreatePostMutation, useGetOnePostQuery, useE
 const CreatePost = () => {
 	const [image, setImage] = useState('');
 	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
 	const [category, setCategory] = useState('');
 	const [text, setText] = useState('');
 	const [preview, setPreview] = useState('');
@@ -55,6 +56,7 @@ const CreatePost = () => {
 				title,
 				imageUrl: image,
 				text,
+				description,
 				category: category || ''
 			};
 			const data = isEditing ? await editPost({ id, fields }) : await createPost(fields);
@@ -68,6 +70,7 @@ const CreatePost = () => {
 		if (data) {
 			setTitle(data?.title);
 			setCategory(data?.category || '');
+			setDescription(data?.description);
 			setText(data?.text);
 			setImage(data?.imageUrl);
 		}
@@ -123,6 +126,14 @@ const CreatePost = () => {
 							classes={{ root: styles.title }}
 							onChange={(e) => setTitle(e.target.value)}
 						/>
+						<TextField
+							value={description || ''}
+							className='field'
+							placeholder='Description'
+							fullWidth
+							classes={{ root: styles.title }}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
 						<FormControl fullWidth className={styles.categoryFormControl}>
 							<InputLabel 
 							id="post-category"
@@ -149,9 +160,11 @@ const CreatePost = () => {
 								<MenuItem className={styles.categoryMenuItem} value="Quantum">Quantum Computing</MenuItem>
 								<MenuItem className={styles.categoryMenuItem} value="Ethics">AI Ethics</MenuItem>
 								<MenuItem className={styles.categoryMenuItem} value="Space">Space Exploration</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Environment">Environment</MenuItem>
 								<MenuItem className={styles.categoryMenuItem} value="Healthcare">Healthcare</MenuItem>
 								<MenuItem className={styles.categoryMenuItem} value="Biotechnology">Biotechnology</MenuItem>
 								<MenuItem className={styles.categoryMenuItem} value="Energy">Renewable Energy</MenuItem>
+								<MenuItem className={styles.categoryMenuItem} value="Other">Other</MenuItem>
 							</Select>
 						</FormControl>
 					</div>

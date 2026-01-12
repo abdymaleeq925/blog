@@ -37,13 +37,15 @@ const Footer = () => {
             {footerItems.map((group, itemIndex) => (
               <div className="cta-wrapper" key={group.itemTitle}>
                 <p className="cta-title">{group.itemTitle}</p>
-                {
-                  group.items.map(item => (
-                    <div className="cta-items-wrapper" key={item}>
-                      <a className="footer-cta" href={`${host}/${item}`}>{item} {["Resources", "Biotechnology", "AI Revolution"].includes(item) && <New/>}</a>      
-                    </div>
-                  ))
-                }
+                <div className="cta-items">
+                  {
+                    group.items.map(item => (
+                      <div className="cta-items-wrapper" key={item}>
+                        <a className="footer-cta" href={`${host}/${item}`}>{item} {["Resources", "Biotechnology", "AI Revolution"].includes(item) && <New/>}</a>      
+                      </div>
+                    ))
+                  }
+                </div>
               </div>
             ))}
           </div>
