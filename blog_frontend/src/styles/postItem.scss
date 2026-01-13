@@ -126,6 +126,11 @@
             color: var(--avatar-icon-color);
         }
         .author-content {
+            display: flex;
+            flex-direction: column;           // вертикальное расположение имени и темы
+            gap: 0.25rem;                     // небольшой отступ между именем и темой
+            flex: 1;                          // занимает всё доступное пространство
+            
             .author-name {
                 font-family: Inter;
                 font-weight: 600;
@@ -145,7 +150,6 @@
         display: flex;
         flex-direction: column;
         gap: 1.875rem;
-
         &-date {
             font-family: Inter;
             color: var(--grey-60);

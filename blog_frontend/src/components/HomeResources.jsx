@@ -28,8 +28,7 @@ const HomeResources = () => {
         button={{ text: "View All Resources", href: "resources" }}
       />
 
-      <div className='homeresources container'>
-        
+      <div className='homeresources container'>  
           <div className="homeresources-title-1">
             <div className="homeresources-title-container">
               <img src={ebooks} alt="ebooks" />

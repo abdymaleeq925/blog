@@ -20,6 +20,7 @@ const HomeBlogs = () => {
 
   const [active, setActive] = useState("All");
   const [postList, setPostList] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const location = useLocation();
@@ -28,10 +29,10 @@ const HomeBlogs = () => {
 
   const postsPerPage = 3;
   const totalPages =
-    postList?.length > postsPerPage
-      ? Math.ceil(postList?.length / postsPerPage)
+    filteredPosts?.length > postsPerPage
+      ? Math.ceil(filteredPosts?.length / postsPerPage)
       : 1;
-  const currentData = postList?.slice(
+  const currentData = filteredPosts?.slice(
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage
   );
@@ -39,6 +40,17 @@ const HomeBlogs = () => {
   useEffect(() => {
     setPostList(data?.posts);
   }, [data?.posts]);
+
+  useEffect(() => {
+    if (active === "All") {
+      setFilteredPosts(postList || []);
+    } else {
+      setFilteredPosts(
+        postList?.filter((post) => post.category === active) || []
+      );
+    }
+    setCurrentPage(1); // Сбрасываем страницу при смене фильтра
+  }, [active, postList]);
 
   useEffect(() => {
     refetch();
@@ -90,7 +102,7 @@ const HomeBlogs = () => {
     <p>Try changing the category or check back later.</p>
   </div>
 )}
-        {postList?.length > 3 && (
+        {filteredPosts?.length > 3 && (
           <div className="pagination">
             <IoArrowBackCircle
               onClick={

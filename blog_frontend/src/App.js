@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setAuthState } from './redux/authSlice.js';
 
 import './styles/index.css';
-import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost} from './pages/index.js';
+import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost, Videos} from './pages/index.js';
 import { Footer, Header } from './components/index.js';
 import { useGetProfileQuery } from './services/authApi.js';
 
@@ -34,6 +34,7 @@ function App() {
         <Route path='/posts/edit/:id' element={<CreatePost/>}/>
         <Route path='/posts/post-detail/:postId' element={<PostDetail/>}/>
         <Route path='/posts' element={<Posts/>}/>
+        <Route path='/videos' element={<Videos/>}/>
         <Route path='/profile/:userId' element={<Profile/>}/>
         <Route path='/profile/registration' element={<Registration/>}/>
         <Route path='/*' element={<FourOFour/>}/>

@@ -1,7 +1,7 @@
 const YOUTUBE_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
-export async function fetchAIVideos() {
+export async function fetchAIVideos(q) {
     if (!API_KEY) {
         throw new Error('YouTube API key is missing. Please set REACT_APP_YOUTUBE_API_KEY in .env');
     }
@@ -25,8 +25,9 @@ export async function fetchAIVideos() {
         const searchUrl = `${YOUTUBE_BASE_URL}/search?` +
             `part=snippet` +
             `&q=${encodeURIComponent(query)}` +
-            `&type=video` +       // < 4 минуты
-            `&maxResults=10` +               // берём больше, чтобы после фильтра осталось 6–12
+            `&type=video` + 
+            `&videoDuration=medium` +      // < 4 минуты
+            `&maxResults=${q}` +               // берём больше, чтобы после фильтра осталось 6–12
             `&order=relevance` +
             `&relevanceLanguage=en` +        // английский — больше качественного контента
             `&key=${API_KEY}`;

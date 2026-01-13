@@ -1,0 +1,107 @@
+.podcasts {
+  width: 100%;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    padding: 5rem;
+    gap: 1.875rem;
+    border-bottom: 1px solid var(--dark-15);
+    overflow: hidden;
+    
+    &:nth-child(1),
+    &:nth-child(3) {
+      padding-left: 10rem;
+      border-right: 1px solid var(--dark-15);
+    }
+
+    &:nth-child(2),
+    &:nth-child(4) {
+      padding-right: 10rem;
+    }
+  }
+
+  &__video {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; // 16:9 aspect ratio
+    overflow: hidden;
+    background-color: var(--dark-15);
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+
+  &__duration {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &__info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  &__title {
+    font-family: Inter, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text-color);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    min-height: 4rem;     // ← ключевой момент (подберите точно под ваш шрифт)
+    max-height: 4rem;
+  }
+
+  &__description {
+    font-family: Inter, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--grey-60);
+    margin: 0;
+
+    margin-top: auto;
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useGetPostsQuery } from '../services/postsApi';
 import '../styles/posts.scss';
-import { Title, PostItem, HomeBlogs, Podcasts } from '../components';
-import { fetchAIVideos } from '../api/videos';
+import { PostItem, HomeBlogs, Podcasts } from '../components';
 
 const Posts = () => {
-  const { data : posts } = useGetPostsQuery();
+  const { data: posts, isFetching } = useGetPostsQuery();
 
 
   return (
@@ -21,16 +20,24 @@ const Posts = () => {
           </div>
         </div>
       </div>
-      <div className="posts__recent">         
-          <PostItem type="recent" post={posts.posts[0]}/>
-      </div>
-      <div className="posts__list">
-        {
-          posts.posts.map((post, index) => (
-            <PostItem type="list" post={post}/>
-          ))
-        }
-      </div>
+      {isFetching ? (
+        <div>Loading...</div>
+      ) : posts?.posts && posts.posts.length > 0 ? (
+        <>
+          <div className="posts__recent">         
+            <PostItem type="recent" post={posts.posts[0]}/>
+          </div>
+          <div className="posts__list">
+            {
+              posts.posts.map((post, index) => (
+                <PostItem key={post._id || index} type="list" post={post}/>
+              ))
+            }
+          </div>
+        </>
+      ) : (
+        <div>No posts available</div>
+      )}
       <HomeBlogs/>
       <Podcasts/>
     </div>

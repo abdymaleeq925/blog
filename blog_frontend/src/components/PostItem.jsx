@@ -80,7 +80,7 @@ const PostItem = ({ type="", isLoading, post, userId }) => {
         <h2 className="post-item-title">{post.title}</h2>
         { type === "" ? (  
           <article className="post-item-description">
-            {post.text?.slice(0, 120) + (post.text?.length > 120 ? "..." : "")}
+            {post.text?.replace(/#+ /g, '').replace(/\n/g, ' ').replace(/\s+/g, ' ').slice(0, 120) + (post.text?.length > 120 ? "..." : "")}
           </article>
         ) : type ==="recent" ? (
           <p className="post-item-description">{post.description}</p>
