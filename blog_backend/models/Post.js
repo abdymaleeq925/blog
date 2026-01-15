@@ -79,9 +79,38 @@ const PostSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+const MessageSchema = new mongoose.Schema(
+    {
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        phoneNumber: {
+            type: String,
+            required: false,
+        },
+        message: {
+            type: String,
+            required: true,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
 PostSchema.plugin(deepPopulate);
 
 const Post = mongoose.model('Post', PostSchema);
 const Comment =  mongoose.model('Comment', CommentSchema);
+const Message = mongoose.model('Message', MessageSchema);
 
-export { Comment, Post };
+export { Comment, Post, Message };

@@ -33,7 +33,7 @@ import { calculateReadingTime } from "../utils/readingTime";
 import { generateTableOfContents, scrollToHeading } from "../utils/tableOfContents";
 import "../styles/postDetail.scss";
 import Comment from "../components/Comment";
-import { API_URL } from "../constants";
+import { API_URL } from "../utils/constants";
 import { Button } from "../components/ui/Button";
 import exploreIcon from '../assets/exploreIcon.svg';
 
@@ -522,14 +522,17 @@ const copyToClipboard = () => {
               <h2>Similar News</h2>
               <Button onClick={() => navigate('/news')} btnName="View All News" btnIcon={exploreIcon}/>
             </div>
+            <div className="recommended-posts-list">
             {recentList?.map((post) => (
               <PostItem 
+              type="list"
                 key={post._id} 
                 isLoading={false} 
                 userId={userId} 
                 post={post} 
               />
             ))}
+            </div>
           </div>
           <Modal
             isOpen={state.isModalOpen}

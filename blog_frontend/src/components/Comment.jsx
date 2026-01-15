@@ -18,6 +18,7 @@ const Comment = ({
     setState((prev) => ({ ...prev, selectedComment: comment }));
     setState((prev) => ({ ...prev, isModalOpen: !prev.isModalOpen }));
   };
+
   return (
     <div className="comments-box" key={comment?._id}>
       <div className="comment-header">

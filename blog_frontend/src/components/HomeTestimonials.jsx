@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Rating } from '@mui/material';
 import { Star, StarBorder, StarHalf } from '@mui/icons-material';
 import Title from './Title'
@@ -11,7 +10,6 @@ import avatar13 from '../assets/avatar13.png';
 import avatar14 from '../assets/avatar14.png';
 
 const HomeTestimonials = () => {
-  const navigate = useNavigate();
   const testimonials = [
     {
       avatar: avatar9,
@@ -67,7 +65,7 @@ const HomeTestimonials = () => {
       <div className='hometestimonials container'>
         {
           testimonials.map((person, index) => (
-            <div className={`hometestimonials-item item-${index + 1}`}>
+            <div className={`hometestimonials-item item-${index + 1}`} key={index}>
               <div className="hometestimonials-item-person-info">
                 <img src={person.avatar} alt="avatar" />
                 <div className="hometestimonials-item-person-info-name">
@@ -84,9 +82,9 @@ const HomeTestimonials = () => {
                 precision={0.1}                 // дробные с шагом 0.1
                 icon={<Star fontSize="inherit" />}
                 emptyIcon={<StarBorder fontSize="inherit" />}
-                halfIcon={<StarHalf fontSize="inherit" />}
-                readOnly={false}
-                onChange={(e, newValue) => console.log(newValue)}
+                halficon={<StarHalf fontSize="inherit" />}
+                readOnly={true}
+                // onChange={(e, newValue) => console.log(newValue)}
               />
               </div>
               <p className="person-comment">{person.comment}</p>  

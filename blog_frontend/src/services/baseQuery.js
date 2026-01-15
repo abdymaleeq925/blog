@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 
 const LOCAL_API_URL = "http://localhost:4444";
-const RENDER_API_URL = "https://blog-backend-m5ss.onrender.com";
+// const RENDER_API_URL = "https://blog-backend-m5ss.onrender.com";
 
 const baseQuery = fetchBaseQuery ({
     baseUrl: `${LOCAL_API_URL}`,

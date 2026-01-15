@@ -106,6 +106,10 @@
     }
 
     .switch {
+        border: 1px solid var(--grey-50);
+        border-radius: 36px;
+        padding: 0.5rem;
+
         &-toggles {
             width: 96px;
             height: 40px;
@@ -113,7 +117,7 @@
             justify-content: space-between;
             align-items: center;
             background-color: var(--title-color);
-            color: var(--background-color);
+            color: var(--avatar-icon-color);
             border-radius: 45px;
             padding: 8px 16px;
             font-size: 24px;
@@ -124,7 +128,7 @@
             &::after {
                 content: "";
                 position: absolute;
-                background-color: var(--background-color);
+                background-color: var(--yellow-55);
                 width: 24px;
                 height: 24px;
                 border-radius: 100%;

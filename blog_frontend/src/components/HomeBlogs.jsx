@@ -54,11 +54,7 @@ const HomeBlogs = () => {
 
   useEffect(() => {
     refetch();
-  }, [location.pathname]);
-
-  const handlePostDelete = (id) => {
-    setPostList(postList.filter((post) => post._id !== id));
-  };
+  }, [refetch, location.pathname]);
 
   return (
     <div className="homeblogs">

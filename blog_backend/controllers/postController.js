@@ -126,7 +126,6 @@ export const remove = async (request, response) => {
   }
 };
 
-
 export const likeTogglePost = async (request, response) => {
   try {
     const { postId } = request.params;

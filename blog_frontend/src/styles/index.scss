@@ -111,7 +111,7 @@ img {
     max-width: 120rem;
     margin: 0 auto;
     padding: 0 10.125rem;
-
+    width: 100%;
 }
 
 .title-wrapper {
@@ -316,6 +316,9 @@ img {
     gap: 10px;
     span {
         font-size: 25px;
+    }
+    svg {
+        color: var(--yellow-55);
     }
 }
 

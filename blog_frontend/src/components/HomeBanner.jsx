@@ -13,31 +13,31 @@ import exploreCircleIcon from '../assets/exploreCircleIcon.svg';
 const HomeBanner = () => {
   return (
     <>
-        <div class="top-section">
-          <div class="left-column">
-            <div class="block block-1">
+        <div className="top-section">
+          <div className="left-column">
+            <div className="block block-1">
               <p className="hero-text-1">Your Journey to Tomorrow Begins Here</p>
               <div className="block-1-text-container">
                 <h1 className="hero-heading-1">Explore the Frontiers of Artificial Intelligence</h1>
                 <p className="hero-paragraph-1">Welcome to the epicenter of AI innovation. FutureTech AI News is your passport to a world where machines think, learn, and reshape the future. Join us on this visionary expedition into the heart of AI.</p>
               </div>
             </div>
-            <div class="small-blocks">
-              <div class="block block-3">
+            <div className="small-blocks">
+              <div className="block block-3">
                 <p className="hero-heading-345">300<span>+</span></p>
                 <p className="hero-parapgraph-345">Resources available</p>
               </div>
-              <div class="block block-4">
+              <div className="block block-4">
                 <p className="hero-heading-345">12k<span>+</span></p>
                 <p className="hero-parapgraph-345">Total downloads</p>
               </div>
-              <div class="block block-5">
+              <div className="block block-5">
                 <p className="hero-heading-345">10k<span>+</span></p>
                 <p className="hero-parapgraph-345">Active users</p>
               </div>
             </div>
           </div>
-          <div class="block block-2">
+          <div className="block block-2">
             <img src={abstractImage} alt="abstractImage" className="block-2-abstract" />
             <div className="block-2-avatars">
               <img src={avatar1} alt="avatar" className="avatar-list" />
@@ -54,8 +54,8 @@ const HomeBanner = () => {
             </button>
           </div>
         </div>
-        <div class="bottom-section">
-          <div class="block block-6">
+        <div className="bottom-section">
+          <div className="block block-6">
             <img src={latestNewsIcon} alt="latest-news-icon" className="hero-icon-678"/>
             <div className="hero-text-container-678">
               <div className="hero-text-678">
@@ -66,7 +66,7 @@ const HomeBanner = () => {
             </div>
             <p className="hero-text-678">Over 1,000 articles published monthly</p>
           </div>
-          <div class="block block-7">
+          <div className="block block-7">
           <img src={expertIcon} alt="expert-icon" className="hero-icon-678"/>
             <div className="hero-text-container-678">
               <div className="hero-text-678">
@@ -77,7 +77,7 @@ const HomeBanner = () => {
             </div>
             <p className="hero-text-678">50+ renowned AI experts on our team</p>
           </div>
-          <div class="block block-8">
+          <div className="block block-8">
           <img src={readershipIcon} alt="readership-icon" className="hero-icon-678"/>
             <div className="hero-text-container-678">
               <div className="hero-text-678">

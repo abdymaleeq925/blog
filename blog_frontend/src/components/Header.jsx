@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { IoSunnyOutline } from 'react-icons/io5';
 import { FaRegMoon } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const New = () => {
   return <span className="new-badge">New</span>;
@@ -27,21 +28,20 @@ const Footer = () => {
       items: ["Whitepaper", "Ebooks", "Reports", "Reasearch Papers"]
     }
   ];
-  const host = window.location.host;
   
   return (
     <div className='footer'>
       <div className="container">
         <div className="footer-wrapper">
           <div className="cta">
-            {footerItems.map((group, itemIndex) => (
+            {footerItems.map(group => (
               <div className="cta-wrapper" key={group.itemTitle}>
                 <p className="cta-title">{group.itemTitle}</p>
                 <div className="cta-items">
                   {
                     group.items.map(item => (
                       <div className="cta-items-wrapper" key={item}>
-                        <a className="footer-cta" href={`${host}/${item}`}>{item} {["Resources", "Biotechnology", "AI Revolution"].includes(item) && <New/>}</a>      
+                        <Link className="footer-cta" to={`/${item.replace(" ","-").toLowerCase()}`}>{item} {["Resources", "Biotechnology", "AI Revolution"].includes(item) && <New/>}</Link>      
                       </div>
                     ))
                   }

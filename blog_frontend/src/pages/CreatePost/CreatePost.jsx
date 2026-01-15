@@ -5,7 +5,7 @@ import SimpleMde from 'react-simplemde-editor';
 import "easymde/dist/easymde.min.css";
 import { useParams } from 'react-router-dom';
 
-import { API_URL } from '../../constants';
+import { API_URL } from '../../utils/constants';
 import styles from './CreatePost.module.scss';
 import { useUploadImageMutation, useCreatePostMutation, useGetOnePostQuery, useEditPostMutation } from '../../services/postsApi';
 

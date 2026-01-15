@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setAuthState } from './redux/authSlice.js';
 
 import './styles/index.css';
-import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost, Videos} from './pages/index.js';
+import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost, Videos, Contacts} from './pages/index.js';
 import { Footer, Header } from './components/index.js';
 import { useGetProfileQuery } from './services/authApi.js';
 
@@ -21,7 +21,11 @@ function App() {
     if (token) {
       dispatch(setAuthState({isLoggedIn: true, data: profile?.data}))
     }
-  }, [profile])
+  }, [profile, dispatch, token])
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [linkUrl.pathname]);
 
   return (
     <div className="App">
@@ -37,6 +41,7 @@ function App() {
         <Route path='/videos' element={<Videos/>}/>
         <Route path='/profile/:userId' element={<Profile/>}/>
         <Route path='/profile/registration' element={<Registration/>}/>
+        <Route path='/contact-us' element={<Contacts/>}/>
         <Route path='/*' element={<FourOFour/>}/>
       </Routes>
       {

@@ -9,7 +9,7 @@ import likedIcon from "../assets/likedIcon.svg";
 import commentIcon from "../assets/commentIcon.svg";
 import shareIcon from "../assets/shareIcon.svg";
 import { Link } from "react-router-dom";
-import { API_URL } from "../constants";
+import { API_URL } from "../utils/constants";
 
 
 const DefaultAvatar = ({ className = "" }) => (

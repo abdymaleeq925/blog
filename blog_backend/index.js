@@ -21,6 +21,7 @@ import {
     replyToggleComment,
 
 } from './controllers/postController.js';
+import { createMessage } from './controllers/messageController.js';
 import handleValidation from './validations/handleValidation.js';
 import { handleMulterError } from './utils/handleMulterError.js';
 
@@ -88,7 +89,6 @@ app.post('/upload', checkUser, upload.single('image'), (request, response) => {
     });
 });
 
-
 app.get('/posts', getAll);
 
 app.get('/post/:id', getOne);
@@ -106,6 +106,9 @@ app.patch('/post/:postId/toggleComment', toggleComment);
 app.patch('/post/:postId/comment/:commentId/likeToggleComment', likeToggleComment);
 
 app.patch('/post/:postId/comment/:commentId/replyToggle', replyToggleComment);
+
+// Contacts page messages
+app.post('/messages', createMessage);
 
 // app.set(); //Настройка запроса
 // // app.get();

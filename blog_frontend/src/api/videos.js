@@ -1,74 +1,75 @@
 const YOUTUBE_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
+const CACHE_KEY = 'ai_videos_cache';
+const CACHE_DURATION = 60 * 60 * 6000;
+
 export async function fetchAIVideos(q) {
+
+    const cached = localStorage.getItem(CACHE_KEY);
+    if(cached) {
+        const { timestamp, data } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_DURATION) {
+            return data;
+        }
+    }
+
     if (!API_KEY) {
-        throw new Error('YouTube API key is missing. Please set REACT_APP_YOUTUBE_API_KEY in .env');
+        throw new Error('YouTube API key is missing.');
     }
 
     try {
         // Список тем
-        const topics = [
-            "Quantum Computing",
-            "AI Ethics",
-            "Space Exploration",
-            "Healthcare",
-            "Biotechnology",
-            "Renewable Energy"
-        ];
+        const query = "AI Quantum Computing Space Exploration Biotechnology Renewable Energy Healthcare";
 
-        // Формируем поисковый запрос: AI + тема
-        const query = topics
-            .map(topic => `"${topic}" AI OR "artificial intelligence" "${topic}"`)
-            .join(' OR ');
+        // 2. Выполняем 2 поиска параллельно (по 100 баллов каждый)
+        const [freshRes, relevantRes] = await Promise.all([
+            // 2 самых свежих
+            fetch(`${YOUTUBE_BASE_URL}/search?part=id&q=${encodeURIComponent(query)}&type=video&videoDuration=medium&order=date&maxResults=2&key=${API_KEY}`),
+            // 30 релевантных
+            fetch(`${YOUTUBE_BASE_URL}/search?part=id&q=${encodeURIComponent(query)}&type=video&videoDuration=medium&order=relevance&maxResults=30&key=${API_KEY}`)
+        ]);
 
-        const searchUrl = `${YOUTUBE_BASE_URL}/search?` +
-            `part=snippet` +
-            `&q=${encodeURIComponent(query)}` +
-            `&type=video` + 
-            `&videoDuration=medium` +      // < 4 минуты
-            `&maxResults=${q}` +               // берём больше, чтобы после фильтра осталось 6–12
-            `&order=relevance` +
-            `&relevanceLanguage=en` +        // английский — больше качественного контента
-            `&key=${API_KEY}`;
+        const freshData = await freshRes.json();
+        const relevantData = await relevantRes.json();
 
-        const searchResult = await fetch(searchUrl);
+        // 3. Собираем уникальные ID
+        const allIds = [
+            ...(freshData.items || []),
+            ...(relevantData.items || [])
+        ].map(item => item.id.videoId);
 
-        if (!searchResult.ok) {
-            const text = await searchResult.text().catch(() => '');
-            throw new Error(
-                `Failed to search YouTube: ${searchResult.status} ${searchResult.statusText} ${text}`.trim()
-            );
-        }
+        const uniqueIds = [...new Set(allIds)].join(',');
 
-        const searchData = await searchResult.json();
-
-        if (!searchData.items?.length) {
-            return [];
-        }
-
-        // Получаем ID всех найденных видео
-        const videoIds = searchData.items.map(item => item.id.videoId).join(',');
-
-        // Второй запрос — получаем длительность и дополнительные данные
-        const detailsUrl = `${YOUTUBE_BASE_URL}/videos?` +
-            `part=snippet,contentDetails` +
-            `&id=${videoIds}` +
-            `&key=${API_KEY}`;
-
+        // 4. Один запрос за деталями (1 балл)
+        const detailsUrl = `${YOUTUBE_BASE_URL}/videos?part=snippet,contentDetails,statistics&id=${uniqueIds}&key=${API_KEY}`;
         const detailsResult = await fetch(detailsUrl);
-
-        if (!detailsResult.ok) {
-            throw new Error(`Failed to fetch video details: ${detailsResult.status}`);
-        }
-
         const detailsData = await detailsResult.json();
 
-        return detailsData;
+        const formattedVideos = detailsData?.items?.map(video => ({
+            id: video.id,
+            title: video.snippet.title,
+            author: video.snippet.channelTitle,
+            thumbnail: video.snippet.thumbnails.high.url,
+            description: video.snippet.localized.description,
+            duration: formatDuration(parseISODuration(video.contentDetails.duration)),
+            views: video.statistics.viewCount,
+            date: video.snippet.publishedAt,
+            tag: video?.snippet?.tags?.length > 0 ? video?.snippet?.tags[Math.floor(Math.random() * video?.snippet?.tags?.length)] : "No tag",
+            link: `https://www.youtube.com/watch?v=${video.id}`
+        }));
+
+        // 5. Сохраняем в кеш
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            data: formattedVideos
+        }));
+
+        return formattedVideos;
 
     } catch (error) {
         console.error('Error fetching AI-related videos:', error);
-        throw error;
+        return cached ? JSON.parse(cached).data : [];
     }
 }
 

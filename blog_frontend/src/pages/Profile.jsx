@@ -6,7 +6,7 @@ import { useGetPostsQuery, useRemovePostMutation } from '../services/postsApi';
 import { setLogOut } from '../redux/authSlice';
 import { Title, PostItem } from '../components';
 import '../styles/profile.scss';
-import { API_URL } from '../constants';
+import { API_URL } from '../utils/constants';
 
 const Profile = () => {
   
