@@ -47,7 +47,7 @@ const PostSchema = new mongoose.Schema(
         },
         category: {
             type: String,
-            default: ''
+            required: true
         },
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -74,7 +74,10 @@ const PostSchema = new mongoose.Schema(
             default: 0
         },
         comments: [CommentSchema],
-        imageUrl: String,
+        imageUrl: {
+            type: String,
+            required: true
+        },
     },
     { timestamps: true }
 );

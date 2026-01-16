@@ -10,4 +10,4 @@ export { default as HomeBanner} from './HomeBanner.jsx';
 export { default as HomeFeatures } from './HomeFeatures.jsx';
 export { default as Login } from './Login.jsx';
 export { default as Register } from './Register.jsx';
-export { default as Podcasts } from './Podcasts.jsx';
+export { default as VideoPack } from './VideoPack.jsx';

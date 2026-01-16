@@ -132,18 +132,16 @@ const PostItem = ({ type="", isLoading, post, userId }) => {
         </button>
         </div>
         {
-          type === "list" && (
-            <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>Read More <img src={exploreIcon} alt="explore" /></Link>
+          type !== "" && (
+            <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>Read More {type === "list" && <img src={exploreIcon} alt="explore" />}</Link>
           )
         }
       </div>
     </div>
 
-    {type !== "list" && (
+    {type === "" && (
       <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>
-      {type !== "recent" 
-      ? <>View Blog <img src={exploreIcon} alt="explore" /></> 
-      : "Read More"}
+      View Blog <img src={exploreIcon} alt="explore" />
       </Link>
     )}
   </div>

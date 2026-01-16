@@ -72,16 +72,18 @@
       width: 512px;
         .post-item-context {
             flex-grow: 1;                        // занимает всё доступное пространство
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            
             .post-item-title {
                 font-size: 1.25rem;
                 display: -webkit-box;
-          -webkit-line-clamp: 2;             // максимум 2 строки
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          min-height: 3.2rem;
+                line-clamp: 2;
+                -webkit-line-clamp: 2;             // максимум 2 строки
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                min-height: 3.2rem;
             }
         }
     }
@@ -99,6 +101,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        
         .post-image {
             flex: 1;
         }
@@ -120,22 +123,31 @@
         display: flex;
         gap: 1rem;
         align-items: center;
+        flex: 0 0 auto; // не растягивается и не сжимается
+        min-width: 0; // позволяет дочерним элементам сжиматься
+        
         .author-avatar {
             width: 5rem;
             height: 5rem;
             color: var(--avatar-icon-color);
+            flex-shrink: 0; // аватар не сжимается
         }
         .author-content {
             display: flex;
             flex-direction: column;           // вертикальное расположение имени и темы
             gap: 0.25rem;                     // небольшой отступ между именем и темой
-            flex: 1;                          // занимает всё доступное пространство
+            min-width: 0; // позволяет содержимому переноситься
+            flex: 1; // занимает доступное пространство
             
             .author-name {
                 font-family: Inter;
                 font-weight: 600;
                 font-size: 1.25rem;
                 line-height: 150%;
+                word-wrap: break-word; // перенос длинных слов
+                overflow-wrap: break-word; // современный стандарт
+                word-break: break-word; // дополнительный перенос для очень длинных слов
+                max-width: 130px; // ограничение ширины для переноса
             }
             .post-item-topic {
                 font-family: Inter;
@@ -143,6 +155,11 @@
                 font-weight: 400;
                 font-size: 1.125rem;
                 line-height: 150%;
+                width: 130px;
+                word-wrap: break-word; // перенос длинных слов
+                overflow-wrap: break-word; // современный стандарт
+                word-break: break-word; // дополнительный перенос для очень длинных слов
+                // max-width: 130px; // ограничение ширины для переноса
             }
         }
     }

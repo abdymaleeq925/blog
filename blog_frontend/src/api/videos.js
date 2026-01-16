@@ -4,7 +4,7 @@ const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 const CACHE_KEY = 'ai_videos_cache';
 const CACHE_DURATION = 60 * 60 * 6000;
 
-export async function fetchAIVideos(q) {
+export async function fetchAIVideos() {
 
     const cached = localStorage.getItem(CACHE_KEY);
     if(cached) {

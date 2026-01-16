@@ -30,13 +30,25 @@
         }
     }
 
+    &__recent-title {
+      padding-left: 10.125rem;
+      font-size: 3rem;
+    }
+
     &__recent {
         padding: 5rem 0;
         border-bottom: 1px solid var(--dark-15);
     }
 
+    &__list-title {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 2rem;
+    }
+
     &__list {
         padding: 5rem 10rem;              // внешние отступы слева/справа 10rem
+        max-width: calc(100% - 10rem);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;

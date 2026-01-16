@@ -12,9 +12,9 @@ export const loginValidation = [
 ];
 
 export const postValidation = [
-    body('title', 'Enter title').isLength({min: 1, max: 150}),
-    body('description', 'Enter description').isLength({min: 1, max: 300}),
-    body('text', 'Enter text').isLength({min: 3}),
+    body('title', 'Title must contain maximum 150 characters').isLength({min: 1, max: 150}),
+    body('description', 'Description must contain maximum 300 characters').isLength({min: 1, max: 300}),
+    body('text', 'Text must contain at least 3 characters').isLength({min: 3}),
     body('category', 'Category must be a string').isString(),
-    body('image', 'Incorrect link')
+    body('imageUrl', 'Incorrect image link').isString()
 ];

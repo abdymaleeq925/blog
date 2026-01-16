@@ -2,6 +2,16 @@
     background-color: var(--dark-08);  
     font-family: Inter, sans-serif;
     padding: 50px 0;  
+    border-bottom: 1px solid var(--dark-15);
+}
+
+.postEditorWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.875rem;
+    h1 {
+        font-size: 3rem;
+    }
 }
 
 .selectCategory {
@@ -10,8 +20,8 @@
     
     :global(.MuiSelect-select) {
         font-family: 'Kumbh Sans', sans-serif !important;
-        color: var(--grey-50) !important; 
-        -webkit-text-fill-color: var(--grey-50) !important; 
+        color: var(--text-color) !important; 
+        -webkit-text-fill-color: var(--text-color) !important; 
     }
 
     :global(.MuiSelect-icon) {
@@ -112,32 +122,19 @@
 .image {
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
-    margin-bottom: 30px;
     
     img {
-        width: 150px;
+        width: 200px;
         height: auto;
         max-height: 150px;
+        border-radius: 12px;
         object-fit: cover;
-    }
-
-    button {
-        font-family: Inter, sans-serif; 
-        border-color: var(--dark-15);
-        color: var(--grey-50);
-
-        &:hover {
-            border-color: var(--dark-10);
-            color: var(--dark-10);
-            background-color: var(--yellow-55);
-        }
     }
 }
 
 .editor {
-    margin: 30px 0;
 
     :global {
         // Убираем красный фон у слов с "ошибками"
@@ -211,6 +208,26 @@
       color: var(--grey-60);
     }
   }
+
+.errorContainer {
+    width: fit-content;
+    padding: 1rem;
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 8px;
+}
+
+.errorMessage {
+    color: #ff6b6b;
+    font-family: Inter, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
 
 .buttons {
     display: flex;

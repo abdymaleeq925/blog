@@ -83,7 +83,7 @@
         }
 
         .contacts-block-column-1 {
-            padding: 16.25rem 5rem 16.25rem 10.125rem;
+            padding: 10.125rem 5rem 10.125rem 10.125rem;
             border-right: 1px solid var(--dark-15);
 
             .contacts-icon {
@@ -105,7 +105,8 @@
         }
 
         .contacts-block-column-2 {
-            padding: 15rem 5rem 15rem 10.125rem;
+            padding: 5rem 10.125rem 5rem 5rem;
+            row-gap: 1.875rem;
             .send-message-form {
                 display: flex;
                 flex-direction: column;

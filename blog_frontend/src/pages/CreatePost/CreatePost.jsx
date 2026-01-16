@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import SimpleMde from 'react-simplemde-editor';
 import "easymde/dist/easymde.min.css";
 import { useParams } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 
 import { API_URL } from '../../utils/constants';
 import styles from './CreatePost.module.scss';
@@ -16,6 +17,7 @@ const CreatePost = () => {
 	const [category, setCategory] = useState('');
 	const [text, setText] = useState('');
 	const [preview, setPreview] = useState('');
+	const [errors, setErrors] = useState([]);
 
 	const navigate = useNavigate();
 
@@ -51,6 +53,8 @@ const CreatePost = () => {
 	}
 
 	const onSubmitPost = async () => {
+		setErrors([]); // Очищаем предыдущие ошибки
+		
 		try {
 			const fields = {
 				title,
@@ -59,10 +63,41 @@ const CreatePost = () => {
 				description,
 				category: category || ''
 			};
-			const data = isEditing ? await editPost({ id, fields }) : await createPost(fields);
-			isEditing ? navigate(`/posts/post-detail/${id}`) : navigate(`/posts/post-detail/${data?.data?._id}`);
+			
+			const result = isEditing ? await editPost({ id, fields }) : await createPost(fields);
+			
+			// Проверяем наличие ошибок в ответе RTK Query
+			if (result.error) {
+				// Обрабатываем ошибки валидации
+				if (result.error.data?.errors && Array.isArray(result.error.data.errors)) {
+					const validationErrors = result.error.data.errors.map(err => {
+						// Ошибки валидации могут быть в формате { msg, param } или просто строками
+						return typeof err === 'string' ? err : (err.msg || err.message || 'Validation error');
+					});
+					setErrors(validationErrors);
+				} else if (result.error.data?.message) {
+					setErrors([result.error.data.message]);
+				} else if (result.error.data) {
+					// Если data - это строка или другой формат
+					setErrors([typeof result.error.data === 'string' ? result.error.data : 'An error occurred while creating the post']);
+				} else {
+					setErrors([result.error.message || 'An error occurred while creating the post']);
+				}
+				return; // Не переходим на другую страницу при ошибке
+			}
+			
+			// Если все успешно, переходим на страницу поста
+			if (result.data) {
+				const postId = isEditing ? id : result.data._id;
+				if (postId) {
+					navigate(`/posts/post-detail/${postId}`);
+				} else {
+					setErrors(['Post ID is missing']);
+				}
+			}
 		} catch (error) {
 			console.warn(error);
+			setErrors([error.message || 'An unexpected error occurred']);
 		}
 	};
 
@@ -99,13 +134,14 @@ const CreatePost = () => {
 		<div className={styles.postEditor}>
 			<div className="container">
 				<div className={styles.postEditorWrapper}>
+					<h1>Create a Post</h1>
 					<div className={styles.image}>
-						<Button variant='outlined' onClick={() => inputRef.current.click()}>Load preview</Button>
+						<Button onClick={() => inputRef.current.click()} btnName="Load preview" isYellow/>
 						<input ref={inputRef} type="file" hidden onChange={handleChangeFile} />
 						{
 							image && (
 								<>
-									<Button variant='outlined' onClick={removeImage}>Delete</Button>
+									<Button onClick={removeImage} btnName="Delete" isYellow/>
 									<img 
 										src={preview ? preview : `${API_URL}${image}`} 
 										alt="Post"
@@ -117,6 +153,15 @@ const CreatePost = () => {
 							)
 						}
 					</div>
+					{errors.length > 0 && (
+						<div className={styles.errorContainer}>
+							{errors.map((error, index) => (
+								<div key={index} className={styles.errorMessage}>
+									{error}
+								</div>
+							))}
+						</div>
+					)}
 					<div className={styles.formColWrapper}>
 						<TextField
 							value={title || ''}
@@ -170,8 +215,8 @@ const CreatePost = () => {
 					</div>
 					<SimpleMde className={styles.editor} options={delay} onChange={changeText} value={text || ''} />
 					<div className={styles.buttons}>
-						<button className='btn' onClick={onSubmitPost}>{isEditing ? 'Edit Post' : 'Add Post'}</button>
-						<button className='btn' onClick={stepBack}>Cancel</button>
+						<Button onClick={onSubmitPost} btnName={isEditing ? 'Edit Post' : 'Add Post'} isYellow/>
+						<Button onClick={stepBack} btnName="Cancel" isYellow/>
 					</div>
 				</div>
 			</div>
