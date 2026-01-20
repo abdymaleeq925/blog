@@ -6,9 +6,9 @@ import { Rating } from '@mui/material';
 import { Star, StarBorder, StarHalf } from '@mui/icons-material';
 import { IoArrowForwardCircle } from "react-icons/io5";
 import { IoArrowBackCircle } from "react-icons/io5";
-import videoIconOne from '../assets/videoIconOne.svg';
-import videoIconTwo from '../assets/videoIconTwo.svg';
-import exploreIcon from '../assets/exploreIcon.svg';
+import videoIconOne from '../assets/icons/videoIconOne.svg';
+import videoIconTwo from '../assets/icons/videoIconTwo.svg';
+import exploreIcon from '../assets/icons/exploreIcon.svg';
 import { Title } from '../components';
 
 const Videos = () => {

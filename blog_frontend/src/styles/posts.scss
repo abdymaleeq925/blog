@@ -31,13 +31,14 @@
     }
 
     &__recent-title {
+      font-family: Kumbh Sans;
       padding-left: 10.125rem;
       font-size: 3rem;
     }
 
     &__recent {
-        padding: 5rem 0;
-        border-bottom: 1px solid var(--dark-15);
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--dark-15);
     }
 
     &__list-title {
@@ -47,18 +48,17 @@
     }
 
     &__list {
-        padding: 5rem 10rem;              // внешние отступы слева/справа 10rem
-        max-width: calc(100% - 10rem);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--grey-60) var(--dark-10);
-
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 1.875rem;
-    scroll-snap-type: x proximity;     // более мягкое прилипание
-    scroll-padding: 10rem;             // отступ от края при скролле
+      padding: 5rem 10rem;
+      max-width: calc(100% - 10rem);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--grey-60) var(--dark-10);
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 1.875rem;
+      scroll-snap-type: x proximity;
+      scroll-padding: 10.125rem;
 
     &::-webkit-scrollbar {
       height: 8px;
@@ -74,28 +74,24 @@
       border-radius: 10px;
     }
 
-    // Карточки
     .post-item--list {
-      flex: 0 0 30%;                    // ~1/3 ширины минус gap
-      max-width: 512px;                 // максимум 480px (примерно)
-      min-width: 512px;                 // не сжимаются слишком сильно
+      flex: 0 0 30%;
+      max-width: 512px;
+      min-width: 512px;
       scroll-snap-align: start;
-
-      // Убираем лишние внутренние padding у карточек — они уже есть в .post-item
     }
 
-    // Адаптив
     @media (max-width: 1200px) {
       padding: 5rem 5rem;
       .post-item--list {
-        flex: 0 0 45%;                // 2 карточки в ряд
+        flex: 0 0 45%;
       }
     }
 
     @media (max-width: 768px) {
       padding: 3rem 2rem;
       .post-item--list {
-        flex: 0 0 80%;                // почти вся ширина экрана — удобно листать
+        flex: 0 0 80%;
         scroll-snap-align: center;
       }
     }

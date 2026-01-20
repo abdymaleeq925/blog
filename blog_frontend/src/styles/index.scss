@@ -27,7 +27,6 @@
     --grey-97: #F7F7F8;
     --grey-99: #FCFCFD;
 
-    /* theme tokens */
     --background-color: var(--dark-08);
     --background-color-lighter: var(--dark-10);
     --text-color: #fff;
@@ -37,6 +36,7 @@
 }
 
 [data-theme="dark"] {
+
     --background-color: var(--dark-08);
     --background-color-lighter: var(--dark-10);
     --text-color: #fff;
@@ -45,9 +45,9 @@
     --avatar-icon-color: #fff;
 
     .switch-toggles::after {
-        left: 15px !important;
-        right: auto !important;
+        left: 14px !important;
     }
+
     @media screen and (width <= 480px) {
         .switch-toggles::after {
             width: 22px;
@@ -114,57 +114,6 @@ img {
     width: 100%;
 }
 
-.title-wrapper {
-    padding: 7.5rem 10rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--dark-10);
-    border-top: 0.5px solid var(--dark-15);
-    border-bottom: 0.5px solid var(--dark-15);
-}
-
-.title-text-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    flex: 1;
-    min-width: 0;
-}
-
-.title-tag {
-    width: fit-content;
-    padding: 0.375rem 0.625rem;
-    background-color: var(--dark-20);
-    border-radius: 0.25rem;
-    font-family: Inter;
-    color: white;
-    font-weight: 500;
-    font-size: 1.25rem;
-    line-height: 150%;
-}
-
-.title-text {
-    font-family: Kumbh Sans;
-    color: white;
-    font-weight: 500;
-    font-size: 3.625rem;
-    line-height: 130%;
-}
-
-.flex {
-    display: flex;
-}
-
-.wrap {
-    flex-wrap: wrap;
-}
-
-.posts__wrapper {
-    gap: 30px;
-    margin-top: 50px;
-}
-
 .forms {
     height: 100vh;
     display: flex;
@@ -178,7 +127,6 @@ img {
         display: flex;
         flex-direction: column;
         align-items: center;
-        
 
         h2 {
             font-family: 'Kumbh Sans', sans-serif;
@@ -189,9 +137,9 @@ img {
         }
     }
 
-    // Стили для кнопки пароля внутри TextField
     .password {
         position: relative;
+
         .btn-showpassword {
             position: absolute;
             right: 12px;
@@ -208,13 +156,6 @@ img {
         }
     }
 
-    .btn-primary {
-        margin-top: 10px;
-        background-color: var(--yellow-55);
-        border-radius: 4px;
-        color: #000;
-        &:hover { background-color: var(--yellow-60); }
-    }
 }
 
 .form-col {
@@ -227,25 +168,23 @@ img {
 .field {
     width: 100%;
 
-    // 1. Стили текста и лейбла
     .MuiInputBase-input {
         color: #fff !important;
         font-family: 'Kumbh Sans', sans-serif;
     }
 
     .MuiInputLabel-root {
-        color: var(--grey-60); // Серый в покое
+        color: var(--grey-60);
         font-family: 'Kumbh Sans', sans-serif;
 
         &.Mui-focused {
-            color: var(--yellow-55); // Желтый при фокусе
+            color: var(--yellow-55);
         }
         &.Mui-error {
-            color: #f44336; // Красный при ошибке
+            color: #f44336;
         }
     }
 
-    // 2. Стили рамки (Border)
     .MuiOutlinedInput-root {
         fieldset {
             border-color: var(--dark-30);
@@ -266,17 +205,17 @@ img {
         }
     }
 
-    // 3. САМЫЙ ОПТИМАЛЬНЫЙ ФИКС АВТОЗАПОЛНЕНИЯ
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus {
-        -webkit-text-fill-color: #fff !important; // Цвет текста
-        transition: background-color 600000s ease-in-out 0s; // Убирает белый фон
-        caret-color: #fff; // Цвет курсора
+        -webkit-text-fill-color: #fff !important;
+        transition: background-color 600000s ease-in-out 0s;
+        caret-color: #fff;
     }
 }
 
 .password {
+    width: 100%;
     position: relative;
 
     .btn-showpassword {
@@ -291,34 +230,30 @@ img {
     }
 }
 
-.post-item.post-item--sm.row {
-    .post-item__info-author {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-
-        * {
-            width: 100%;
-        }
-    }
-
-    .post-item__image {
-        height: 100%;
-        max-height: 250px;
-    }
-}
-
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 0;
     gap: 10px;
+
     span {
         font-size: 25px;
     }
+
     svg {
         color: var(--yellow-55);
+        font-size: 2.75rem;
+
+        &:first-child {
+            &:hover {
+                transform: translateX(-2px);
+            }    
+        }
+
+        &:hover {
+            transform: translateX(2px);
+        }
     }
 }
 
@@ -378,6 +313,7 @@ img {
         display: flex;
         justify-content: space-between;
         padding: 2.5rem 0;
+
         .terms-policy {
             display: flex;
             p:nth-child(1) {
@@ -388,6 +324,19 @@ img {
                 padding-left: 0.75rem;
             }
         }
+
+        .contact-social-btns {
+            display: flex;
+            gap: 1.25rem;
+            a {
+                padding: 0;
+            }
+            .social-icon {
+                color: var(--avatar-icon-color);
+                font-size: 24px;
+            }
+        }
+
         p {
             font-family: Inter;
             color: var(--dark-40);

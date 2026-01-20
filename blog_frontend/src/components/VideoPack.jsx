@@ -51,7 +51,6 @@ const VideoPack = () => {
             />
             <div className="videoPack__grid">
                 {loading ? (
-                    // Показываем 4 скелетона во время загрузки
                     Array.from({ length: 4 }).map((_, index) => (
                         <div key={`skeleton-${index}`} className="videoPack__card">
                             <PostSkeleton variant="video" />

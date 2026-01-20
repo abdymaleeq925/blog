@@ -1,5 +1,5 @@
 import React from 'react';
-import exploreIcon from '../assets/exploreIcon.svg';
+import exploreIcon from '../assets/icons/exploreIcon.svg';
 import '../styles/index.scss';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/Button';

@@ -1,7 +1,9 @@
 import React from 'react';
+
 import Title from './Title';
-import futureTechIcon from '../assets/futureTechIcon.svg';
-import researchIcon from '../assets/researchIcon.svg';
+
+import futureTechIcon from '../assets/icons/futureTechIcon.svg';
+import researchIcon from '../assets/icons/researchIcon.svg';
 
 const HomeFeatures = () => {
   return (

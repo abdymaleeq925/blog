@@ -11,11 +11,11 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import EmailIcon from "@mui/icons-material/Email";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import likedIcon from "../assets/likedIcon.svg";
-import likeIcon from "../assets/likeIcon.svg";
-import viewsIcon from "../assets/viewsIcon.svg";
-import shareIcon from "../assets/shareIcon.svg";
-import arrowDownIcon from "../assets/arrowDownIcon.svg";
+import likedIcon from "../assets/icons/likedIcon.svg";
+import likeIcon from "../assets/icons/likeIcon.svg";
+import viewsIcon from "../assets/icons/viewsIcon.svg";
+import shareIcon from "../assets/icons/shareIcon.svg";
+import arrowDownIcon from "../assets/icons/arrowDownIcon.svg";
 
 
 import { PostItem } from "../components";
@@ -35,7 +35,7 @@ import "../styles/postDetail.scss";
 import Comment from "../components/Comment";
 import { API_URL } from "../utils/constants";
 import { Button } from "../components/ui/Button";
-import exploreIcon from '../assets/exploreIcon.svg';
+import exploreIcon from '../assets/icons/exploreIcon.svg';
 
 Modal.setAppElement("#root");
 

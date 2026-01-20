@@ -59,7 +59,6 @@ const Login = ({ formType, setFormType }) => {
         }
     );
 
-    console.log("errors", errors);
   return (
     <>
         <h2>Log In</h2>
@@ -71,7 +70,7 @@ const Login = ({ formType, setFormType }) => {
                 helperText={errors.email?.message}
                 {...register('email', {required: 'Email is required'})}
             />
-            <div className='password' style={{width: '100%'}}>
+            <div className='password'>
                 <TextField
                     label = 'Password'
                     className='field'

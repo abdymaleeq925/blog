@@ -1,17 +1,11 @@
 .skeleton {
+    background: transparent;
+
     &--post {
-        width: calc(33.3% - 20px);
-
-        .skeleton-info {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .skeleton-user {
-            display: flex;
-            gap: 15px;
-        }
+        padding: 2rem 10.125rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
     }
 
     &--video {

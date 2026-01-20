@@ -1,7 +1,9 @@
 import React from 'react'
 import { Rating } from '@mui/material';
 import { Star, StarBorder, StarHalf } from '@mui/icons-material';
+
 import Title from './Title'
+
 import avatar9 from '../assets/avatar9.png';
 import avatar10 from '../assets/avatar10.png';
 import avatar11 from '../assets/avatar11.png';
@@ -60,12 +62,12 @@ const HomeTestimonials = () => {
       <Title
         tag="What Our Readers Say"
         title="Real Words from Real Readers"
-        button={{ text: "View All Testimonials", href: "resources" }}
+        button={{ text: "View All Testimonials", href: "posts" }}
       />
-      <div className='hometestimonials container'>
-        {
-          testimonials.map((person, index) => (
-            <div className={`hometestimonials-item item-${index + 1}`} key={index}>
+      <div className='hometestimonials'>
+        {testimonials.map((person, index) => (
+          <div className={`hometestimonials-item item-${index + 1}`} key={index}>
+            <div className="content-wrapper">
               <div className="hometestimonials-item-person-info">
                 <img src={person.avatar} alt="avatar" />
                 <div className="hometestimonials-item-person-info-name">
@@ -73,28 +75,24 @@ const HomeTestimonials = () => {
                   <p className="person-location">{person.location}</p>
                 </div>
               </div>
-              
+
               <div className="hometestimonials-item-person-comment">
-              <div className="rating-wrapper">
-              <Rating
-                name="custom-rating"
-                value={person.rank}
-                precision={0.1}                 // дробные с шагом 0.1
-                icon={<Star fontSize="inherit" />}
-                emptyIcon={<StarBorder fontSize="inherit" />}
-                halficon={<StarHalf fontSize="inherit" />}
-                readOnly={true}
-                // onChange={(e, newValue) => console.log(newValue)}
-              />
-              </div>
-              <p className="person-comment">{person.comment}</p>  
+                <div className="rating-wrapper">
+                  <Rating
+                    name="custom-rating"
+                    value={person.rank}
+                    precision={0.1}
+                    icon={<Star fontSize="inherit" />}
+                    emptyIcon={<StarBorder fontSize="inherit" />}
+                    halficon={<StarHalf fontSize="inherit" />}
+                    readOnly={true}
+                  />
+                </div>
+                <p className="person-comment">{person.comment}</p>
               </div>
             </div>
-          ))
-        }
-
-
-
+          </div>
+        ))}
       </div>
     </div>
 

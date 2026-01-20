@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { Button } from '../components/ui/Button'
 import { FaLinkedin, FaGithub, FaTelegram } from "react-icons/fa";
-import exploreIcon from '../assets/exploreIcon.svg';
-import getInTouchIcon from '../assets/getInTouchIcon.svg';
-import faqIcon from '../assets/faqIcon.svg';
+import exploreIcon from '../assets/icons/exploreIcon.svg';
+import getInTouchIcon from '../assets/icons/getInTouchIcon.svg';
+import faqIcon from '../assets/icons/faqIcon.svg';
 
 import { Accordion, AccordionDetails, AccordionSummary, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -59,7 +59,7 @@ const Contacts = () => {
 
     return (
         <div className='contacts'>
-            <div className="upper-blocks">
+            <div ref={formRef} className="upper-blocks">
                 <div className="contacts-block-row-1">
                     <p>General Inquiries</p>
                     <div className="contact-cta-btns">
@@ -148,7 +148,7 @@ const Contacts = () => {
                     <h1>Get in Touch with Us</h1>
                 </div>
                 <div className="contacts-block-column-2">
-                    <form ref={formRef} className="send-message-form" onSubmit={handleSubmit}>
+                    <form className="send-message-form" onSubmit={handleSubmit}>
                         {/* Строка 1: Имя + Фамилия */}
                         <div className="form-row">
                             <TextField

@@ -30,7 +30,6 @@
         transition: color 0.2s ease;
     }
 
-    // 3. Цвет границы (fieldset)
     :global(.MuiOutlinedInput-notchedOutline) {
         border-color: var(--dark-25) !important;
         transition: border-color 0.2s ease;
@@ -38,10 +37,10 @@
 
     &:hover {
         :global(.MuiOutlinedInput-notchedOutline) {
-            border-color: var(--grey-50) !important; // Граница становится светлее (grey-50)
+            border-color: var(--grey-50) !important;
         }
         :global(.MuiSelect-icon) {
-            color: #fff !important; // Опционально: иконка тоже чуть светлеет
+            color: #fff !important;
         }
     }
     
@@ -75,13 +74,11 @@
     padding: 12px 16px !important;
     transition: all 0.2s ease !important;
 
-    // Когда наводим мышкой на пункт
     &:hover {
         background-color: var(--yellow-55) !important;
         color: var(--dark-15) !important;
     }
 
-    // Когда пункт выбран (active)
     &.Mui-selected {
         background-color: var(--yellow-55) !important;
         color: var(--yellow-55) !important;
@@ -93,7 +90,7 @@
 }
 
 .title {
-    width: 100% !important; // TextField занимает всё место
+    width: 100% !important;
     
     :global(.MuiInputBase-input) {
         color: #fff !important;
@@ -108,7 +105,6 @@
 }
 
 .categoryFormControl {
-    // Ограничиваем только блок с категорией
     max-width: 400px !important; 
 }
 
@@ -116,7 +112,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 100%; // Растягиваем обертку на всю ширину редактора
+    width: 100%;
 }
 
 .image {
@@ -137,20 +133,16 @@
 .editor {
 
     :global {
-        // Убираем красный фон у слов с "ошибками"
         .cm-spell-error {
           background: transparent !important;
-          // Если хочешь, можно добавить легкое подчеркивание вместо фона:
           border-bottom: 1px dotted var(--yellow-55); 
         }
     
-        // Дополнительно: убираем стандартные стили для других типов текста
         .cm-header, .cm-strong, .cm-em {
           color: inherit !important;
         }
       }
   
-    // 1. Тулбар (панель инструментов)
     :global(.editor-toolbar) {
       background-color: var(--dark-10);
       border: 1px solid var(--dark-25);
@@ -173,7 +165,6 @@
       }
     }
   
-    // 2. Основное поле ввода (CodeMirror)
     :global(.CodeMirror) {
       background-color: var(--dark-08) !important;
       color: #fff !important; // Цвет текста
@@ -182,28 +173,23 @@
       font-family: 'Kumbh Sans', sans-serif;
     }
   
-    // 3. Цвет текста при наборе (пробиваем специфичность CodeMirror)
     :global(.CodeMirror-line) {
       color: #fff !important;
     }
   
-    // 4. Курсор (чтобы он не был черным и невидимым)
     :global(.CodeMirror-cursor) {
       border-left: 2px solid var(--yellow-55) !important;
     }
   
-    // 5. Выделение текста
     :global(.CodeMirror-selected) {
       background: rgba(255, 255, 255, 0.1) !important;
     }
   
-    // 6. Окно превью (если нажать на глаз)
     :global(.editor-preview) {
       background-color: var(--dark-08) !important;
       color: var(--grey-50);
     }
   
-    // 7. Статус-бар (внизу)
     :global(.editor-statusbar) {
       color: var(--grey-60);
     }
