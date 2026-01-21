@@ -1,22 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-import "../styles/postItem.scss";
 import PostSkeleton from "./Skeleton";
+import { API_URL } from "../utils/constants";
+
 import exploreIcon from "../assets/icons/exploreIcon.svg";
 import likeIcon from "../assets/icons/likeIcon.svg";
 import likedIcon from "../assets/icons/likedIcon.svg";
 import commentIcon from "../assets/icons/commentIcon.svg";
 import shareIcon from "../assets/icons/shareIcon.svg";
-import { Link } from "react-router-dom";
-import { API_URL } from "../utils/constants";
+
+import "../styles/postItem.scss";
 
 
 const DefaultAvatar = ({ className = "" }) => (
   <svg
     className={className}
     viewBox="0 0 35 35"
-    fill="currentColor" // Позволяет менять цвет через CSS свойство color
+    fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g id="SVGRepo_iconCarrier">
@@ -32,7 +34,7 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
   }, 0);
 
   if (isLoading) {
-    return <PostSkeleton variant={type}/>;
+    return <PostSkeleton variant={type} />;
   }
 
   return (
@@ -58,13 +60,14 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
                 className="author-avatar"
                 src={`${API_URL}${post.user.avatarUrl}`}
                 alt={`${post.user.fullName} avatar`}
+                loading="lazy"
               />
             ) : (
               <DefaultAvatar className="author-avatar" />
             )}
             <div className="author-content">
-              <p className="author-name">{post.user.fullName}</p>
-              <p className="post-item-topic">{post.category || "Uncategorized"}</p>
+              <p className="author-name">{post?.user?.fullName}</p>
+              <p className="post-item-topic">{post?.category || "Uncategorized"}</p>
             </div>
           </div>
         )}
@@ -72,20 +75,20 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
         <div className="post-item-content">
           {type === "" && (
             <p className="post-item-content-date">
-              {dayjs(post.createdAt).format("MMMM D, YYYY")}
+              {dayjs(post?.createdAt).format("MMMM D, YYYY")}
             </p>
           )}
 
           <div className="post-item-context">
-            <h2 className="post-item-title">{post.title}</h2>
+            <h2 className="post-item-title">{post?.title}</h2>
             {type === "" ? (
               <article className="post-item-description">
-                {post.text?.replace(/#+ /g, '').replace(/\n/g, ' ').replace(/\s+/g, ' ')}
+                {post?.text?.replace(/#+ /g, '').replace(/\n/g, ' ').replace(/\s+/g, ' ')}
               </article>
             ) : type === "recent" ? (
-              <p className="post-item-description">{post.description}</p>
+              <p className="post-item-description">{post?.description}</p>
             ) : (
-              <p className="post-item-category">{post.category}</p>
+              <p className="post-item-category">{post?.category}</p>
             )}
           </div>
 
@@ -115,12 +118,12 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
           <div className="cta-icons">
             <div className="cta-btns">
               <button className="cta-btn">
-                {post.likes.some((like) => like._id === userId) ? (
+                {post?.likes?.some((like) => like._id === userId) ? (
                   <img src={likedIcon} alt="liked" />
                 ) : (
                   <img src={likeIcon} alt="like" />
                 )}
-                {post.likes.length}
+                {post?.likes?.length}
               </button>
               <button className="cta-btn">
                 <img src={commentIcon} alt="comment" />
@@ -128,19 +131,19 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
               </button>
               <button className="cta-btn">
                 <img src={shareIcon} alt="share" />
-                {post.shares.length}
+                {post?.shares?.length}
               </button>
             </div>
             {
               type !== "" && (
-                <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>Read More {type === "list" && <img src={exploreIcon} alt="explore" />}</Link>
+                <Link className="action-btn" to={`/posts/post-detail/${post?._id}`}>Read More {type === "list" && <img src={exploreIcon} alt="explore" />}</Link>
               )
             }
           </div>
         </div>
 
         {type === "" && (
-          <Link className="action-btn" to={`/posts/post-detail/${post._id}`}>
+          <Link className="action-btn" to={`/posts/post-detail/${post?._id}`}>
             View Blog <img src={exploreIcon} alt="explore" />
           </Link>
         )}

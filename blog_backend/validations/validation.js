@@ -16,5 +16,5 @@ export const postValidation = [
     body('description', 'Description must contain maximum 300 characters').isLength({min: 1, max: 300}),
     body('text', 'Text must contain at least 3 characters').isLength({min: 3}),
     body('category', 'Category must be a string').isString(),
-    body('imageUrl', 'Incorrect image link').isString()
+    body('imageUrl', 'Incorrect image link or you did not upload the image').isLength({min: 1}).isString()
 ];

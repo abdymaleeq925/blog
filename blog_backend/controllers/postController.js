@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
+import { validationResult } from 'express-validator';
 
 import { Post, Comment } from "../models/Post.js";
 
 export const create = async (request, response) => {
   try {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
     const doc = new Post({
       title: request.body.title,
       text: request.body.text,

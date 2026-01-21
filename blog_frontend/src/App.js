@@ -1,13 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAuthState } from './redux/authSlice.js';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import './styles/index.css';
+import { setAuthState } from './redux/authSlice.js';
+import { useGetProfileQuery } from './services/authApi.js';
+
 import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost, Videos, Contacts} from './pages/index.js';
 import { Footer, Header } from './components/index.js';
-import { useGetProfileQuery } from './services/authApi.js';
+
+import './styles/index.scss';
 
 function App() {
   const linkUrl = useLocation();
@@ -32,6 +35,7 @@ function App() {
       {
         lastPath !== 'registration' && <Header/>
       }
+      <ToastContainer hideProgressBar={true} position='bottom-center' newestOnTop={true} limit={1}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/create-post' element={<CreatePost/>}/>

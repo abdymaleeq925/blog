@@ -16,7 +16,7 @@ export const authApi = createApi({
             query: (user) => createRequest('/auth/login', 'POST', user)
         }),
         getProfile: builder.query({
-            query: (id) => createRequest('/auth/profile', 'GET')
+            query: () => createRequest('/auth/profile', 'GET')
         }) 
     })
 })

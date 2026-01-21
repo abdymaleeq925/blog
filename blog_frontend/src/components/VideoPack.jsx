@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Title from './Title'
+
 import { fetchAIVideos } from '../api/videos';
-import '../styles/videoPack.scss';
+import Title from './Title'
 import PostSkeleton from './Skeleton';
 
+import '../styles/videoPack.scss';
+
 const VideoPack = () => {
+
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,19 +15,18 @@ const VideoPack = () => {
     useEffect(() => {
         const loadVideos = async () => {
             try {
-              const data = await fetchAIVideos();
-              // Убеждаемся, что это массив
-              const videoArray = Array.isArray(data) ? data : data?.items || [];
-              setVideos(videoArray);
+                const data = await fetchAIVideos();
+                const videoArray = Array.isArray(data) ? data : data?.items || [];
+                setVideos(videoArray);
             } catch (err) {
-              setError(err.message || "Failed to load videos");
-              console.error("Video fetch error:", err);
+                setError(err.message || "Failed to load videos");
+                console.error("Video fetch error:", err);
             } finally {
-              setLoading(false);
+                setLoading(false);
             }
-          };
-      
-          loadVideos();
+        };
+
+        loadVideos();
     }, []);
 
     if (error) {

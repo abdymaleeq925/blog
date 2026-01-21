@@ -30,6 +30,7 @@
     "react-select": "^5.10.2",
     "react-select-country-list": "^2.2.3",
     "react-simplemde-editor": "^5.2.0",
+    "react-toastify": "^11.0.5",
     "rehype-highlight": "^7.0.2",
     "rehype-raw": "^7.0.0",
     "sass": "^1.77.5",

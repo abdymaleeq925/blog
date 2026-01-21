@@ -6,6 +6,7 @@ import { PostItem, HomeBlogs, VideoPack } from '../components';
 import '../styles/posts.scss';
 
 const Posts = () => {
+
   const { data: posts, isFetching } = useGetPostsQuery();
 
   return (
@@ -27,7 +28,6 @@ const Posts = () => {
             <h3 className='posts__recent-title'>Latest post</h3>
             <PostItem isLoading={true}/>
           </div>
-          
           <h3 className='posts__list-title'>Slide for more posts</h3>
           <div className="posts__list">
             {[...Array(3)].map((_, i) => (
@@ -51,7 +51,7 @@ const Posts = () => {
           </div>
         </>
       ) : (
-        <div>No posts available</div>
+        <h1 className='posts-empty'>No posts available</h1>
       )}
       <HomeBlogs />
       <VideoPack />
