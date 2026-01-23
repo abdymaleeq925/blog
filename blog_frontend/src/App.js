@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setAuthState } from './redux/authSlice.js';
 import { useGetProfileQuery } from './services/authApi.js';
 
-import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost, Videos, Contacts} from './pages/index.js';
+import {Home, PostDetail, Posts, Profile, Registration, FourOFour, CreatePost, Videos, Contacts, Resources} from './pages/index.js';
 import { Footer, Header } from './components/index.js';
 
 import './styles/index.scss';
@@ -46,6 +46,7 @@ function App() {
         <Route path='/profile/:userId' element={<Profile/>}/>
         <Route path='/profile/registration' element={<Registration/>}/>
         <Route path='/contact-us' element={<Contacts/>}/>
+        <Route path='/resources' element={<Resources/>}/>
         <Route path='/*' element={<FourOFour/>}/>
       </Routes>
       {

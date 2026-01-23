@@ -7,3 +7,4 @@ export { default as Registration } from './Registration.jsx';
 export { default as Videos } from './Videos.jsx';
 export { default as FourOFour } from './FourOFour.jsx';
 export { default as Contacts } from './Contacts.jsx';
+export { default as Resources } from './Resources.jsx';

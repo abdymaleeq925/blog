@@ -12,9 +12,9 @@ import avatar5 from '../assets/avatar5.png';
 import avatar6 from '../assets/avatar6.png';
 import avatar7 from '../assets/avatar7.png';
 import avatar8 from '../assets/avatar8.png';
-import ebooks from '../assets/ebooks.svg';
+import ebooks from '../assets/icons/ebooks.svg';
 import ebooksImage from '../assets/ebooksImage.png';
-import whitepapers from '../assets/whitepapers.svg';
+import whitepapers from '../assets/icons/whitepapers.svg';
 import whitepapersImage from '../assets/whitepapersImage.png';
 
 import exploreIcon from '../assets/icons/exploreIcon.svg';
