@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/lovable-uploads/b3b6d914-7a4f-4146-bc22-b15166f698d9.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Royal Book Publishing - Academic Publishing Excellence</title>
+    <meta name="description" content="Transform your research into prestigious publications. Professional book publishing, academic chapters, and conference proceedings with global reach." />
+    <meta name="author" content="Royal Book Publishing" />
+    <meta name="keywords" content="academic publishing, book publishing, conference proceedings, scholarly publishing, research publication" />
+    
+    <!-- Tamil Font Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta property="og:title" content="Royal Book Publishing - Academic Publishing Excellence" />
+    <meta property="og:description" content="Transform your research into prestigious publications. Professional book publishing, academic chapters, and conference proceedings with global reach." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e39451e7-8259-456e-8232-8ead2c9143d3/id-preview-a703cea8--19a7bd55-a1b2-4d52-8a12-5084b4309fdb.lovable.app-1765735701068.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e39451e7-8259-456e-8232-8ead2c9143d3/id-preview-a703cea8--19a7bd55-a1b2-4d52-8a12-5084b4309fdb.lovable.app-1765735701068.png" />
+    <script type="module" crossorigin src="/assets/index-CaFFP1Qu.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CbqBtNxL.css">
+  <script defer src="https://www.royalbookpublishing.com/~flock.js" data-proxy-url="https://www.royalbookpublishing.com/~api/analytics"></script></head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

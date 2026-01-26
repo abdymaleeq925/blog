@@ -86,6 +86,33 @@ const PostSkeleton = ({ variant }) => {
     );
   }
 
+  if (variant.includes('resources')) {
+    if(variant.includes('other')) {
+      return (
+        <Stack direction="column" spacing={2}>
+          <Skeleton
+            variant='rounded'
+            width={107}
+            height={157}
+            sx={{ bgcolor: 'var(--dark-10)'}}
+          />
+          <Skeleton variant='text' width="100%" height={24} sx={{ bgcolor: 'var(--dark-10)'}}/>
+          <Skeleton variant='text' width="100%" height={24} sx={{ bgcolor: 'var(--dark-10)'}}/>
+        </Stack>
+      )
+    } else if(variant.includes('recent')) {
+      return (
+        <Skeleton
+          variant='rounded'
+          width={107}
+            height={157}
+            sx={{ bgcolor: 'var(--dark-10)'}}
+        />
+      )
+    }
+    
+  }
+
   return (
     <div className='skeleton skeleton--post'>
       <Stack direction="row" spacing={2} alignItems="center">

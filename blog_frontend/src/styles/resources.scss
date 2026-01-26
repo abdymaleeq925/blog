@@ -108,9 +108,10 @@
             flex-direction: column;
             gap: 3rem;
 
-            img {
+            .pdf-preview {
                 width: fit-content;
                 margin: 0 auto;
+                max-height: fit-content;
             }
         }
 
@@ -197,7 +198,6 @@
             display: flex;
             flex-direction: column;
             gap: 1.875rem;
-            align-items: center;
         }
 
         &-heading {
@@ -224,7 +224,6 @@
             flex-direction: column;
             gap: 0.875rem;
             .recent-resources-description-heading-1 {
-                text-wrap: nowrap;
                 font-family: Inter;
                 font-size: 1.5rem;
                 font-weight: 600;
@@ -310,10 +309,10 @@
         &-description {
             display: flex;
             flex-direction: column;
-            height: 100%;
             row-gap: 1.875rem;
             padding: 5rem 0;
             border-bottom: 1px solid var(--dark-15);
+
 
             // Границы только у нужных карточек (правый столбец не имеет border-right)
             &:nth-child(3n + 1),                  // 1, 4, 7...
@@ -334,13 +333,12 @@
                 padding-right: 10.125rem;
             }
 
-            .other-resources-thumbnail {
-                min-height: 273px;
-                aspect-ratio: 16 / 9; // вместо фиксированной высоты — пропорция
-                object-fit: cover;
-                display: block;
-                border-radius: 8px;
-                flex-shrink: 0; // картинка не сжимается
+            .pdf-mini-preview {
+                display: flex;
+                align-items: center;
+                width: min-content;
+                margin: 0 auto;
+                min-height: 9.56rem;
             }
 
             &-info {
