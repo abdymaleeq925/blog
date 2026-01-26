@@ -4,7 +4,7 @@
 
 # dependencies
 /node_modules
-/pdf_cache
+blog_backend/pdf_cache/
 /.pnp
 .pnp.js
 
