@@ -1,7 +1,7 @@
 .postEditor {
-    background-color: var(--dark-08);  
+    background-color: var(--dark-08);
     font-family: Inter, sans-serif;
-    padding: 50px 0;  
+    padding: 50px 0;
     border-bottom: 1px solid var(--dark-15);
 }
 
@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1.875rem;
+
     h1 {
         font-size: 3rem;
     }
@@ -17,11 +18,11 @@
 .selectCategory {
     background-color: var(--dark-08) !important;
     border-radius: 10px;
-    
+
     :global(.MuiSelect-select) {
         font-family: 'Kumbh Sans', sans-serif !important;
-        color: var(--text-color) !important; 
-        -webkit-text-fill-color: var(--text-color) !important; 
+        color: var(--text-color) !important;
+        -webkit-text-fill-color: var(--text-color) !important;
     }
 
     :global(.MuiSelect-icon) {
@@ -39,16 +40,18 @@
         :global(.MuiOutlinedInput-notchedOutline) {
             border-color: var(--grey-50) !important;
         }
+
         :global(.MuiSelect-icon) {
             color: #fff !important;
         }
     }
-    
+
     &.Mui-focused {
         :global(.MuiOutlinedInput-notchedOutline) {
             border-color: var(--yellow-55) !important;
             border-width: 2px !important;
         }
+
         :global(.MuiSelect-icon) {
             color: var(--yellow-55) !important;
             fill: var(--yellow-55) !important;
@@ -82,6 +85,7 @@
     &.Mui-selected {
         background-color: var(--yellow-55) !important;
         color: var(--yellow-55) !important;
+
         &:hover {
             background-color: var(--yellow-55) !important;
             color: var(--dark-15) !important;
@@ -91,12 +95,12 @@
 
 .title {
     width: 100% !important;
-    
+
     :global(.MuiInputBase-input) {
         color: #fff !important;
         font-size: 1.5rem;
         font-weight: 500;
-        
+
         &::placeholder {
             color: var(--grey-50) !important;
             opacity: 1;
@@ -105,7 +109,7 @@
 }
 
 .categoryFormControl {
-    max-width: 400px !important; 
+    max-width: 400px !important;
 }
 
 .formColWrapper {
@@ -120,7 +124,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    
+
     img {
         width: 200px;
         height: auto;
@@ -134,66 +138,70 @@
 
     :global {
         .cm-spell-error {
-          background: transparent !important;
-          border-bottom: 1px dotted var(--yellow-55); 
+            background: transparent !important;
+            border-bottom: 1px dotted var(--yellow-55);
         }
-    
-        .cm-header, .cm-strong, .cm-em {
-          color: inherit !important;
+
+        .cm-header,
+        .cm-strong,
+        .cm-em {
+            color: inherit !important;
         }
-      }
-  
+    }
+
     :global(.editor-toolbar) {
-      background-color: var(--dark-10);
-      border: 1px solid var(--dark-25);
-      border-bottom: none;
-      opacity: 1;
-  
-      button {
-        color: var(--grey-50) !important;
-        
-        &:hover, &.active {
-          background: var(--dark-20) !important;
-          border-color: var(--dark-30) !important;
-          color: var(--yellow-55) !important;
+        padding: 1rem;
+        background-color: var(--dark-10);
+        border: 1px solid var(--dark-25);
+        border-bottom: none;
+        opacity: 1;
+
+        button {
+            color: var(--grey-50) !important;
+
+            &:hover,
+            &.active {
+                background: var(--dark-20) !important;
+                border-color: var(--dark-30) !important;
+                color: var(--yellow-55) !important;
+            }
         }
-      }
-  
-      i.separator {
-        border-right-color: var(--dark-25);
-        border-left-color: var(--dark-25);
-      }
+
+        i.separator {
+            border-right-color: var(--dark-25);
+            border-left-color: var(--dark-25);
+        }
     }
-  
+
     :global(.CodeMirror) {
-      background-color: var(--dark-08) !important;
-      color: #fff !important; // Цвет текста
-      border: 1px solid var(--dark-25) !important;
-      border-radius: 0 0 10px 10px;
-      font-family: 'Kumbh Sans', sans-serif;
+        background-color: var(--dark-08) !important;
+        color: #fff !important; // Цвет текста
+        border: 1px solid var(--dark-25) !important;
+        border-radius: 0 0 10px 10px;
+        font-family: 'Kumbh Sans', sans-serif;
     }
-  
+
     :global(.CodeMirror-line) {
-      color: #fff !important;
+        color: #fff !important;
     }
-  
+
     :global(.CodeMirror-cursor) {
-      border-left: 2px solid var(--yellow-55) !important;
+        border-left: 2px solid var(--yellow-55) !important;
     }
-  
+
     :global(.CodeMirror-selected) {
-      background: rgba(255, 255, 255, 0.1) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
     }
-  
+
     :global(.editor-preview) {
-      background-color: var(--dark-08) !important;
-      color: var(--grey-50);
+        background-color: var(--dark-08) !important;
+        color: var(--grey-50);
     }
-  
+
     :global(.editor-statusbar) {
-      color: var(--grey-60);
+        color: var(--grey-60);
     }
-  }
+}
 
 .errorContainer {
     width: fit-content;
@@ -209,7 +217,7 @@
     font-size: 0.875rem;
     line-height: 1.5;
     margin-bottom: 0.5rem;
-    
+
     &:last-child {
         margin-bottom: 0;
     }
@@ -220,12 +228,15 @@
     gap: 1rem;
 }
 
-@media screen and (width <= 480px) {
-    .image, .buttons {
+@media screen and (width <=480px) {
+
+    .image,
+    .buttons {
         button {
             font-size: 12px;
         }
     }
+
     .title {
         input {
             font-size: 20px;

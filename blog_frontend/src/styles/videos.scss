@@ -1,3 +1,5 @@
+@import "mixins";
+
 .videos {
   background-color: var(--background-color);
 
@@ -5,18 +7,46 @@
     padding-top: 8.125rem;
     padding-bottom: 9.375rem;
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("xl") {
+      padding-top: 6rem;
+      padding-bottom: 7rem;
+    }
+
+    @include respond-to("lg") {
+      padding-top: 4rem;
+      padding-bottom: 5rem;
+    }
+
+    @include respond-to("sm") {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
   }
 
   .banner {
     display: flex;
     flex-direction: column;
     row-gap: 1.25rem;
+
     h1 {
       font-family: Kumbh Sans;
       font-size: 5rem;
-      line-height: 1.3;
+      line-height: 1.2;
       font-weight: 500;
       width: -webkit-fill-available;
+
+      @include respond-to("xl") {
+        font-size: 4rem;
+      }
+
+      @include respond-to("lg") {
+        font-size: 3rem;
+      }
+
+      @include respond-to("sm") {
+        font-size: 2.25rem;
+      }
     }
 
     p {
@@ -25,12 +55,22 @@
       line-height: 1.5;
       font-weight: 400;
       color: var(--grey-60);
+
+      @include respond-to("sm") {
+        font-size: 1rem;
+      }
     }
 
     .subbanner {
       display: flex;
       align-items: center;
       gap: 5rem;
+
+      @include respond-to("lg") {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
     }
   }
 
@@ -41,6 +81,11 @@
     gap: 0;
     background-color: var(--dark-08);
 
+    @include respond-to("lg") {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+
     &-title-1,
     &-title-2 {
       padding: 9.719rem 5rem 9.719rem 10.125rem;
@@ -49,10 +94,30 @@
       gap: 3.5rem;
       border-right: 1px solid var(--dark-15);
 
+      @include respond-to("xl") {
+        padding: 6rem 3rem 6rem 5rem;
+      }
+
+      @include respond-to("lg") {
+        padding: 4rem 2rem;
+        border-right: none;
+        border-bottom: 1px solid var(--dark-15);
+      }
+
+      @include respond-to("sm") {
+        padding: 3rem 1rem;
+        gap: 2rem;
+      }
+
       img {
         width: 5rem;
         height: 5rem;
         object-fit: contain;
+
+        @include respond-to("sm") {
+          width: 4rem;
+          height: 4rem;
+        }
       }
     }
 
@@ -60,11 +125,19 @@
       grid-column: 1;
       grid-row: 1;
       border-bottom: 1px solid var(--dark-15);
+
+      @include respond-to("lg") {
+        grid-row: auto;
+      }
     }
 
     &-title-2 {
       grid-column: 1;
       grid-row: 2;
+
+      @include respond-to("lg") {
+        grid-row: auto;
+      }
     }
 
     &-description-1,
@@ -74,9 +147,25 @@
       flex-direction: column;
       gap: 3rem;
 
+      @include respond-to("xl") {
+        padding: 4rem 5rem 4rem 3rem;
+      }
+
+      @include respond-to("lg") {
+        padding: 3rem 2rem;
+        border-bottom: 1px solid var(--dark-15);
+      }
+
+      @include respond-to("sm") {
+        padding: 2rem 1rem;
+        gap: 2rem;
+      }
+
       img {
         width: fit-content;
         margin: 0 auto;
+        max-width: 100%;
+        height: auto;
       }
     }
 
@@ -84,21 +173,33 @@
       grid-column: 2;
       grid-row: 1;
       border-bottom: 1px solid var(--dark-15);
+
+      @include respond-to("lg") {
+        grid-column: 1;
+        grid-row: auto;
+      }
     }
 
     &-description-2 {
       grid-column: 2;
       grid-row: 2;
+
+      @include respond-to("lg") {
+        grid-column: 1;
+        grid-row: auto;
+      }
     }
 
     &-title-container {
       display: flex;
       flex-direction: column;
       gap: 2rem;
+
       button {
         width: auto;
         justify-content: center;
         height: 63px;
+
         img {
           width: 24px;
         }
@@ -115,25 +216,38 @@
       align-items: center;
       gap: 2rem;
 
+      @include respond-to("sm") {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1.25rem;
+      }
+
       img {
         width: 1.5rem;
         height: 1.5rem;
       }
 
       .recent-videos-content {
-        flex: 1 1 auto; // занимает всё доступное пространство слева
+        flex: 1 1 auto;
         min-width: 0;
         display: flex;
         flex-direction: column;
         gap: 0.25rem;
       }
+
       .recent-videos-heading {
         font-family: Inter;
         font-weight: 400;
         font-size: 1.125rem;
         line-height: 1.5;
         color: var(--grey-60);
+
+        @include respond-to("sm") {
+          font-size: 1rem;
+        }
       }
+
       .recent-videos-text {
         font-family: Inter;
         font-weight: 500;
@@ -142,20 +256,30 @@
 
         display: -webkit-box;
         line-clamp: 3;
-        -webkit-line-clamp: 3; // максимум 3 строки (можно 2)
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @include respond-to("sm") {
+          font-size: 1rem;
+        }
 
         word-break: break-word;
         overflow-wrap: break-word;
         white-space: normal;
       }
-      .action-btn {
-        flex: 0 0 auto; // ← кнопка НЕ растягивается, берёт только свой размер
-        white-space: nowrap; // текст кнопки в одну строку
 
-        margin-left: auto; // дополнительная страховка — прижимает вправо
+      .action-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin-left: auto;
+
+        @include respond-to("sm") {
+          width: 100%;
+          margin-left: 0;
+          justify-content: center;
+        }
       }
     }
 
@@ -163,17 +287,25 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      @include respond-to("sm") {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
     }
 
     &-heading {
-      font-family:
-        Kumbh Sans,
-        sans-serif;
+      font-family: Kumbh Sans, sans-serif;
       font-weight: 600;
       font-size: 2.5rem;
-      line-height: 1.4;
+      line-height: 1.3;
       color: var(--white);
       text-transform: capitalize;
+
+      @include respond-to("sm") {
+        font-size: 2rem;
+      }
     }
 
     &-paragraph {
@@ -182,28 +314,37 @@
       font-size: 1.25rem;
       line-height: 1.5;
       color: var(--grey-60);
+
+      @include respond-to("sm") {
+        font-size: 1.125rem;
+      }
     }
 
     &-description-info-1 {
       display: flex;
       flex-direction: column;
       gap: 0.875rem;
+
       .recent-videos-description-heading-1 {
         text-wrap: nowrap;
         font-family: Inter;
         font-size: 1.5rem;
         font-weight: 600;
-        line-height: 150%;
+        line-height: 1.4;
+
+        @include respond-to("sm") {
+          font-size: 1.25rem;
+          text-wrap: wrap;
+        }
       }
+
       .recent-videos-description-text-1 {
         font-family: Inter;
         color: var(--grey-60);
         font-size: 1.125rem;
         font-weight: 400;
-        line-height: 150%;
-
+        line-height: 1.5;
         margin: 0;
-
         margin-top: auto;
 
         display: -webkit-box;
@@ -212,6 +353,10 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @include respond-to("sm") {
+          font-size: 1rem;
+        }
       }
     }
 
@@ -220,57 +365,83 @@
       grid-template-columns: repeat(3, 1fr);
       width: 100%;
       gap: 1.25rem;
+
+      @include respond-to("sm") {
+        grid-template-columns: 1fr;
+      }
+
       .recent-videos-total,
       .recent-videos-downloads {
         padding: 1.875rem;
         background-color: var(--dark-10);
         border: 1px solid var(--dark-15);
         border-radius: 13px;
+
+        @include respond-to("xl") {
+          padding: 1.25rem;
+        }
       }
 
       .recent-videos-downloads {
         display: flex;
         justify-content: space-between;
+        align-items: center;
       }
+
       .recent-videos-description-heading-2 {
         font-family: Inter;
         color: var(--grey-60);
         font-weight: 400;
         font-size: 1.125rem;
-        line-height: 150%;
+        line-height: 1.5;
       }
+
       .recent-videos-description-text-2 {
         font-family: Inter;
         font-weight: 600;
         font-size: 1.25rem;
-        line-height: 150%;
+        line-height: 1.5;
       }
     }
+
     .recent-videos-description-info-3 {
       padding: 1.875rem;
       background-color: var(--dark-10);
       border: 1px solid var(--dark-15);
       border-radius: 13px;
+
+      @include respond-to("xl") {
+        padding: 1.25rem;
+      }
+
       .recent-videos-description-heading-3 {
         font-family: Inter;
         color: var(--grey-60);
         font-weight: 400;
         font-size: 1.125rem;
-        line-height: 150%;
+        line-height: 1.5;
       }
+
       .recent-videos-description-text-3 {
         font-family: Inter;
         font-weight: 500;
         font-size: 1.25rem;
-        line-height: 150%;
+        line-height: 1.5;
       }
     }
   }
 
   .other-videos {
     display: grid;
-    grid-template-columns: 1fr 0.85fr 1fr;
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @include respond-to("lg") {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include respond-to("sm") {
+      grid-template-columns: 1fr;
+    }
 
     &-description {
       display: flex;
@@ -279,36 +450,116 @@
       row-gap: 1.875rem;
       padding: 5rem 0;
       border-bottom: 1px solid var(--dark-15);
+      box-sizing: border-box;
+      min-width: 0;
 
-      // Границы только у нужных карточек (правый столбец не имеет border-right)
-      &:nth-child(3n + 1),                  // 1, 4, 7...
-        &:nth-child(3n + 2) {
-        // 2, 5, 8...
+      @include respond-to("xl") {
+        padding: 4rem 0;
+      }
+
+      @include respond-to("sm") {
+        padding: 3rem 0;
+      }
+
+      &:nth-child(3n + 1),
+      &:nth-child(3n + 2) {
         border-right: 1px solid var(--dark-15);
         padding-right: 2.875rem;
         padding-left: 10.125rem;
+
+        @include respond-to("xl") {
+          padding-left: 5rem;
+          padding-right: 2rem;
+        }
+
+        @include respond-to("lg") {
+          border-right: none;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          border-right: 1px solid var(--dark-15);
+        }
+
+        @include respond-to("sm") {
+          border-right: none;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+
+      @include respond-to("lg") {
+        &:nth-child(2n) {
+          border-right: none;
+        }
+
+        &:nth-child(3n + 2) {
+          border-right: 1px solid var(--dark-15);
+        }
+
+        &:nth-child(2n + 1) {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+
+        &:nth-child(2n + 2) {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+      }
+
+      @include respond-to("sm") {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
       }
 
       &:nth-child(3n + 2),
       &:nth-child(3n + 3) {
-        padding-left: 2.875rem; // ← здесь твой нужный отступ
+        padding-left: 2.875rem;
+
+        @include respond-to("xl") {
+          padding-left: 2rem;
+        }
+
+        @include respond-to("lg") {
+          padding-left: 2rem;
+        }
+
+        @include respond-to("sm") {
+          padding-left: 1rem;
+        }
       }
 
-      &:nth-child(3n + 3), &:nth-child(3n + 6) {
+      &:nth-child(3n + 3) {
         padding-right: 10.125rem;
-      } 
+
+        @include respond-to("xl") {
+          padding-right: 5rem;
+        }
+
+        @include respond-to("lg") {
+          padding-right: 2rem;
+        }
+
+        @include respond-to("sm") {
+          padding-right: 1rem;
+        }
+      }
 
       .other-videos-thumbnail {
-        min-height: 273px;
-        aspect-ratio: 16 / 9; // вместо фиксированной высоты — пропорция
+        max-width: 100%;
+        height: 290px;
+        aspect-ratio: 16 / 9;
         object-fit: cover;
         display: block;
         border-radius: 8px;
-        flex-shrink: 0; // картинка не сжимается
+        flex-shrink: 0;
+
+        @include respond-to("sm") {
+          min-height: auto;
+        }
       }
 
       &-info {
-        flex-grow: 1; // ← занимает всё оставшееся пространство
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
         gap: 0.875rem;
@@ -317,22 +568,28 @@
           font-family: Inter;
           font-size: 1.5rem;
           font-weight: 600;
-          line-height: 150%;
+          line-height: 1.4;
           margin: 0;
           display: -webkit-box;
           line-clamp: 2;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          min-height: 3.2rem;
+          min-height: 4.2rem; // Fixed height for 2 lines
+
+          @include respond-to("sm") {
+            font-size: 1.25rem;
+            min-height: 3.5rem; // Adjust for smaller font
+          }
         }
+
         .other-videos-description-text {
           flex-grow: 1;
           font-family: Inter;
           color: var(--grey-60);
           font-size: 1.125rem;
           font-weight: 400;
-          line-height: 150%;
+          line-height: 1.5;
           margin: 0;
           margin-top: auto;
           display: -webkit-box;
@@ -341,14 +598,19 @@
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
+
+          @include respond-to("sm") {
+            font-size: 1rem;
+          }
         }
       }
     }
   }
 
+
   .rating-wrapper {
-    background-color: var(--dark-08); // ← фон как у карточки
-    padding: 0.625rem 1rem; // ← небольшой "таб" вокруг звёзд
+    background-color: var(--dark-08);
+    padding: 0.625rem 1rem;
     border: 1px solid var(--dark-15);
     border-radius: 100px;
   }

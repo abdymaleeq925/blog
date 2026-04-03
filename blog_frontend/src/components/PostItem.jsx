@@ -101,11 +101,7 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
               <div className="info-text">
                 <p>Publication Date</p>
                 <span>
-                  {new Date(post?.createdAt).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
+                  {dayjs(post?.createdAt).format("MMMM D, YYYY")}
                 </span>
               </div>
               <div className="info-text">

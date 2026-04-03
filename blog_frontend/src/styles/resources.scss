@@ -1,13 +1,40 @@
+@import "mixins";
+
 .resources {
     &__banner {
         .top-block {
             .banner {
                 padding: 8.125rem 10.125rem;
+
+                @include respond-to("xl") {
+                    padding: 6rem 5rem;
+                }
+
+                @include respond-to("lg") {
+                    padding: 4rem 2rem;
+                }
+
+                @include respond-to("sm") {
+                    padding: 3rem 1rem;
+                }
+
                 h1 {
                     font-family: Kumbh Sans;
                     font-size: 5rem;
-                    line-height: 1.3;
+                    line-height: 1.2;
                     font-weight: 500;
+
+                    @include respond-to("xl") {
+                        font-size: 4rem;
+                    }
+
+                    @include respond-to("lg") {
+                        font-size: 3rem;
+                    }
+
+                    @include respond-to("sm") {
+                        font-size: 2.25rem;
+                    }
                 }
 
                 p {
@@ -17,12 +44,22 @@
                     font-weight: 400;
                     color: var(--grey-60);
                     letter-spacing: -0.03em;
+
+                    @include respond-to("sm") {
+                        font-size: 1rem;
+                    }
                 }
 
                 .subbanner {
                     display: flex;
                     align-items: center;
                     gap: 5rem;
+
+                    @include respond-to("lg") {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 2rem;
+                    }
                 }
             }
         }
@@ -32,6 +69,10 @@
             border-top: 1px solid var(--dark-15);
             border-bottom: 1px solid var(--dark-15);
 
+            @include respond-to("sm") {
+                flex-direction: column;
+            }
+
             .block {
                 flex: 1;
                 border-right: 1px solid var(--dark-15);
@@ -39,19 +80,62 @@
                 padding: 3.125rem;
                 text-align: center;
 
+                @include respond-to("xl") {
+                    padding: 2.5rem;
+                }
+
+                @include respond-to("sm") {
+                    border-right: none;
+                    border-bottom: 1px solid var(--dark-15);
+                    padding: 2rem 1rem;
+                }
+
                 &:last-child {
                     padding-right: 10.125rem;
                     border-right: none;
+
+                    @include respond-to("xl") {
+                        padding-right: 5rem;
+                    }
+
+                    @include respond-to("lg") {
+                        padding-right: 2rem;
+                    }
+
+                    @include respond-to("sm") {
+                        padding-right: 1rem;
+                        border-bottom: none;
+                    }
                 }
 
                 &:first-child {
                     padding-left: 10.125rem;
+
+                    @include respond-to("xl") {
+                        padding-left: 5rem;
+                    }
+
+                    @include respond-to("lg") {
+                        padding-left: 2rem;
+                    }
+
+                    @include respond-to("sm") {
+                        padding-left: 1rem;
+                    }
                 }
 
                 .block-heading {
                     font-weight: 600;
                     font-size: 3.75rem;
                     line-height: 1.5;
+
+                    @include respond-to("lg") {
+                        font-size: 3rem;
+                    }
+
+                    @include respond-to("sm") {
+                        font-size: 2.5rem;
+                    }
 
                     span {
                         color: var(--yellow-55);
@@ -63,6 +147,10 @@
                     font-weight: 400;
                     font-size: 1.125rem;
                     line-height: 1.5;
+
+                    @include respond-to("sm") {
+                        font-size: 1rem;
+                    }
                 }
             }
         }
@@ -75,6 +163,11 @@
         gap: 0;
         background-color: var(--dark-08);
 
+        @include respond-to("lg") {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+        }
+
         &-title-1,
         &-title-2 {
             padding: 9.719rem 5rem 9.719rem 10.125rem;
@@ -83,10 +176,30 @@
             gap: 3.5rem;
             border-right: 1px solid var(--dark-15);
 
+            @include respond-to("xl") {
+                padding: 6rem 3rem 6rem 5rem;
+            }
+
+            @include respond-to("lg") {
+                padding: 4rem 2rem;
+                border-right: none;
+                border-bottom: 1px solid var(--dark-15);
+            }
+
+            @include respond-to("sm") {
+                padding: 3rem 1rem;
+                gap: 2rem;
+            }
+
             img {
                 width: 5rem;
                 height: 5rem;
                 object-fit: contain;
+
+                @include respond-to("sm") {
+                    width: 4rem;
+                    height: 4rem;
+                }
             }
         }
 
@@ -94,11 +207,19 @@
             grid-column: 1;
             grid-row: 1;
             border-bottom: 1px solid var(--dark-15);
+
+            @include respond-to("lg") {
+                grid-row: auto;
+            }
         }
 
         &-title-2 {
             grid-column: 1;
             grid-row: 2;
+
+            @include respond-to("lg") {
+                grid-row: auto;
+            }
         }
 
         &-description-1,
@@ -108,10 +229,25 @@
             flex-direction: column;
             gap: 3rem;
 
+            @include respond-to("xl") {
+                padding: 4rem 5rem 4rem 3rem;
+            }
+
+            @include respond-to("lg") {
+                padding: 3rem 2rem;
+                border-bottom: 1px solid var(--dark-15);
+            }
+
+            @include respond-to("sm") {
+                padding: 2rem 1rem;
+                gap: 2rem;
+            }
+
             .pdf-preview {
                 width: fit-content;
                 margin: 0 auto;
                 max-height: fit-content;
+                max-width: 100%;
             }
         }
 
@@ -119,21 +255,33 @@
             grid-column: 2;
             grid-row: 1;
             border-bottom: 1px solid var(--dark-15);
+
+            @include respond-to("lg") {
+                grid-column: 1;
+                grid-row: auto;
+            }
         }
 
         &-description-2 {
             grid-column: 2;
             grid-row: 2;
+
+            @include respond-to("lg") {
+                grid-column: 1;
+                grid-row: auto;
+            }
         }
 
         &-title-container {
             display: flex;
             flex-direction: column;
             gap: 2rem;
+
             button {
                 width: auto;
                 justify-content: center;
                 height: 63px;
+
                 img {
                     width: 24px;
                 }
@@ -150,25 +298,38 @@
             align-items: center;
             gap: 2rem;
 
+            @include respond-to("sm") {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+                padding: 1.25rem;
+            }
+
             img {
                 width: 1.5rem;
                 height: 1.5rem;
             }
 
             .recent-resources-content {
-                flex: 1 1 auto; // занимает всё доступное пространство слева
+                flex: 1 1 auto;
                 min-width: 0;
                 display: flex;
                 flex-direction: column;
                 gap: 0.25rem;
             }
+
             .recent-resources-heading {
                 font-family: Inter;
                 font-weight: 400;
                 font-size: 1.125rem;
                 line-height: 1.5;
                 color: var(--grey-60);
+
+                @include respond-to("sm") {
+                    font-size: 1rem;
+                }
             }
+
             .recent-resources-text {
                 font-family: Inter;
                 font-weight: 500;
@@ -177,20 +338,30 @@
 
                 display: -webkit-box;
                 line-clamp: 3;
-                -webkit-line-clamp: 3; // максимум 3 строки (можно 2)
+                -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 text-overflow: ellipsis;
+
+                @include respond-to("sm") {
+                    font-size: 1rem;
+                }
 
                 word-break: break-word;
                 overflow-wrap: break-word;
                 white-space: normal;
             }
-            .action-btn {
-                flex: 0 0 auto; // ← кнопка НЕ растягивается, берёт только свой размер
-                white-space: nowrap; // текст кнопки в одну строку
 
-                margin-left: auto; // дополнительная страховка — прижимает вправо
+            .action-btn {
+                flex: 0 0 auto;
+                white-space: nowrap;
+                margin-left: auto;
+
+                @include respond-to("sm") {
+                    width: 100%;
+                    margin-left: 0;
+                    justify-content: center;
+                }
             }
         }
 
@@ -201,14 +372,16 @@
         }
 
         &-heading {
-            font-family:
-                Kumbh Sans,
-                sans-serif;
+            font-family: Kumbh Sans, sans-serif;
             font-weight: 600;
             font-size: 2.5rem;
-            line-height: 1.5;
+            line-height: 1.3;
             color: var(--text-color);
             text-transform: capitalize;
+
+            @include respond-to("sm") {
+                font-size: 2rem;
+            }
         }
 
         &-paragraph {
@@ -217,27 +390,35 @@
             font-size: 1.125rem;
             line-height: 1.5;
             color: var(--grey-60);
+
+            @include respond-to("sm") {
+                font-size: 1rem;
+            }
         }
 
         &-description-info-1 {
             display: flex;
             flex-direction: column;
             gap: 0.875rem;
+
             .recent-resources-description-heading-1 {
                 font-family: Inter;
                 font-size: 1.5rem;
                 font-weight: 600;
-                line-height: 150%;
+                line-height: 1.4;
+
+                @include respond-to("sm") {
+                    font-size: 1.25rem;
+                }
             }
+
             .recent-resources-description-text-1 {
                 font-family: Inter;
                 color: var(--grey-60);
                 font-size: 1.125rem;
                 font-weight: 400;
-                line-height: 150%;
-
+                line-height: 1.5;
                 margin: 0;
-
                 margin-top: auto;
 
                 display: -webkit-box;
@@ -246,6 +427,10 @@
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 text-overflow: ellipsis;
+
+                @include respond-to("sm") {
+                    font-size: 1rem;
+                }
             }
         }
 
@@ -254,57 +439,83 @@
             grid-template-columns: repeat(3, 1fr);
             width: 100%;
             gap: 1.25rem;
+
+            @include respond-to("sm") {
+                grid-template-columns: 1fr;
+            }
+
             .recent-resources-total,
             .recent-resources-downloads {
                 padding: 1.875rem;
                 background-color: var(--dark-10);
                 border: 1px solid var(--dark-15);
                 border-radius: 13px;
+
+                @include respond-to("xl") {
+                    padding: 1.25rem;
+                }
             }
 
             .recent-resources-downloads {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
             }
+
             .recent-resources-description-heading-2 {
                 font-family: Inter;
                 color: var(--grey-60);
                 font-weight: 400;
                 font-size: 1.125rem;
-                line-height: 150%;
+                line-height: 1.5;
             }
+
             .recent-resources-description-text-2 {
                 font-family: Inter;
                 font-weight: 600;
                 font-size: 1.25rem;
-                line-height: 150%;
+                line-height: 1.5;
             }
         }
+
         .recent-resources-description-info-3 {
             padding: 1.875rem;
             background-color: var(--dark-10);
             border: 1px solid var(--dark-15);
             border-radius: 13px;
+
+            @include respond-to("xl") {
+                padding: 1.25rem;
+            }
+
             .recent-resources-description-heading-3 {
                 font-family: Inter;
                 color: var(--grey-60);
                 font-weight: 400;
                 font-size: 1.125rem;
-                line-height: 150%;
+                line-height: 1.5;
             }
+
             .recent-resources-description-text-3 {
                 font-family: Inter;
                 font-weight: 500;
                 font-size: 1.25rem;
-                line-height: 150%;
+                line-height: 1.5;
             }
         }
     }
 
     .other-resources {
         display: grid;
-        grid-template-columns: 1fr 0.85fr 1fr;
-        grid-template-rows: repeat(2, auto);
+        grid-template-columns: repeat(3, 1fr);
+
+        @include respond-to("lg") {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include respond-to("sm") {
+            grid-template-columns: 1fr;
+        }
 
         &-description {
             display: flex;
@@ -313,24 +524,77 @@
             padding: 5rem 0;
             border-bottom: 1px solid var(--dark-15);
 
+            @include respond-to("xl") {
+                padding: 4rem 0;
+            }
 
-            // Границы только у нужных карточек (правый столбец не имеет border-right)
-            &:nth-child(3n + 1),                  // 1, 4, 7...
+            @include respond-to("sm") {
+                padding: 3rem 0;
+            }
+
+            &:nth-child(3n + 1),
             &:nth-child(3n + 2) {
-                // 2, 5, 8...
                 border-right: 1px solid var(--dark-15);
                 padding-right: 2.875rem;
                 padding-left: 10.125rem;
+
+                @include respond-to("xl") {
+                    padding-left: 5rem;
+                    padding-right: 2rem;
+                }
+
+                @include respond-to("lg") {
+                    border-right: none;
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                    border-right: 1px solid var(--dark-15);
+                }
+
+                @include respond-to("sm") {
+                    border-right: none;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+            }
+
+            @include respond-to("lg") {
+                &:nth-child(2n) {
+                    border-right: none;
+                }
             }
 
             &:nth-child(3n + 2),
             &:nth-child(3n + 3) {
-                padding-left: 2.875rem; // ← здесь твой нужный отступ
+                padding-left: 2.875rem;
+
+                @include respond-to("xl") {
+                    padding-left: 2rem;
+                }
+
+                @include respond-to("lg") {
+                    padding-left: 2rem;
+                }
+
+                @include respond-to("sm") {
+                    padding-left: 1rem;
+                }
             }
 
             &:nth-child(3n + 3),
             &:nth-child(3n + 6) {
                 padding-right: 10.125rem;
+
+                @include respond-to("xl") {
+                    padding-right: 5rem;
+                }
+
+                @include respond-to("lg") {
+                    padding-right: 2rem;
+                }
+
+                @include respond-to("sm") {
+                    padding-right: 1rem;
+                }
             }
 
             .pdf-mini-preview {
@@ -339,10 +603,16 @@
                 width: min-content;
                 margin: 0 auto;
                 min-height: 9.56rem;
+                max-width: 100%;
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                }
             }
 
             &-info {
-                flex-grow: 1; // ← занимает всё оставшееся пространство
+                flex-grow: 1;
                 display: flex;
                 flex-direction: column;
                 gap: 0.875rem;
@@ -351,7 +621,7 @@
                     font-family: Inter;
                     font-size: 1.5rem;
                     font-weight: 600;
-                    line-height: 150%;
+                    line-height: 1.4;
                     margin: 0;
                     display: -webkit-box;
                     line-clamp: 2;
@@ -359,14 +629,20 @@
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     min-height: 3.2rem;
+
+                    @include respond-to("sm") {
+                        font-size: 1.25rem;
+                        min-height: auto;
+                    }
                 }
+
                 .other-resources-description-text {
                     flex-grow: 1;
                     font-family: Inter;
                     color: var(--grey-60);
                     font-size: 1.125rem;
                     font-weight: 400;
-                    line-height: 150%;
+                    line-height: 1.5;
                     margin: 0;
                     margin-top: auto;
                     display: -webkit-box;
@@ -375,6 +651,88 @@
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     text-overflow: ellipsis;
+
+                    @include respond-to("sm") {
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    &-error-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        border: 1px dashed rgba(229, 62, 62, 0.3);
+        margin: 40px 0;
+        padding: 2rem;
+
+        .error-content {
+            text-align: center;
+            max-width: 400px;
+
+            .icon-stack {
+                position: relative;
+                display: inline-block;
+                margin-bottom: 20px;
+
+                .pdf-base {
+                    font-size: 80px;
+                    color: #cbd5e0;
+                }
+
+                .error-badge {
+                    position: absolute;
+                    bottom: -5px;
+                    right: -5px;
+                    background: #e53e3e;
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    border: 4px solid #fff;
+                }
+            }
+
+            h3 {
+                font-size: 24px;
+                color: #fff;
+                margin-bottom: 10px;
+
+                @include respond-to("sm") {
+                    font-size: 20px;
+                }
+            }
+
+            p {
+                color: var(--grey-60);
+                margin-bottom: 25px;
+            }
+
+            .retry-button {
+                padding: 12px 30px;
+                background: #e53e3e;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 14px rgba(229, 62, 62, 0.3);
+
+                &:hover {
+                    background: #c53030;
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(229, 62, 62, 0.4);
                 }
             }
         }

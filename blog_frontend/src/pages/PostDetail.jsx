@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
@@ -385,6 +386,10 @@ const PostDetail = () => {
 
   return (
     <div className="single-post">
+      <Helmet>
+        <title>{state.post?.title ? `${state.post.title} | FutureTech Blog` : "Loading Post... | FutureTech Blog"}</title>
+        <meta name="description" content={state.post?.category ? `Read about ${state.post.category} on FutureTech Blog` : "Blog post on FutureTech"} />
+      </Helmet>
       <div className="single-post-heading-container">
         {state.post?.imageUrl && (
           <img

@@ -11,6 +11,7 @@ import { fetchAIResources } from '../api/resources';
 import videoIconOne from '../assets/icons/videoIconOne.svg';
 import videoIconTwo from '../assets/icons/videoIconTwo.svg';
 import PostSkeleton from '../components/Skeleton';
+import { IoArrowBackCircle, IoArrowForwardCircle } from 'react-icons/io5';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -19,16 +20,26 @@ const Resources = () => {
     const [resources, setResources] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [filteredResources, setFilteredResources] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const [activeCategory, setActiveCategory] = useState("Whitepapers");
 
+    const postsPerPage = 6;
+    const totalPages =
+        filteredResources?.length > postsPerPage
+            ? Math.ceil(filteredResources?.length / postsPerPage)
+            : 1;
+    const currentData = filteredResources?.slice(
+        (currentPage - 1) * postsPerPage,
+        currentPage * postsPerPage
+    );
 
     const categories = useMemo(() => {
         const cats = [...new Set(resources.map(r => r.category))];
         return cats.length ? cats : ['Whitepapers', 'Reports', 'Ebooks'];
     }, [resources]);
 
-    // Автоматический выбор категории, если текущая пропала
     useEffect(() => {
         if (!categories.includes(activeCategory) && categories.length > 0) {
             setActiveCategory(categories[0]);
@@ -40,6 +51,7 @@ const Resources = () => {
         const loadData = async () => {
             try {
                 const data = await fetchAIResources();
+
                 if (mounted) setResources(data);
             } catch (err) {
                 if (mounted) setError('Не удалось загрузить ресурсы');
@@ -57,18 +69,23 @@ const Resources = () => {
             ? 'http://localhost:4444'
             : 'https://your-backend-domain.com';   // ← здесь ваш реальный прод-адрес
 
-            console.log(`${backendBase}/proxy/pdf?url=${encodeURIComponent(url)}`)
+        console.log(`${backendBase}/proxy/pdf?url=${encodeURIComponent(url)}`)
 
         return `${backendBase}/proxy/pdf?url=${encodeURIComponent(url)}`;
     };
 
-    if (error) return <div className="resources error">{error}</div>;
-
     const filtered = resources.filter(r => r.category === activeCategory);
-    const others = resources.filter(r => r.category !== activeCategory);
 
     const featured1 = filtered[0];
     const featured2 = filtered[1];
+
+    useEffect(() => {
+        setFilteredResources(resources.filter(r => ![featured1, featured2].includes(r.id)))
+    }, [resources, featured1, featured2]);
+
+    if (error) {
+        return <ErrorState message={error} />;
+    }
 
     return (
         <div className='resources'>
@@ -102,13 +119,13 @@ const Resources = () => {
                 </div>
             </div>
             <Title tag="Dive into the Details" title="In-Depth Reports and Analysis" buttons={categories} activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
-            {loading ? ( <PostSkeleton variant="recent-resources"/> ) : (
+            {loading ? (<PostSkeleton variant="recent-resources" />) : (
                 <div className='recent-resources'>
                     <div className="recent-resources-title-1">
                         <div className="recent-resources-title-container">
                             <img src={videoIconOne} alt="video-icon" />
                             <div className="recent-resources-title-content">
-                                <h4 className='recent-resources-heading'>{featured1.category}</h4>
+                                <h4 className='recent-resources-heading'>{featured1?.category}</h4>
                                 <p className='recent-resources-paragraph'>Provides technical specifications and requirements for implementing quantum computing systems.</p>
                             </div>
                         </div>
@@ -118,8 +135,9 @@ const Resources = () => {
                             <div className="pdf-preview">
                                 <Document
                                     file={getPdfProxyUrl(featured1.link)}
-                                    loading="Загрузка страницы..."
-                                    error="Не удалось загрузить PDF"
+                                    loading={<FaFilePdf size={150} color='var(--avatar-icon-color)' />}
+                                    error={<FaFilePdf size={150} color='var(--avatar-icon-color)' />}
+                                    noData={<FaFilePdf size={150} color='var(--avatar-icon-color)' />}
                                     onLoadError={console.error}
                                 >
                                     <Page
@@ -142,10 +160,10 @@ const Resources = () => {
                             <div className="recent-resources-total">
                                 <p className="recent-resources-description-heading-2">Published Date</p>
                                 <p className="recent-resources-description-text-2">{new Date(featured1?.publishedAt).toLocaleDateString('en-US', {
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric',
-                            })}</p>
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })}</p>
                             </div>
                             <div className="recent-resources-total">
                                 <p className="recent-resources-description-heading-2">Category</p>
@@ -153,7 +171,7 @@ const Resources = () => {
                             </div>
                             <div className="recent-resources-total">
                                 <p className="recent-resources-description-heading-2">Author</p>
-                                <p className="recent-resources-description-text-2">{featured1?.author.split(",").slice(0,3).join(",")}</p>
+                                <p className="recent-resources-description-text-2">{featured1?.author.split(",").slice(0, 3).join(",")}</p>
                             </div>
 
                         </div>
@@ -164,7 +182,7 @@ const Resources = () => {
                         <div className="recent-resources-title-container">
                             <img src={videoIconTwo} alt="video-icon" />
                             <div className="recent-resources-title-content">
-                                <h4 className='recent-resources-heading'>{featured2.category}</h4>
+                                <h4 className='recent-resources-heading'>{featured2?.category}</h4>
                                 <p className='recent-resources-paragraph'>Explores Mars colonization, asteroid resource potential, and space tourism.</p>
                             </div>
                         </div>
@@ -198,18 +216,18 @@ const Resources = () => {
                             <div className="recent-resources-total">
                                 <p className="recent-resources-description-heading-2">Published Date</p>
                                 <p className="recent-resources-description-text-2">{new Date(featured1?.publishedAt).toLocaleDateString('en-US', {
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric',
-                            })}</p>
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })}</p>
                             </div>
                             <div className="recent-resources-total">
                                 <p className="recent-resources-description-heading-2">Category</p>
                                 <p className="recent-resources-description-text-2">{featured1?.tag}</p>
                             </div>
                             <div className="recent-resources-total">
-                            <p className="recent-resources-description-heading-2">Author</p>
-                            <p className="recent-resources-description-text-2">{featured1?.author.split(",").slice(0,3).join(",")}</p>
+                                <p className="recent-resources-description-heading-2">Author</p>
+                                <p className="recent-resources-description-text-2">{featured1?.author.split(",").slice(0, 3).join(",")}</p>
                             </div>
 
                         </div>
@@ -223,16 +241,16 @@ const Resources = () => {
                 title="Other resources"
             />
             {
-                loading ? ( <PostSkeleton variant="other-resources"/> ) : (
+                loading ? (<PostSkeleton variant="other-resources" />) : (
                     <div className="other-resources">
-                        {others.map((resource) => (
+                        {currentData.map((resource) => (
                             <div className="other-resources-description" key={resource?.id}>
                                 <div className="pdf-mini-preview">
-                                    <Document 
-                                        file={getPdfProxyUrl(resource.link)} 
-                                        loading={<img src={videoIconOne} alt='pdf-icon'/>} 
-                                        error={<FaFilePdf size={50} color='var(--avatar-icon-color)'/>} 
-                                        noData={<img src={videoIconOne} alt='no-data-icon'/>}>
+                                    <Document
+                                        file={getPdfProxyUrl(resource.link)}
+                                        loading={<FaFilePdf size={50} color='var(--avatar-icon-color)' />}
+                                        error={<FaFilePdf size={50} color='var(--avatar-icon-color)' />}
+                                        noData={<FaFilePdf size={50} color='var(--avatar-icon-color)' />}>
                                         <Page
                                             pageNumber={1}
                                             renderTextLayer={false}
@@ -252,9 +270,55 @@ const Resources = () => {
                     </div>
                 )
             }
-
+            {filteredResources?.length > 6 && (
+                <div className="pagination">
+                    <IoArrowBackCircle
+                        onClick={
+                            currentPage > 1
+                                ? () => setCurrentPage((prev) => prev - 1)
+                                : undefined
+                        }
+                        style={{
+                            cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                            opacity: currentPage === 1 ? 0.5 : 1,
+                            fontSize: "45px",
+                        }}
+                    />
+                    <span>
+                        {currentPage} / {totalPages}
+                    </span>
+                    <IoArrowForwardCircle
+                        onClick={
+                            currentPage < totalPages
+                                ? () => setCurrentPage((prev) => prev + 1)
+                                : undefined
+                        }
+                        style={{
+                            cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                            opacity: currentPage === totalPages ? 0.5 : 1,
+                            fontSize: "45px",
+                        }}
+                    />
+                </div>
+            )}
         </div>
     )
 }
 
 export default Resources
+
+const ErrorState = ({ message, onRetry }) => (
+    <div className="resources-error-container">
+        <div className="error-content">
+            <div className="icon-stack">
+                <FaFilePdf className="pdf-base" />
+                <div className="error-badge">!</div>
+            </div>
+            <h3>Oops! Something went wrong</h3>
+            <p>{message}</p>
+            <button onClick={() => window.location.reload()} className="retry-button">
+                Try Again
+            </button>
+        </div>
+    </div>
+);

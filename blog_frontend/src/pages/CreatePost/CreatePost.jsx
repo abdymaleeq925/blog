@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SimpleMde from 'react-simplemde-editor';
+import 'easymde/dist/easymde.min.css';
 import { toast } from 'react-toastify';
 
 import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import "easymde/dist/easymde.min.css";
 
 import { useUploadImageMutation, useCreatePostMutation, useGetOnePostQuery, useEditPostMutation } from '../../services/postsApi';
 import { API_URL } from '../../utils/constants';
@@ -31,7 +31,7 @@ const CreatePost = () => {
 
 	const notify = (message) => {
 		toast.success(message, { position: "bottom-center", hideProgressBar: true });
-	  }
+	}
 
 	const [uploadImage] = useUploadImageMutation();
 	const [createPost] = useCreatePostMutation();
@@ -93,7 +93,7 @@ const CreatePost = () => {
 				const postId = isEditing ? id : result.data._id;
 				if (postId) {
 					navigate(`/posts/post-detail/${postId}`);
-					if (isEditing) {notify("Post has been edited")} else {notify("Post has been created")}
+					if (isEditing) { notify("Post has been edited") } else { notify("Post has been created") }
 				} else {
 					setErrors(['Post ID is missing']);
 				}
@@ -128,7 +128,7 @@ const CreatePost = () => {
 		},
 		minHeight: "300px",
 		autofocus: false,
-		placeholder: "Введите текст статьи...",
+		placeholder: "Write your post here...",
 		status: false,
 	}), []);
 

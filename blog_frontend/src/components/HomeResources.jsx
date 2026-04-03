@@ -38,10 +38,10 @@ const HomeResources = () => {
           <div className="homeresources-title-container">
             <img src={ebooks} alt="ebooks" />
             <div className="homeresources-title-content">
-              <h4 className='homeresources-heading'>Ebooks</h4>
-              <p className='homeresources-paragraph'>Explore our collection of ebooks covering a wide spectrum of future technology topics.</p>
+              <h4 className='homeresources-heading'>Videos</h4>
+              <p className='homeresources-paragraph'>Explore our collection of videos covering a wide spectrum of future technology topics.</p>
             </div>
-            <Button onClick={() => navigate("/resources")} btnName="Download Ebooks Now" btnIcon={exploreIcon} />
+            <Button onClick={() => navigate("/videos")} btnName="Watch Videos Now" btnIcon={exploreIcon} />
           </div>
           <div className="homeresources-title-downloads">
             <div className="homeresources-content">
@@ -64,20 +64,20 @@ const HomeResources = () => {
           <img src={ebooksImage} alt="ebooks-image" />
           <div className="homeresources-description-info-2">
             <div className="homeresources-total">
-              <p className="homeresources-description-heading-2">Total Ebooks</p>
-              <p className="homeresources-description-text-2">Over 100 ebooks</p>
+              <p className="homeresources-description-heading-2">Total Videos</p>
+              <p className="homeresources-description-text-2">Over 10+ videos</p>
             </div>
             <div className="homeresources-downloads">
               <div className="homeresources-downloads-content">
-                <p className="homeresources-description-heading-2">Download Formats</p>
-                <p className="homeresources-description-text-2">PDF format for access.</p>
+                <p className="homeresources-description-heading-2">Watch Formats</p>
+                <p className="homeresources-description-text-2">MP4 format for access.</p>
               </div>
-              <Button onClick={() => navigate("/resources")} btnName="Preview" btnIcon={previewIcon} />
+              <Button onClick={() => navigate("/videos")} btnName="Preview" btnIcon={previewIcon} />
             </div>
           </div>
           <div className="homeresources-description-info-3">
             <p className="homeresources-description-heading-3">Average Author Expertise</p>
-            <p className="homeresources-description-text-3">Ebooks are authored by renowned experts with an average of 15 years of experience</p>
+            <p className="homeresources-description-text-3">Videos are authored by renowned experts with an average of 15 years of experience</p>
           </div>
         </div>
 

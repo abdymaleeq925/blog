@@ -1,22 +1,50 @@
-.homebanner {
+@import "mixins";
 
+.homebanner {
   .top-section {
     display: grid;
     grid-template-columns: 60% 40%;
+
+    @include respond-to("md") {
+      grid-template-columns: 1fr;
+    }
 
     .left-column {
       display: grid;
       grid-template-rows: auto auto;
       border-right: 1px solid var(--dark-15);
 
+      @include respond-to("md") {
+        border-right: none;
+        border-bottom: 1px solid var(--dark-15);
+      }
+
       .block-1 {
-        height: 34.875rem;
+        height: auto;
+        min-height: 34.875rem;
         padding: 9.375rem 3.125rem 6.25rem 10.125rem;
         background-color: var(--dark-08);
         display: flex;
         flex-direction: column;
         gap: 1.875rem;
-    
+
+        @include respond-to("xl") {
+          padding: 6.25rem 2.5rem 6.25rem 5rem;
+          min-height: auto;
+        }
+
+        @include respond-to("lg") {
+          padding: 5rem 2.5rem;
+        }
+
+        @include respond-to("md") {
+          padding: 3.5rem 2.5rem;
+        }
+
+        @include respond-to("sm") {
+          padding: 2.5rem 1rem 1.875rem 1rem;
+        }
+
         &-text-container {
           display: flex;
           flex-direction: column;
@@ -28,34 +56,81 @@
           font-weight: 500;
           font-size: 4.375rem;
           line-height: 120%;
+
+          @include respond-to("xl") {
+            font-size: 3.44rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 2.5rem;
+          }
+
+          @include respond-to("sm") {
+            font-size: 1.875rem;
+          }
         }
-      
+
         .hero-text-1 {
           font-family: Kumbh Sans;
           color: var(--dark-40);
           font-weight: 500;
           font-size: 1.875rem;
           line-height: 120%;
+
+          @include respond-to("xl") {
+            font-size: 1.375rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 1.25rem;
+          }
+
+          @include respond-to("sm") {
+            font-size: 1.125rem;
+          }
         }
-      
+
         .hero-paragraph-1 {
           font-family: Kumbh Sans;
           color: var(--grey-50);
           font-weight: 400;
           font-size: 1.125rem;
           line-height: 150%;
+
+          @include respond-to("xl") {
+            font-size: 1rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 0.875rem;
+          }
+
         }
       }
 
       .small-blocks {
         display: flex;
         border-top: 1px solid var(--dark-15);
-  
+
+        @include respond-to("xs") {
+          flex-direction: column;
+        }
+
         .block {
           flex: 1;
           border-right: 1px solid var(--dark-15);
+
           &:last-child {
             border-right: none;
+          }
+
+          @include respond-to("xs") {
+            border-right: none;
+            border-bottom: 1px solid var(--dark-15);
+
+            &:last-child {
+              border-bottom: none;
+            }
           }
         }
 
@@ -70,11 +145,39 @@
           justify-content: center;
           gap: 0.625rem;
           flex: 1;
-          border-right: 1px solid var(--dark-15);
+
+          @include respond-to("xl") {
+            padding: 1.875rem 2.5rem;
+            height: auto;
+          }
+
+          @include respond-to("lg") {
+            padding: 1.875rem 2rem;
+          }
+
+          @include respond-to("md") {
+            align-items: center;
+          }
+
+          @include respond-to("sm") {
+            padding: 1.25rem;
+          }
         }
-      
+
         .block-3 {
           padding-left: 10.125rem;
+
+          @include respond-to("xl") {
+            padding-left: 5rem;
+          }
+
+          @include respond-to("lg") {
+            padding-left: 2.5rem;
+          }
+
+          @include respond-to("sm") {
+            padding-left: 1rem;
+          }
         }
 
         .hero-heading-345 {
@@ -82,18 +185,39 @@
           font-weight: 600;
           font-size: 2.5rem;
           line-height: 150%;
-      
+
+          @include respond-to("xl") {
+            font-size: 1.875rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 1.75rem;
+          }
+
+          @include respond-to("sm") {
+            font-size: 1.5rem;
+          }
+
           span {
             color: var(--yellow-55);
           }
         }
-      
+
         .hero-parapgraph-345 {
           font-family: Inter;
           color: var(--grey-60);
           font-weight: 400;
           font-size: 1.125rem;
           line-height: 150%;
+
+          @include respond-to("xl") {
+            font-size: 0.875rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 0.75rem;
+          }
+
         }
       }
     }
@@ -108,7 +232,25 @@
       display: flex;
       flex-direction: column;
       gap: 1.875rem;
-  
+
+      @include respond-to("xl") {
+        padding: 18.75rem 5rem 3.125rem 3.125rem;
+      }
+
+      @include respond-to("lg") {
+        padding: 12.75rem 2rem 3rem 2rem;
+      }
+
+      @include respond-to("md") {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      @include respond-to("sm") {
+        padding: 6.125rem 2.5rem 2.5rem 2.5rem;
+        gap: 1.25rem;
+      }
+
       &-abstract {
         position: absolute;
         top: -5%;
@@ -116,8 +258,26 @@
         transform: rotate(35.39deg);
         width: 55.875rem;
         z-index: 1;
+
+        @include respond-to("xl") {
+          top: -4%;
+        }
+
+        @include respond-to("lg") {
+          top: -10%;
+          width: 35.875rem;
+        }
+
+        @include respond-to("md") {
+          top: -5%;
+          width: 30.875rem;
+        }
+
+        @include respond-to("sm") {
+          width: 20.875rem;
+        }
       }
-  
+
       &-text-container {
         width: max-content;
         display: flex;
@@ -125,22 +285,43 @@
         gap: 0.875rem;
         z-index: 2;
 
+        @include respond-to("xl") {
+          width: auto;
+        }
+
         .hero-heading-2 {
           font-family: Inter;
           font-weight: 500;
           font-size: 1.5rem;
           line-height: 150%;
+
+          @include respond-to("xl") {
+            font-size: 1.25rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 1.125rem;
+          }
         }
-      
+
         .hero-paragraph-2 {
           font-family: Inter;
           color: var(--grey-60);
           font-weight: 400;
           font-size: 1.125rem;
           line-height: 150%;
+
+          @include respond-to("xl") {
+            font-size: 1rem;
+          }
+
+          @include respond-to("lg") {
+            font-size: 0.875rem;
+          }
+
         }
       }
-  
+
       &-avatars {
         width: fit-content;
         display: flex;
@@ -151,18 +332,37 @@
         border: 2px solid var(--dark-15);
         border-radius: 100px;
         z-index: 2;
+
+        @include respond-to("xl") {
+          padding: 0.5rem;
+        }
+
+        @include respond-to("sm") {
+          padding: 0.25rem;
+        }
       }
-  
+
       .avatar-list {
         width: 60px;
         height: 60px;
+
+        @include respond-to("xl") {
+          width: 50px;
+          height: 50px;
+        }
+
+        @include respond-to("lg") {
+          width: 40px;
+          height: 40px;
+        }
+
         border-radius: 50%;
         box-sizing: border-box;
         border: 2px solid var(--dark-40);
         background-color: var(--dark-15);
         margin-left: -10px;
       }
-  
+
       .avatar-list:first-child {
         margin-left: 0;
       }
@@ -173,12 +373,21 @@
     display: flex;
     border-top: 1px solid var(--dark-15);
 
+    @include respond-to("md") {
+      flex-direction: column;
+    }
+
     .block {
       flex: 1;
       border-right: 1px solid var(--dark-15);
 
       &:last-child {
         border-right: none;
+      }
+
+      @include respond-to("lg") {
+        border-right: none;
+        border-bottom: 1px solid var(--dark-15);
       }
     }
 
@@ -194,65 +403,154 @@
       flex: 1;
       border-right: 1px solid var(--dark-15);
       border-bottom: 1px solid var(--dark-15);
+
       img {
         width: 52px;
         height: 52px;
       }
+
+      @include respond-to("xl") {
+        padding: 2.5rem 3.125rem;
+
+        img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      @include respond-to("lg") {
+        height: auto;
+        padding: 2.5rem;
+
+        .hero-icon-678 {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      @include respond-to("sm") {
+        padding: 1.875rem 1rem;
+      }
+
+
     }
-  
+
     .block-6 {
       padding-left: 10.125rem;
+
+      @include respond-to("xl") {
+        padding-left: 5rem;
+      }
+
+      @include respond-to("lg") {
+        padding-left: 2.5rem;
+      }
+
+      @include respond-to("sm") {
+        padding-left: 1rem;
+      }
+    }
+
+    .block-8 {
+      padding-right: 10.125rem;
+
+      @include respond-to("xl") {
+        padding-right: 5rem;
+      }
+
+      @include respond-to("lg") {
+        padding-right: 2.5rem;
+      }
+
+      @include respond-to("sm") {
+        padding-right: 1rem;
+      }
     }
 
     .hero-text-container-678 {
       display: flex;
       justify-content: space-between;
-  
+
       .action-btn {
         padding: 0;
         background-color: transparent;
         border: none;
+
+        @include respond-to("sm") {
+          width: auto;
+        }
 
         &:hover {
           box-shadow: none;
         }
       }
     }
-  
+
     .hero-heading-678 {
       font-family: Inter;
       color: white;
       font-weight: 500;
       font-size: 1.25rem;
       line-height: 150%;
+
+      @include respond-to("xl") {
+        font-size: 1.125rem;
+      }
+
+      @include respond-to("lg") {
+        font-size: 1rem;
+      }
+
     }
-  
+
     .hero-paragraph-678 {
       font-family: Inter;
       color: var(--grey-50);
       font-weight: 400;
       font-size: 1.125rem;
       line-height: 150%;
+
+      @include respond-to("xl") {
+        font-size: 1rem;
+      }
+
+      @include respond-to("lg") {
+        font-size: 0.875rem;
+      }
     }
-  
+
     .hero-text-678 {
       font-family: Kumbh Sans;
       color: var(--grey-60);
       font-weight: 400;
       font-size: 1.25rem;
       line-height: 150%;
+
+      @include respond-to("xl") {
+        font-size: 1rem;
+      }
+
+      @include respond-to("lg") {
+        font-size: 0.875rem;
+      }
+
     }
   }
 
 }
 
 .homefeatures {
-  
+
   display: grid;
   grid-template-columns: 40% 60%;
   grid-template-rows: auto auto;
   gap: 0;
   background-color: var(--dark-08);
+
+  @include respond-to("lg") {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
 
   &-text-container {
     display: flex;
@@ -267,6 +565,19 @@
     flex-direction: column;
     gap: 3.125rem;
 
+    @include respond-to("xl") {
+      padding: 7.5rem 5rem;
+    }
+
+    @include respond-to("lg") {
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--dark-15);
+    }
+
+    @include respond-to("sm") {
+      padding: 3rem 1rem;
+    }
+
     img {
       width: 4rem;
       height: 4rem;
@@ -275,7 +586,19 @@
 
   &-description-1,
   &-description-2 {
-    padding: 5rem 10rem 5rem 5rem;
+    padding: 5rem 10.125rem 5rem 5rem;
+
+    @include respond-to("xl") {
+      padding: 4rem 5rem;
+    }
+
+    @include respond-to("lg") {
+      padding: 4rem 2rem;
+    }
+
+    @include respond-to("sm") {
+      padding: 3rem 1rem;
+    }
 
     .inner-grid {
       display: grid;
@@ -283,8 +606,13 @@
       grid-template-rows: 1fr 1fr;
       gap: 1.875rem;
       height: 100%;
+
+      @include respond-to("md") {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
     }
-    
+
     .inner-block {
       background-color: var(--dark-10);
       padding: 2.5rem;
@@ -294,18 +622,32 @@
       gap: 1.25rem;
       justify-content: center;
       min-height: 80px;
+
+      @include respond-to("sm") {
+        padding: 1.5rem;
+      }
+
       &-heading {
         font-family: Inter;
         font-weight: 500;
         font-size: 1.5rem;
         line-height: 150%;
+
+        @include respond-to("sm") {
+          font-size: 1.125rem;
+        }
       }
+
       &-paragraph {
         font-family: Inter;
         color: var(--grey-60);
         font-weight: 400;
         font-size: 1.125rem;
         line-height: 150%;
+
+        @include respond-to("sm") {
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -315,23 +657,47 @@
     grid-row: 1;
     border-right: 1px solid var(--dark-15);
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+      border-right: none;
+    }
   }
 
   &-description-1 {
     grid-column: 2;
     grid-row: 1;
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 
   &-title-2 {
     grid-column: 1;
     grid-row: 2;
     border-right: 1px solid var(--dark-15);
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--dark-15);
+    }
   }
 
   &-description-2 {
     grid-column: 2;
     grid-row: 2;
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+      border-bottom: 1px solid var(--dark-15);
+    }
   }
 
   &-heading {
@@ -339,6 +705,10 @@
     font-weight: 600;
     font-size: 2.5rem;
     line-height: 150%;
+
+    @include respond-to("sm") {
+      font-size: 1.75rem;
+    }
   }
 
   &-paragraph {
@@ -355,11 +725,25 @@
   border-top: 1px solid var(--dark-15);
 
   &-filter {
-    padding: 3.125rem 10rem;
+    padding: 3.125rem 10.125rem;
     display: flex;
     gap: 1.25rem;
     border-top: 1px solid var(--dark-15);
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("xl") {
+      padding: 3rem 5rem;
+    }
+
+    @include respond-to("lg") {
+      padding: 2.5rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    @include respond-to("sm") {
+      padding: 2rem 1rem;
+      gap: 0.5rem;
+    }
   }
 
   .filter-btn {
@@ -369,8 +753,14 @@
     box-sizing: border-box;
     border: 1px solid var(--dark-15);
 
+    @include respond-to("sm") {
+      padding: 1rem 0.5rem;
+      font-size: 0.875rem;
+      min-width: calc(50% - 0.25rem);
+    }
+
     &:hover {
-     box-shadow: none;
+      box-shadow: none;
     }
   }
 
@@ -393,6 +783,11 @@
   gap: 0;
   background-color: var(--dark-08);
 
+  @include respond-to("lg") {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
   &-title-1,
   &-title-2 {
     padding: 9.719rem 5rem 9.719rem 10.125rem;
@@ -400,6 +795,20 @@
     flex-direction: column;
     gap: 3.5rem;
     border-right: 1px solid var(--dark-15);
+
+    @include respond-to("xl") {
+      padding: 7.5rem 5rem;
+    }
+
+    @include respond-to("lg") {
+      padding: 4rem 2rem;
+      border-right: none;
+      border-bottom: 1px solid var(--dark-15);
+    }
+
+    @include respond-to("sm") {
+      padding: 3rem 1rem;
+    }
 
     img {
       width: 5rem;
@@ -412,11 +821,21 @@
     grid-column: 1;
     grid-row: 1;
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 
   &-title-2 {
     grid-column: 1;
     grid-row: 2;
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 
   &-description-1,
@@ -425,17 +844,40 @@
     display: flex;
     flex-direction: column;
     gap: 3rem;
+
+    @include respond-to("xl") {
+      padding: 4rem 5rem;
+    }
+
+    @include respond-to("lg") {
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--dark-15);
+    }
+
+    @include respond-to("sm") {
+      padding: 3rem 1rem;
+    }
   }
 
   &-description-1 {
     grid-column: 2;
     grid-row: 1;
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 
   &-description-2 {
     grid-column: 2;
     grid-row: 2;
+
+    @include respond-to("lg") {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 
   &-title-container {
@@ -448,7 +890,7 @@
       justify-content: center;
       max-height: 63px;
       background-color: var(--dark-10);
-      
+
       img {
         width: 24px;
       }
@@ -463,6 +905,12 @@
     display: flex;
     gap: 3.125rem;
     width: fit-content;
+
+    @include respond-to("sm") {
+      width: 100%;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
 
     .homeresources-content {
       display: flex;
@@ -483,8 +931,12 @@
       font-weight: 600;
       font-size: 1.5rem;
       line-height: 1.5;
+
+      @include respond-to("sm") {
+        font-size: 1.25rem;
+      }
     }
-    
+
     .homeresources-downloaded-avatars {
       width: fit-content;
       display: flex;
@@ -502,6 +954,11 @@
         border: 2px solid var(--dark-40);
         background-color: var(--dark-15);
         margin-left: -10px;
+
+        @include respond-to("sm") {
+          width: 35px;
+          height: 35px;
+        }
       }
 
       .avatar-list:first-child {
@@ -524,6 +981,10 @@
     font-size: 2.5rem;
     line-height: 1.4;
     color: var(--white);
+
+    @include respond-to("sm") {
+      font-size: 1.75rem;
+    }
   }
 
   &-paragraph {
@@ -532,6 +993,10 @@
     font-size: 1.25rem;
     line-height: 1.5;
     color: var(--grey-60);
+
+    @include respond-to("sm") {
+      font-size: 1rem;
+    }
   }
 
   &-description-info-1 {
@@ -539,12 +1004,22 @@
     gap: 4.063rem;
     align-items: center;
 
+    @include respond-to("md") {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
     .homeresources-description-heading-1 {
       text-wrap: nowrap;
       font-family: Inter;
       font-size: 1.5rem;
       font-weight: 600;
       line-height: 150%;
+
+      @include respond-to("sm") {
+        font-size: 1.25rem;
+      }
     }
 
     .homeresources-description-text-1 {
@@ -561,18 +1036,34 @@
     grid-template-columns: 1fr 2fr;
     gap: 1.25rem;
 
+    @include respond-to("md") {
+      grid-template-columns: 1fr;
+    }
+
     .homeresources-total,
     .homeresources-downloads {
       padding: 1.875rem;
       background-color: var(--dark-10);
       border: 1px solid var(--dark-15);
       border-radius: 13px;
+
+      @include respond-to("sm") {
+        padding: 1.25rem;
+      }
     }
 
     .homeresources-downloads {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+
+      @include respond-to("sm") {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
     }
+
     .homeresources-description-heading-2 {
       font-family: Inter;
       color: var(--grey-60);
@@ -580,6 +1071,7 @@
       font-size: 1.125rem;
       line-height: 150%;
     }
+
     .homeresources-description-text-2 {
       font-family: Inter;
       font-weight: 600;
@@ -593,6 +1085,11 @@
     background-color: var(--dark-10);
     border: 1px solid var(--dark-15);
     border-radius: 13px;
+
+    @include respond-to("sm") {
+      padding: 1.25rem;
+    }
+
     .homeresources-description-heading-3 {
       font-family: Inter;
       color: var(--grey-60);
@@ -600,6 +1097,7 @@
       font-size: 1.125rem;
       line-height: 150%;
     }
+
     .homeresources-description-text-3 {
       font-family: Inter;
       font-weight: 500;
@@ -614,26 +1112,80 @@
   display: grid;
   grid-template-columns: 1fr 0.85fr 1fr;
 
+  @include respond-to("lg") {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include respond-to("md") {
+    grid-template-columns: 1fr;
+  }
+
   &-item {
     border-right: 1px solid var(--dark-15);
     border-bottom: 1px solid var(--dark-15);
-    padding: 6rem 4rem;      
+    padding: 6rem 4rem;
+
+    @include respond-to("xl") {
+      padding: 4rem 3rem;
+    }
+
+    @include respond-to("sm") {
+      padding: 3rem 1rem;
+    }
 
     &.item-1,
     &.item-4 {
       padding-left: 10.125rem;
+
+      @include respond-to("xl") {
+        padding-left: 5rem;
+      }
+
+      @include respond-to("lg") {
+        padding-left: 2rem;
+      }
+
+      @include respond-to("sm") {
+        padding-left: 1rem;
+      }
     }
 
     &.item-3,
     &.item-6 {
       padding-right: 10.125rem;
       border-right: none;
+
+      @include respond-to("xl") {
+        padding-right: 5rem;
+      }
+
+      @include respond-to("lg") {
+        padding-right: 2rem;
+        border-right: 1px solid var(--dark-15);
+      }
+
+      @include respond-to("sm") {
+        padding-right: 1rem;
+        border-right: none;
+      }
+    }
+
+    &.item-2,
+    &.item-5 {
+      @include respond-to("lg") {
+        border-right: none;
+        padding-right: 2rem;
+      }
+
+      @include respond-to("sm") {
+        padding-right: 1rem;
+      }
     }
 
     .content-wrapper {
       width: 100%;
-      max-width: 38rem;              
-      margin: 0 auto;                
+      max-width: 38rem;
+      margin: 0 auto;
     }
 
     display: flex;
@@ -656,6 +1208,11 @@
       position: relative;
       width: 100%;
 
+      @include respond-to("sm") {
+        padding: 2.5rem 1rem 1.25rem;
+        margin-top: 2.5rem;
+      }
+
       .rating-wrapper {
         position: absolute;
         top: 0;
@@ -670,16 +1227,11 @@
 
       .person-comment {
         text-align: center;
+
+        @include respond-to("sm") {
+          font-size: 0.875rem;
+        }
       }
     }
-  }
-}
-
-@media screen and (width <= 480px) {
-  .title-sm {
-    font-size: 20px;
-  }
-  .posts__wrapper {
-    flex-direction: column;
   }
 }

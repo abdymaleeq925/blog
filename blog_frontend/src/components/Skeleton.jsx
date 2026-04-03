@@ -89,25 +89,41 @@ const PostSkeleton = ({ variant }) => {
   if (variant.includes('resources')) {
     if(variant.includes('other')) {
       return (
-        <Stack direction="column" spacing={2}>
-          <Skeleton
-            variant='rounded'
-            width={107}
-            height={157}
-            sx={{ bgcolor: 'var(--dark-10)'}}
-          />
-          <Skeleton variant='text' width="100%" height={24} sx={{ bgcolor: 'var(--dark-10)'}}/>
-          <Skeleton variant='text' width="100%" height={24} sx={{ bgcolor: 'var(--dark-10)'}}/>
+        <Stack direction='row' spacing={15}>
+        {
+          Array(3).fill(0).map((_,index) => (
+            <Stack key={index} direction="column" spacing={2} width='calc(100vw - 66%)' sx={{padding: '5rem 10.125rem 5rem 10.125rem'}}>
+              <Skeleton
+                variant='rounded'
+                width={107}
+                height={157}
+                sx={{ bgcolor: 'var(--dark-10)', margin: '0 auto'}}
+              />
+              <Skeleton variant='text' width="100%" height={24} sx={{ bgcolor: 'var(--dark-10)'}}/>
+              <Skeleton variant='text' width="100%" height={24} sx={{ bgcolor: 'var(--dark-10)'}}/>
+            </Stack>
+          ))
+        }
         </Stack>
       )
     } else if(variant.includes('recent')) {
       return (
-        <Skeleton
-          variant='rounded'
-          width={107}
-            height={157}
-            sx={{ bgcolor: 'var(--dark-10)'}}
-        />
+        <div className="container">
+          <Stack direction='row' spacing={40} alignItems='center' sx={{paddingTop: '5rem', paddingBottom: '5rem'}}>
+            <Skeleton
+              variant='rounded'
+              width={519}
+              height={334}
+              sx={{ bgcolor: 'var(--dark-10)'}}
+            />
+            <Skeleton 
+              variant='rounded'
+              width={800}
+              height={700}
+              sx={{ bgcolor: 'var(--dark-10)' }}
+            />
+          </Stack>
+        </div>
       )
     }
     

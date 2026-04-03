@@ -1,12 +1,30 @@
+@import "mixins";
+
 .hero-grid {
     margin-top: 30px;
     margin-bottom: 60px;
+
+    @include respond-to("sm") {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
 
     &__wrapper {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: auto auto;
-        gap: 2em;
+        gap: 2rem;
+
+        @include respond-to("lg") {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        @include respond-to("sm") {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
     }
 
     .post-item {
@@ -19,33 +37,36 @@
     .post-item--sm {
         grid-column: span 1;
         grid-row: span 4;
+
+        @include respond-to("lg") {
+            grid-row: span 1;
+        }
     }
 
-    /* Средние элементы */
     .post-item--md {
         grid-column: span 3;
         grid-row: span 1;
+
+        @include respond-to("lg") {
+            grid-column: span 2;
+        }
     }
 
-    /* Крупные элементы */
     .post-item--lg {
         grid-column: span 2;
         grid-row: span 2;
+
+        @include respond-to("lg") {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
     }
 
     .title-sm {
         font-weight: 600;
-    }
-}
 
-@media screen and (width <= 480px) {
-    .hero-grid {
-        margin-bottom: 30px;
-        .title-sm {
+        @include respond-to("sm") {
             font-size: 20px;
-        }
-        &__wrapper {
-            display: flex; 
         }
     }
 }

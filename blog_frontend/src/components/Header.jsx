@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { IoSunnyOutline } from 'react-icons/io5';
+import { IoSunnyOutline, IoMenuOutline, IoCloseOutline } from 'react-icons/io5';
 import { FaRegMoon } from "react-icons/fa";
 import Icon from '../assets/icons/icon.svg';
 
@@ -21,14 +21,18 @@ const Header = () => {
   const user = useSelector((state) => state.auth.data);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   const handleLogout = () => {
     dispatch(setLogOut());
     window.localStorage.removeItem('token');
     setIsDropdownOpen(false);
+    closeMenu();
     navigate('/');
   }
 
@@ -54,22 +58,47 @@ const Header = () => {
     <div className="header">
       <div className="container">
         <div className="header__wrapper">
-          <div className="header__logo">
+          <div className="header__logo" onClick={() => navigate("/")}>
             <img src={Icon} alt="website-icon" />
             <h2>FutureTech</h2>
           </div>
-          <ul className="header__navs">
+          <ul className={`header__navs ${isMenuOpen ? 'active' : ''}`}>
             <li>
-              <NavLink to="/" end>Home</NavLink>
+              <NavLink to="/" end onClick={closeMenu}>Home</NavLink>
             </li>
             <li>
-              <NavLink to="/posts">Posts</NavLink>
+              <NavLink to="/posts" onClick={closeMenu}>Posts</NavLink>
             </li>
             <li>
-              <NavLink to="/videos">Videos</NavLink>
+              <NavLink to="/videos" onClick={closeMenu}>Videos</NavLink>
             </li>
             <li>
-              <NavLink to="/resources">Resources</NavLink>
+              <NavLink to="/resources" onClick={closeMenu}>Resources</NavLink>
+            </li>
+            <li className="mobile-cta">
+              {isLoggedIn ? (
+                <div className="mobile-cta__wrapper">
+                  <Button btnName="Create Post" onClick={() => { navigate("/create-post"); closeMenu(); }} isYellow />
+                  <div className="dropdown">
+                    <Button className="dropdown__toggle" btnName={user?.fullName} onClick={toggleDropdown} isYellow />
+                    <ul className={`dropdown__menu ${isDropdownOpen ? 'active' : ''}`}>
+                      <li>
+                        <NavLink to={`/profile/${user?._id}`} onClick={() => { setIsDropdownOpen(false); closeMenu() }}>
+                          My Profile
+                        </NavLink>
+                      </li>
+                      <li>
+                        <button onClick={handleLogout} className="logout-btn">
+                          Log Out
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+              ) : (
+                <Button btnName="Log In" onClick={() => { navigate("profile/registration"); closeMenu(); }} isYellow />
+              )}
             </li>
           </ul>
           <div className="header__cta">
@@ -97,6 +126,9 @@ const Header = () => {
                 <Button btnName="Log In" onClick={() => navigate("profile/registration")} isYellow />
               )
             }
+            <div className={`header__menu-icon ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+              {isMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
+            </div>
             <div className="switch" onClick={handleToggle}>
               <div className="switch-toggles">
                 <div className="day"><IoSunnyOutline /></div>

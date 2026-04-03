@@ -66,7 +66,7 @@ const HomeBanner = () => {
           <img src={latestNewsIcon} alt="latest-news-icon" className="hero-icon-678" />
           <div className="hero-text-container-678">
             <div className="hero-text-678">
-              <p className="hero-heading-678">Latest News Updates</p>
+              <p className="hero-heading-678">Latest Posts Updates</p>
               <p className="hero-paragraph-678">Stay Current</p>
             </div>
             <Button btnIcon={exploreCircleIcon} onClick={() => navigate("/posts")} />
@@ -77,7 +77,7 @@ const HomeBanner = () => {
           <img src={expertIcon} alt="expert-icon" className="hero-icon-678" />
           <div className="hero-text-container-678">
             <div className="hero-text-678">
-              <p className="hero-heading-678">Expert Contributors</p>
+              <p className="hero-heading-678">Expert Videos</p>
               <p className="hero-paragraph-678">Trusted Insights</p>
             </div>
             <Button btnIcon={exploreCircleIcon} onClick={() => navigate("/videos")} />

@@ -1,20 +1,44 @@
+@import "mixins";
+
 .page_404 {
   font-family: Kumbh Sans;
   color: var(--dark-08);
   text-align: center;
   padding: 5rem 0;
+
+  @include respond-to("sm") {
+    padding: 3rem 1rem;
+  }
+
   img {
     width: 100%;
   }
-  
+
   .four_zero_four_bg {
     background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
     height: 650px;
     background-position: center;
+    background-repeat: no-repeat;
+
+    @include respond-to("lg") {
+      height: 450px;
+    }
+
+    @include respond-to("sm") {
+      height: 300px;
+    }
 
     h1 {
       margin: 0;
       font-size: 6rem;
+
+      @include respond-to("lg") {
+        font-size: 4rem;
+      }
+
+      @include respond-to("sm") {
+        font-size: 3rem;
+      }
     }
   }
 
@@ -25,13 +49,43 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    
+
+    @include respond-to("lg") {
+      margin-top: -100px;
+    }
+
+    @include respond-to("sm") {
+      margin-top: -50px;
+    }
+
     h3 {
       font-size: 48px;
+
+      @include respond-to("lg") {
+        font-size: 36px;
+      }
+
+      @include respond-to("sm") {
+        font-size: 24px;
+      }
     }
-    
+
     p {
       font-size: 24px;
+
+      @include respond-to("lg") {
+        font-size: 20px;
+      }
+
+      @include respond-to("sm") {
+        font-size: 16px;
+      }
+    }
+
+    .action-btn-yellow {
+      @include respond-to("sm") {
+        width: 100%;
+      }
     }
   }
 

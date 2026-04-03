@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import { format } from "date-fns";
+import dayjs from "dayjs";
 import ClearIcon from "@mui/icons-material/Clear";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 
@@ -42,8 +42,8 @@ const Comment = ({
         <ReactMarkdown>{comment?.text}</ReactMarkdown>
         {comment?.createdAt && (
           <p className="date">
-            {format(new Date(comment?.createdAt), "HH:mm")}{" "}
-            {format(new Date(comment?.createdAt), "dd MMM yyyy")}
+            {dayjs(comment?.createdAt).format("HH:mm")}{" "}
+            {dayjs(comment?.createdAt).format("DD MMM YYYY")}
           </p>
         )}
       </div>

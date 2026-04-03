@@ -1,22 +1,52 @@
+@import "mixins";
+
 .post-item {
     background-color: var(--dark-08);
-    padding: 5rem 10rem;
+    padding: 5rem 10.125rem;
     border-bottom: 1px solid var(--dark-15);
+
+    @include respond-to("xl") {
+        padding: 4rem 5rem;
+    }
+
+    @include respond-to("lg") {
+        padding: 3rem 2rem;
+    }
+
+    @include respond-to("sm") {
+        padding: 2rem 1rem;
+    }
 
     &--recent {
         border-bottom: none;
+
         .post-item-wrapper {
             gap: 5rem;
             align-items: center;
+
+            @include respond-to("lg") {
+                gap: 2.5rem;
+            }
+
+            @include respond-to("md") {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         .post-image-container {
             flex: 0 0 33%;
             max-width: 445px;
+            width: 100%;
             aspect-ratio: 4 / 3;
             overflow: hidden;
             border-radius: 12px;
             background: var(--dark-12);
+
+            @include respond-to("md") {
+                flex: none;
+                max-width: 100%;
+            }
 
             .post-image {
                 width: 100%;
@@ -37,6 +67,7 @@
 
         .post-item-content {
             flex: 1;
+            width: 100%;
         }
     }
 
@@ -52,10 +83,15 @@
         }
 
         .post-image-container {
-            width: 512px;
+            width: 100%;
+            max-width: 512px;
             aspect-ratio: 3 / 2;
             overflow: hidden;
             border-radius: 8px;
+
+            @include respond-to("sm") {
+                max-width: 100%;
+            }
         }
 
         .post-image {
@@ -70,7 +106,13 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            width: 512px;
+            width: 100%;
+            max-width: 512px;
+
+            @include respond-to("sm") {
+                max-width: 100%;
+            }
+
             .post-item-context {
                 flex-grow: 1;
                 display: flex;
@@ -85,6 +127,11 @@
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     min-height: 3.2rem;
+
+                    @include respond-to("sm") {
+                        min-height: auto;
+                        font-size: 1.125rem;
+                    }
                 }
             }
         }
@@ -94,6 +141,10 @@
             font-size: 1.25rem;
             line-height: 1.5;
             margin-top: auto;
+
+            @include respond-to("sm") {
+                font-size: 1rem;
+            }
         }
     }
 
@@ -110,12 +161,23 @@
     &-details {
         display: flex;
         gap: 3.125rem;
+
+        @include respond-to("sm") {
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
         p,
         span {
             font-size: 1.125rem;
             line-height: 1.5;
             font-weight: 400;
+
+            @include respond-to("sm") {
+                font-size: 1rem;
+            }
         }
+
         p {
             color: var(--grey-60);
         }
@@ -133,7 +195,13 @@
             height: 5rem;
             color: var(--avatar-icon-color);
             flex-shrink: 0;
+
+            @include respond-to("sm") {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
         }
+
         .author-content {
             display: flex;
             flex-direction: column;
@@ -150,7 +218,12 @@
                 overflow-wrap: break-word;
                 word-break: break-word;
                 max-width: 130px;
+
+                @include respond-to("sm") {
+                    font-size: 1rem;
+                }
             }
+
             .post-item-topic {
                 font-family: Inter;
                 color: var(--grey-60);
@@ -161,15 +234,24 @@
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 word-break: break-word;
+
+                @include respond-to("sm") {
+                    font-size: 0.875rem;
+                }
             }
         }
     }
-    
+
     &-content {
         display: flex;
         flex-direction: column;
         gap: 1.875rem;
         max-width: 1173px;
+        width: 100%;
+
+        @include respond-to("sm") {
+            gap: 1rem;
+        }
 
         &-date {
             font-family: Inter;
@@ -177,6 +259,10 @@
             font-weight: 600;
             font-size: 1.25rem;
             line-height: 150%;
+
+            @include respond-to("sm") {
+                font-size: 1rem;
+            }
         }
 
         .post-item-context {
@@ -189,6 +275,14 @@
                 font-size: 1.625rem;
                 font-weight: 600;
                 line-height: 150%;
+
+                @include respond-to("lg") {
+                    font-size: 1.375rem;
+                }
+
+                @include respond-to("sm") {
+                    font-size: 1.25rem;
+                }
             }
 
             .post-item-description {
@@ -203,6 +297,10 @@
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+
+                @include respond-to("sm") {
+                    font-size: 1rem;
+                }
             }
         }
 
@@ -210,6 +308,17 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            @include respond-to("sm") {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+
+                .action-btn {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
 
             .cta-btns {
                 display: flex;
@@ -230,17 +339,21 @@
                 border-radius: 100px;
                 border: 1px solid var(--dark-15);
 
+                @include respond-to("sm") {
+                    padding: 0.375rem 0.75rem;
+                    font-size: 0.875rem;
+
+                    img {
+                        width: 1.25rem;
+                        height: 1.25rem;
+                    }
+                }
+
                 img {
                     width: 1.5rem;
                     height: 1.5rem;
                 }
             }
         }
-    }
-}
-
-@media (max-width: 1024px) {
-    .author-avatar {
-        --size: 4rem;
     }
 }

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/videos.scss';
-import { fetchAIVideos } from '../api/videos';
-import { Button } from '../components/ui/Button';
+
 import { Rating } from '@mui/material';
 import { Star, StarBorder, StarHalf } from '@mui/icons-material';
 import { IoArrowForwardCircle } from "react-icons/io5";
 import { IoArrowBackCircle } from "react-icons/io5";
+
+import { fetchAIVideos } from '../api/videos';
+import { Button } from '../components/ui/Button';
+import { Title } from '../components';
+
 import videoIconOne from '../assets/icons/videoIconOne.svg';
 import videoIconTwo from '../assets/icons/videoIconTwo.svg';
 import exploreIcon from '../assets/icons/exploreIcon.svg';
-import { Title } from '../components';
+import '../styles/videos.scss';
 
 const Videos = () => {
 
@@ -73,7 +76,7 @@ const Videos = () => {
                                 <Rating
                                     name="custom-rating"
                                     value={5}
-                                    precision={0.1}                 // дробные с шагом 0.1
+                                    precision={0.1}
                                     icon={<Star fontSize="inherit" />}
                                     emptyIcon={<StarBorder fontSize="inherit" />}
                                     halficon={<StarHalf fontSize="inherit" />}
@@ -88,7 +91,7 @@ const Videos = () => {
                             <p className='recent-videos-heading'>Host</p>
                             <p className='recent-videos-text'>{videos[0]?.author}</p>
                         </div>
-                        <Button onClick={() => window.open(`${videos[0]?.id}`, '_blank')} btnName="Watch Video" btnIcon={exploreIcon} />
+                        <Button onClick={() => window.open(`${videos[0]?.link}`, '_blank')} btnName="Watch Video" btnIcon={exploreIcon} />
                     </div>
                 </div>
                 <div className="recent-videos-description-1">
@@ -114,11 +117,8 @@ const Videos = () => {
                                 year: 'numeric',
                             })}</p>
                         </div>
-
                     </div>
-
                 </div>
-
                 <div className="recent-videos-title-2">
                     <div className="recent-videos-title-container">
                         <img src={videoIconTwo} alt="video-icon" />
@@ -128,12 +128,11 @@ const Videos = () => {
                                 <Rating
                                     name="custom-rating"
                                     value={5}
-                                    precision={0.1}                 // дробные с шагом 0.1
+                                    precision={0.1}
                                     icon={<Star fontSize="inherit" />}
                                     emptyIcon={<StarBorder fontSize="inherit" />}
                                     halficon={<StarHalf fontSize="inherit" />}
                                     readOnly={true}
-                                // onChange={(e, newValue) => console.log(newValue)}
                                 />
                             </div>
                         </div>
@@ -143,7 +142,7 @@ const Videos = () => {
                             <p className='recent-videos-heading'>Host</p>
                             <p className='recent-videos-text'>{videos[1]?.author}</p>
                         </div>
-                        <Button onClick={() => window.open(`${videos[1]?.id}`, '_blank')} btnName="Watch Video" btnIcon={exploreIcon} />
+                        <Button onClick={() => window.open(`${videos[1]?.link}`, '_blank')} btnName="Watch Video" btnIcon={exploreIcon} />
                     </div>
                 </div>
                 <div className="recent-videos-description-2">
@@ -169,10 +168,8 @@ const Videos = () => {
                                 year: 'numeric',
                             })}</p>
                         </div>
-
                     </div>
                 </div>
-
             </div>
             <Title
                 tag="Stay Informed with Relevant Content"
@@ -186,7 +183,7 @@ const Videos = () => {
                             <p className="other-videos-description-heading">{video?.title}</p>
                             <p className="other-videos-description-text">{video?.description}</p>
                         </div>
-                        <Button onClick={() => window.open(`${video?.id}`, '_blank')} btnName="Watch Video" btnIcon={exploreIcon} />
+                        <Button onClick={() => window.open(`${video?.link}`, '_blank')} btnName="Watch Video" btnIcon={exploreIcon} />
                     </div>
                 ))}
             </div>

@@ -11,16 +11,16 @@ import { registerValidation, loginValidation, postValidation } from './validatio
 import checkUser from './utils/checkUser.js';
 import { login, profile, registration } from './controllers/userController.js';
 import {
-    create,
-    getAll,
-    getOne,
-    update,
-    remove,
-    likeTogglePost,
-    shareTogglePost,
-    toggleComment,
-    likeToggleComment,
-    replyToggleComment,
+  create,
+  getAll,
+  getOne,
+  update,
+  remove,
+  likeTogglePost,
+  shareTogglePost,
+  toggleComment,
+  likeToggleComment,
+  replyToggleComment,
 
 } from './controllers/postController.js';
 import { createMessage } from './controllers/messageController.js';
@@ -41,39 +41,39 @@ app.use("/uploads", express.static(join(__dirname, "uploads")));
 mongoose.connect(process.env.DB_URL).then(console.log('DB is OK')).catch((error) => console.log('DB is NOT OK', error));
 
 const storage = multer.diskStorage({
-    destination: (_, __, cb) => { cb(null, 'uploads') },
-    filename: (_, file, cb) => {
-        // Лучше генерировать уникальное имя, чтобы избежать конфликтов
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, uniqueSuffix + extname(file.originalname));
-      },
+  destination: (_, __, cb) => { cb(null, 'uploads') },
+  filename: (_, file, cb) => {
+    // Лучше генерировать уникальное имя, чтобы избежать конфликтов
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + extname(file.originalname));
+  },
 });
 
 // Валидация файла
 const fileFilter = (req, file, cb) => {
-    // Проверяем MIME-тип
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    if (allowedTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error('Неверный формат изображения. Разрешены только JPG, PNG, GIF, WebP.'));
-    }
-  };
+  // Проверяем MIME-тип
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Неверный формат изображения. Разрешены только JPG, PNG, GIF, WebP.'));
+  }
+};
 
-  const upload = multer({
-    storage,
-    limits: {
-      fileSize: 5 * 1024 * 1024, // 5 MB максимум (можно изменить)
-    },
-    fileFilter,
-  });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5 MB максимум (можно изменить)
+  },
+  fileFilter,
+});
 
 app.use(cors({ origin: ['http://localhost:3000', 'https://blog-frontend-4j7d.onrender.com'], credentials: true }));
 
 
 //CRUD
 app.get('/', (request, response) => {
-    response.send('Hello World!');
+  response.send('Hello World!');
 });
 app.post('/auth/login', loginValidation, handleValidation, login);
 
@@ -85,16 +85,16 @@ app.get('/auth/profile', checkUser, profile);
 app.post('/post/create', checkUser, postValidation, handleValidation, create);
 
 app.post('/upload', checkUser, upload.single('image'), (request, response) => {
-    response.json ({
-        url: `/uploads/${request.file.filename}`
-    });
+  response.json({
+    url: `/uploads/${request.file.filename}`
+  });
 });
 
 app.get('/posts', getAll);
 
 app.get('/post/:id', getOne);
 
-app.patch('/post/:id',checkUser, postValidation, handleValidation, update);
+app.patch('/post/:id', checkUser, postValidation, handleValidation, update);
 
 app.delete('/post/:id', checkUser, remove);
 
@@ -112,7 +112,7 @@ app.patch('/post/:postId/comment/:commentId/replyToggle', replyToggleComment);
 const CACHE_DIR = path.join(__dirname, 'pdf_cache');
 
 // Создаем папку, если её нет
-fs.mkdir(CACHE_DIR, { recursive: true }).catch(() => {});
+fs.mkdir(CACHE_DIR, { recursive: true }).catch(() => { });
 
 const getCachePath = (url) => {
   const hash = crypto.createHash('md5').update(url).digest('hex');
@@ -133,7 +133,7 @@ app.get('/proxy/pdf', async (req, res) => {
     try {
       await fs.access(cachePath);
       console.log(`[Cache HIT] Serving from disk: ${pdfUrl}`);
-      
+
       // Устанавливаем заголовки для кэшированного файла
       res.set({
         'Content-Type': 'application/pdf',
@@ -141,7 +141,7 @@ app.get('/proxy/pdf', async (req, res) => {
         'Cache-Control': 'public, max-age=86400', // Кэш в браузере на сутки
         'X-Cache': 'HIT' // Полезно для отладки
       });
-      
+
       return res.sendFile(cachePath);
     } catch (cacheErr) {
       // Файла нет в кэше, идем дальше к загрузке
@@ -197,8 +197,8 @@ app.post('/messages', createMessage);
 
 //Связка с frontend
 app.listen('4444', (error) => {
-    if (error) {
-        console.error(error);
-    }
-    console.log('Server is OK');
+  if (error) {
+    console.error(error);
+  }
+  console.log('Server is OK');
 });

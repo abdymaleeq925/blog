@@ -62,7 +62,6 @@ const HomeTestimonials = () => {
       <Title
         tag="What Our Readers Say"
         title="Real Words from Real Readers"
-        button={{ text: "View All Testimonials", href: "posts" }}
       />
       <div className='hometestimonials'>
         {testimonials.map((person, index) => (

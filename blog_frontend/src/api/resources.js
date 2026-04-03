@@ -1,11 +1,11 @@
 const CACHE_KEY = 'ai_resources_cache';
-const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 часов
+const CACHE_DURATION = 6 * 60 * 60 * 1000;
 
 const OPENALEX_API = new URL('https://api.openalex.org/works');
 OPENALEX_API.searchParams.set('search', 'artificial intelligence machine learning LLM');
 OPENALEX_API.searchParams.set('filter', 'type:report|book|proceedings-article');
 OPENALEX_API.searchParams.set('sort', 'publication_date:desc');
-OPENALEX_API.searchParams.set('per-page', '30');
+OPENALEX_API.searchParams.set('per-page', '83');
 
 export async function fetchAIResources() {
     const cached = localStorage.getItem(CACHE_KEY);
@@ -27,10 +27,12 @@ export async function fetchAIResources() {
 
         const { results = [] } = await res.json();
 
+        console.log("results", results);
+
         const resources = results
             .map((item) => {
-                const pdf = item.primary_location?.pdf_url;
-                if (!pdf) return null;
+                // const pdf = item.primary_location?.pdf_url;
+                // if (!pdf) return null;
 
                 const abstract = item.abstract_inverted_index
                     ? Object.keys(item.abstract_inverted_index).join(' ')
@@ -47,9 +49,11 @@ export async function fetchAIResources() {
                     description: abstract.slice(0, 480) + (abstract.length > 480 ? '...' : ''),
                     publishedAt: item.publication_date || null,
                     year: item.publication_year?.toString() || 'N/A',
-                    link: pdf,
+                    link: item.primary_location?.pdf_url,
                     category,
-                    tag: 'AI'
+                    tag: item.keywords && item.keywords.length > 0
+                        ? item.keywords.reduce((prev, curr) => (prev.score > curr.score ? prev : curr)).display_name
+                        : 'General'
                 };
             })
             .filter(Boolean);
