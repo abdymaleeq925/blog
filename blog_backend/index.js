@@ -27,10 +27,17 @@ app.use(cors({
 app.use('/uploads', express.static(join(__dirname, 'uploads')));
 
 // Database connection
+if (!process.env.DB_URL) {
+  console.error('❌ DB_URL is missing in environment variables!');
+}
+
 mongoose
   .connect(process.env.DB_URL)
-  .then(() => console.log('✅ MongoDB connected'))
-  .catch((error) => console.error('❌ MongoDB connection failed:', error.message));
+  .then(() => console.log('✅ MongoDB connected successfully'))
+  .catch((error) => {
+    console.error('❌ MongoDB connection failed!');
+    console.error('Error details:', error.message);
+  });
 
 // Routes
 app.get('/', (req, res) => res.json({ status: 'ok', message: 'Blog API is running' }));

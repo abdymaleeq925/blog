@@ -33,12 +33,15 @@ export const getAll = async (request, response) => {
       .populate("user")
       .populate("likes", "fullName")
       .populate("shares", "fullName");
-    if (!posts) {
-      response.status(404).json({ message: "Posts not found" });
-    }
-    return response.json({ posts });
+    
+    // An empty array is NOT an error, it's just 0 posts.
+    return response.json({ posts: posts || [] });
   } catch (error) {
-    response.status(404).json({ message: "Not found" });
+    console.error('Error fetching posts:', error);
+    response.status(500).json({ 
+      message: "Database error occurred while fetching posts",
+      error: error.message 
+    });
   }
 };
 
@@ -96,7 +99,8 @@ export const getOne = async (request, response) => {
       });
     response.json(updatedPost);
   } catch (error) {
-    response.status(401).json({ message: "Error" });
+    console.error('Error fetching single post:', error);
+    response.status(500).json({ message: "Error fetching post", error: error.message });
   }
 };
 

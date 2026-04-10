@@ -13,7 +13,7 @@ import { setAuthState } from '../redux/authSlice';
 
 
 const Login = ({ setFormType }) => {
-    const [login] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -97,7 +97,9 @@ const Login = ({ setFormType }) => {
                     {errors.root.serverError.message}
                     </div>
                 )}
-                <button className="action-btn-yellow" type="submit">Log In</button>
+                <button className="action-btn-yellow" type="submit" disabled={isLoading}>
+                    {isLoading ? 'Logging in...' : 'Log In'}
+                </button>
             </form>
             <p className='sign-up-button'>
                 Don't have an account?

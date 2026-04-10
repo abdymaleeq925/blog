@@ -10,7 +10,7 @@ import { useRegisterUserMutation } from '../services/authApi';
 import { setAuthState } from '../redux/authSlice';
 
 const Register = ({ setFormType }) => {
-  const [registerUser] = useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -190,8 +190,8 @@ const Register = ({ setFormType }) => {
         }}
         />        
 
-        <button className="action-btn-yellow" type="submit">
-          Sign Up
+        <button className="action-btn-yellow" type="submit" disabled={isLoading}>
+          {isLoading ? 'Creating account...' : 'Sign Up'}
         </button>
       </form>
 
