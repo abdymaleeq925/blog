@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { validationResult } from 'express-validator';
 
-import { Post, Comment } from "../models/Post.js";
+import Post from "../models/Post.js";
+import { Comment } from "../models/Comment.js";
 
 export const create = async (request, response) => {
   try {

@@ -11,27 +11,41 @@ export const login = async (request, response) => {
 
     if (!user) {
       return response.status(404).json({
-        message: 'User not found'
-      })
+        message: 'User not found',
+      });
     }
-    const token = jwt.sign({
-      _id: user._id
-    }, 'secretkey', { expiresIn: '7d' });
-    const { passwordHash, ...userData } = user._doc
-    return response.status(200).json({
-      ...userData, token
-    });
+
+    // Verify password against stored hash
+    const isPasswordValid = await bcrypt.compare(
+      request.body.password,
+      user.passwordHash
+    );
+
+    if (!isPasswordValid) {
+      return response.status(400).json({
+        message: 'Invalid email or password',
+      });
+    }
+
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    const { passwordHash, ...userData } = user._doc;
+    return response.status(200).json({ ...userData, token });
   } catch (error) {
-    console.log(error);
+    console.error('Login error:', error);
     return response.status(500).json({
-      message: 'Authentication failured'
-    })
+      message: 'Authentication failed',
+    });
   }
 }
 
 export const registration = async (req, res) => {
   try {
-    // ✅ 1. Проверяем ошибки валидации
+    // 1. Check validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -39,11 +53,11 @@ export const registration = async (req, res) => {
       });
     }
 
-    // ✅ 2. Хешируем пароль
+    // 2. Hash the password
     const salt = await bcrypt.genSalt(12);
     const hash = await bcrypt.hash(req.body.password, salt);
 
-    // ✅ 3. Создаём пользователя
+    // 3. Create the user
     const doc = new User({
       email: req.body.email,
       fullName: req.body.fullName,
@@ -53,28 +67,28 @@ export const registration = async (req, res) => {
 
     const user = await doc.save();
 
-    // ✅ 4. Генерируем токен
+    // 4. Generate JWT token
     const token = jwt.sign(
       { _id: user._id },
-      'secretkey',
+      process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 
     const { passwordHash, ...userData } = user._doc;
 
-    return res.status(200).json({
+    return res.status(201).json({
       ...userData,
       token,
     });
   } catch (error) {
-    console.error(error);
+    console.error('Registration error:', error);
     if (req.file) {
       fs.unlink(req.file.path, (err) => {
-        if (err) console.error('Ошибка удаления файла:', err);
+        if (err) console.error('Failed to delete uploaded file:', err);
       });
     }
     return res.status(500).json({
-      message: 'Authentication failed',
+      message: 'Registration failed',
     });
   }
 };

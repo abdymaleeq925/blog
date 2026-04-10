@@ -40,7 +40,13 @@ const Profile = () => {
       <Title tag="All you need about your profile" title="Profile" />
       <div className="container">
         <div className="profile__wrapper">
-          <img src={`${API_URL}${profile?.avatarUrl}`} alt="avatar" />
+          {profile?.avatarUrl ? (
+            <img src={`${API_URL}${profile?.avatarUrl}`} alt="avatar" />
+          ) : (
+            <div className="profile__avatar-placeholder">
+              {profile?.fullName?.charAt(0)?.toUpperCase() || '?'}
+            </div>
+          )}
           <h1>{profile?.fullName}</h1>
           <p>Registration date: {formatedDate}</p>
           <Button btnName='Log Out' onClick={logOut} isYellow />

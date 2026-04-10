@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import '../styles/FourOFour.scss';
 
@@ -15,7 +15,7 @@ const FourOFour = () => {
         <div className="contant_box_404">
             <h3 className="h2">Look like you're lost</h3>
             <p>The page you are looking for is not available right now.</p>
-            <Link to={navigate(-1)} className="btn btn-primary">Go Back</Link>
+            <button onClick={() => navigate(-1)} className="btn btn-primary">Go Back</button>
         </div> 
         
       </div>

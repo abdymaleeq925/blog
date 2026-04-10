@@ -27,7 +27,7 @@ const Footer = () => {
     },
     {
       itemTitle: "Resources",
-      items: ["Whitepaper", "Ebooks", "Reports", "Reasearch Papers"]
+      items: ["Whitepaper", "Ebooks", "Reports", "Research Papers"]
     }
   ];
 
@@ -69,7 +69,7 @@ const Footer = () => {
                 <FaTelegram className="social-icon" />
               </a>
             </div>
-            <p>© 2024 FutureTech. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} FutureTech. All rights reserved.</p>
           </div>
         </div>
       </div>
