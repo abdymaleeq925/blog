@@ -16,6 +16,10 @@
         @include respond-to("sm") {
             padding: 1.25rem 0;
         }
+
+        @include respond-to("xs") {
+            padding: 1rem 0;
+        }
     }
 
     &__logo {
@@ -38,6 +42,14 @@
 
             img {
                 width: 24px;
+            }
+        }
+
+        @include respond-to("xs") {
+            font-size: 0.75rem;
+
+            img {
+                width: 20px;
             }
         }
     }
@@ -121,6 +133,16 @@
                 li {
                     a {
                         font-size: 1.25rem;
+                    }
+                }
+            }
+        }
+
+        @include respond-to("xs") {
+            &.active {
+                li {
+                    a {
+                        font-size: 1.125rem;
                     }
                 }
             }
@@ -214,6 +236,13 @@
                     font-size: 18px;
                 }
 
+                @include respond-to("xs") {
+                    width: 48px;
+                    height: 20px;
+                    padding: 4px 6px;
+                    font-size: 14px;
+                }
+
                 &:hover {
                     cursor: pointer;
                 }
@@ -240,6 +269,13 @@
                     @include respond-to("sm") {
                         top: 1px;
                         left: 38px;
+                    }
+
+                    @include respond-to("xs") {
+                        width: 14px;
+                        height: 14px;
+                        top: 3px;
+                        left: 28px;
                     }
                 }
 

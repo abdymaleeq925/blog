@@ -16,15 +16,21 @@
     gap: 0.625rem;
     white-space: nowrap;
     cursor: pointer;
+    flex-shrink: 0;
 
     @include respond-to("xl") {
-        padding: 0.625rem 0.875rem;
+        padding: 0.875rem 1.3rem;
         font-size: 0.875rem;
         border-radius: 0.5rem;
     }
 
     @include respond-to("lg") {
-        padding: 0.5rem 0.625rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    @include respond-to("md") {
+        padding: 0.625rem 0.875rem;
         font-size: 0.75rem;
     }
 
@@ -36,6 +42,15 @@
 
         img {
             width: 20px;
+        }
+    }
+
+    @include respond-to("xs") {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+
+        img {
+            width: 16px;
         }
     }
 
@@ -65,18 +80,28 @@
     border: 1px solid transparent;
 
     @include respond-to("xl") {
-        padding: 0.625rem 0.875rem;
+        padding: 0.75rem 1rem;
         font-size: 0.875rem;
     }
 
     @include respond-to("lg") {
-        padding: 0.5rem 0.625rem;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.75rem;
+    }
+
+    @include respond-to("md") {
+        padding: 0.5rem 0.75rem;
         font-size: 0.75rem;
     }
 
     @include respond-to("sm") {
         padding: 0.4rem 0.5rem;
         font-size: 0.625rem;
+    }
+
+    @include respond-to("xs") {
+        padding: 0.3rem 0.4rem;
+        font-size: 0.5rem;
     }
 
     &:hover {

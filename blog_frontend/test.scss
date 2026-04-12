@@ -1,0 +1,29 @@
+$breakpoints: (
+  "xs": 480px,
+  "sm": 768px,
+  "md": 992px,
+  "lg": 1200px,
+  "xl": 1470px,
+);
+
+@mixin respond-to($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+.homeblogs {
+  .filter-btn {
+    padding: 1.875rem 1.5rem;
+    @include respond-to("xl") {
+      padding: 1rem;
+    }
+  }
+}
+
+.action-btn {
+  padding: 1.125rem 1.5rem;
+  @include respond-to("xl") {
+      padding: 0.625rem 0.875rem;
+  }
+}
