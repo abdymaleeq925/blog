@@ -15,7 +15,7 @@
 
 ## 🖥️ Live Demo
 
-**Frontend:** [blog-frontend-4j7d.onrender.com](https://blog-frontend-4j7d.onrender.com)  
+**Frontend:** [blog-frontend-4j7d.onrender.com](https://blog-4wsh.onrender.com)  
 **Backend API:** [blog-backend-m5ss.onrender.com](https://blog-backend-m5ss.onrender.com)
 
 ---
