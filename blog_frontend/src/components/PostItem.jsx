@@ -69,6 +69,9 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
               <p className="author-name">{post?.user?.fullName}</p>
               <p className="post-item-topic">{post?.category || "Uncategorized"}</p>
             </div>
+            <Link className="action-btn mobile-action-btn" to={`/posts/post-detail/${post?._id}`}>
+              View Blog <img src={exploreIcon} alt="explore" />
+            </Link>
           </div>
         )}
 
@@ -139,7 +142,7 @@ const PostItem = ({ type = "", isLoading, post, userId }) => {
         </div>
 
         {type === "" && (
-          <Link className="action-btn" to={`/posts/post-detail/${post?._id}`}>
+          <Link className="action-btn desktop-action-btn" to={`/posts/post-detail/${post?._id}`}>
             View Blog <img src={exploreIcon} alt="explore" />
           </Link>
         )}

@@ -23,6 +23,8 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const menuRef = useRef(null);
+  const toggleRef = useRef(null);
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -49,6 +51,10 @@ const Header = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
+      if (menuRef.current && !menuRef.current.contains(event.target) &&
+          toggleRef.current && !toggleRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -58,11 +64,11 @@ const Header = () => {
     <div className="header">
       <div className="container">
         <div className="header__wrapper">
-          <div className="header__logo" onClick={() => navigate("/")}>
+          <div className="header__logo" onClick={() => { navigate("/"); closeMenu(); }}>
             <img src={Icon} alt="website-icon" />
             <h2>FutureTech</h2>
           </div>
-          <ul className={`header__navs ${isMenuOpen ? 'active' : ''}`}>
+          <ul className={`header__navs ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
             <li>
               <NavLink to="/" end onClick={closeMenu}>Home</NavLink>
             </li>
@@ -126,7 +132,7 @@ const Header = () => {
                 <Button btnName="Log In" onClick={() => navigate("profile/registration")} isYellow />
               )
             }
-            <div className={`header__menu-icon ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+            <div className={`header__menu-icon ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu} ref={toggleRef}>
               {isMenuOpen ? <IoCloseOutline /> : <IoMenuOutline />}
             </div>
             <div className="switch" onClick={handleToggle}>

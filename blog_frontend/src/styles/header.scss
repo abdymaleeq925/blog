@@ -130,6 +130,9 @@
 
         @include respond-to("sm") {
             &.active {
+                gap: 1.5rem;
+                height: 60vh;
+
                 li {
                     a {
                         font-size: 1.25rem;

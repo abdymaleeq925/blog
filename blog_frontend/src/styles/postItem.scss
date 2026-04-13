@@ -164,6 +164,18 @@
         .post-image {
             flex: 1;
         }
+
+        @include respond-to("sm") {
+            flex-direction: column;
+            align-items: start;
+            gap: 1.875rem;
+        }
+
+        .desktop-action-btn {
+            @include respond-to("sm") {
+                display: none;
+            }
+        }
     }
 
     &-details {
@@ -210,6 +222,19 @@
         flex: 0 0 auto;
         min-width: 0;
 
+        @include respond-to("sm") {
+            width: 100%;
+        }
+
+        .mobile-action-btn {
+            display: none;
+
+            @include respond-to("sm") {
+                display: flex;
+                width: max-content;
+            }
+        }
+
         .author-avatar {
             width: 5rem;
             height: 5rem;
@@ -221,10 +246,11 @@
                 height: 4rem;
             }
 
-            @include respond-to("sm") {
+            @include respond-to("md") {
                 width: 3.5rem;
                 height: 3.5rem;
             }
+
         }
 
         .author-content {
@@ -233,6 +259,10 @@
             gap: 0.25rem;
             min-width: 0;
             flex: 1;
+
+            @include respond-to("sm") {
+                min-width: 100px;
+            }
 
             .author-name {
                 font-family: Inter;
@@ -246,10 +276,6 @@
 
                 @include respond-to("xl") {
                     font-size: 1.125rem;
-                }
-
-                @include respond-to("sm") {
-                    font-size: 1rem;
                 }
             }
 
@@ -268,7 +294,7 @@
                     font-size: 1rem;
                 }
 
-                @include respond-to("sm") {
+                @include respond-to("md") {
                     font-size: 0.875rem;
                 }
             }
@@ -282,7 +308,7 @@
         max-width: 1173px;
         width: 100%;
 
-        @include respond-to("sm") {
+        @include respond-to("md") {
             gap: 1rem;
         }
 
@@ -297,21 +323,6 @@
                 font-size: 1.125rem;
             }
 
-            @include respond-to("lg") {
-                font-size: 1rem;
-            }
-
-            @include respond-to("md") {
-                font-size: 1rem;
-            }
-
-            @include respond-to("sm") {
-                font-size: 1rem;
-            }
-
-            @include respond-to("xs") {
-                font-size: 0.875rem;
-            }
         }
 
         .post-item-context {
@@ -334,14 +345,6 @@
                 }
 
                 @include respond-to("md") {
-                    font-size: 1.25rem;
-                }
-
-                @include respond-to("sm") {
-                    font-size: 1.25rem;
-                }
-
-                @include respond-to("xs") {
                     font-size: 1.125rem;
                 }
             }
@@ -364,15 +367,9 @@
                 }
 
                 @include respond-to("md") {
-                    font-size: 1rem;
-                }
-
-                @include respond-to("sm") {
-                    font-size: 1rem;
-                }
-
-                @include respond-to("xs") {
                     font-size: 0.875rem;
+                    line-clamp: 2;
+                    -webkit-line-clamp: 2;
                 }
             }
         }
@@ -415,19 +412,6 @@
                 @include respond-to("xl") {
                     padding: 0.375rem 0.75rem;
                     font-size: 0.875rem;
-                }
-
-
-                @include respond-to("sm") {
-                    padding: 0.375rem 0.75rem;
-                    font-size: 0.875rem;
-
-                }
-
-                @include respond-to("xs") {
-                    padding: 0.25rem 0.5rem;
-                    font-size: 0.75rem;
-
                 }
 
                 img {
